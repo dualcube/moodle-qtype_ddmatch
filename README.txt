@@ -22,4 +22,4 @@ Grading:
 
 The grading is identical to the original matching question.
 
-This version can be used with Moodle 2.4.1 and ulterior versions.
+This version can be used with Moodle 3.8.1 and other stable versions.
