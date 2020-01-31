@@ -1,7 +1,7 @@
 Drag-and-Drop Matching Question
 -------------------------------
 
-Author: Adriane Boyd (adrianeboyd@gmail.com)
+Author: Dualcube Team
 
 Description:
 
