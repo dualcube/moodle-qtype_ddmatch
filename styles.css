@@ -1,0 +1,109 @@
+.ddmatch li {
+    margin: 6px;
+    padding: 4px;
+}
+
+.ddmatch li.matchdrag {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.ddmatch li.placeholder {
+    border: 1px dotted black;
+    text-align: center;
+}
+
+.ddmatch ul.matchorigin {
+    border: 1px solid gray;
+    float: right;
+    list-style: none;
+    margin: 6px;
+    padding: 4px;
+    width: 35%;
+}
+
+.ddmatch .matchorigin li {
+    list-style:none;
+}
+
+.ddmatch .matchtarget {
+    border: 1px solid black;
+    list-style: none;
+    margin: 6px;
+    min-height: 30px;
+    padding: 4px;
+    width: 100%;
+}
+
+.ddmatch .matchtarget li {
+    list-style:none;
+}
+
+.ddmatch li p {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ddmatch ul.matchdefault {
+    border: 2px solid gray;
+}
+
+.ddmatch td.text {
+    width: 25%;
+}
+.ddmatch td.control {
+    margin: 6px;
+    padding: 4px;
+    width: 75%;
+}
+
+.ddmatch table.answer {
+    float: left;
+    margin-bottom: 0.5em;
+    width: 60%;
+}
+
+.ddmatch .correctanswertable {
+    margin: 10px;
+}
+
+.ddmatch .matchtarget.yui3-dd-drop-active-valid {
+    border: 2px dotted red;
+}
+
+.ddmatch .matchtarget.yui3-dd-drop-over {
+    border: 2px dotted green;
+}
+
+.matchtarget .placeholder.hidden {
+    display: none;
+}
+
+.ddmatch .matchtarget.yui3-dd-drop-over li {
+    opacity:0.5;
+}
+
+/* Editing form. */
+body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] {
+    background: #EEE;
+    border: 1px solid #BBB;
+    border-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] .fitemtitle {
+    font-weight: bold;
+}
+
+body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
+    background: #EEE;
+    border: 1px solid #BBB;
+    border-top: 0;
+    margin-bottom: 2em;
+    margin-top: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
