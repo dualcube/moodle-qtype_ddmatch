@@ -6,6 +6,7 @@
 .ddmatch li.matchdrag {
     background-color: white;
     border: 1px solid black;
+    height:36px;
 }
 
 .ddmatch li.placeholder {
@@ -20,6 +21,8 @@
     margin: 6px;
     padding: 4px;
     width: 35%;
+    max-height:380px;
+    overflow-y:auto;
 }
 
 .ddmatch .matchorigin li {
@@ -29,9 +32,8 @@
 .ddmatch .matchtarget {
     border: 1px solid black;
     list-style: none;
-    margin: 6px;
-    min-height: 30px;
-    padding: 4px;
+    margin: 0;
+    padding: 0;
     width: 100%;
 }
 
@@ -45,22 +47,21 @@
 }
 
 .ddmatch ul.matchdefault {
-    border: 2px solid gray;
+    border: 1px solid gray;
 }
 
 .ddmatch td.text {
     width: 25%;
+    padding:0;
 }
 .ddmatch td.control {
-    margin: 6px;
-    padding: 4px;
     width: 75%;
 }
 
 .ddmatch table.answer {
     float: left;
     margin-bottom: 0.5em;
-    width: 60%;
+    width: 100%;
 }
 
 .ddmatch .correctanswertable {
@@ -106,4 +107,19 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     margin-top: 0;
     padding-bottom: 5px;
     padding-top: 5px;
+}
+.divanswer {
+    max-height: 380px;
+    overflow-y:auto;
+    width: 60%;
+    float: left;
+}
+.qtext{margin-bottom:0;}
+.qtext p{margin:0;}
+.qtext p br{display:none;}
+.jsenabled .visibleifjs{display:inline-block !important; margin-bottom:10px;}
+@media screen and (max-width: 768px) {
+.ddmatch li p{font-size:12px;}
+.ddmatch .matchorigin li{font-size:12px;}
+.ddmatch li.matchdrag{height:28px;}
 }

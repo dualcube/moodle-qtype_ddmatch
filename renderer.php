@@ -136,6 +136,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $choices = $this->format_choices($qa);
 
         $o  = html_writer::start_tag('div', array('class' => 'ablock'));
+        $o .= html_writer::start_tag('div', array('class' => 'divanswer'));
         $o .= html_writer::start_tag('table', array('class' => 'answer'));
         $o .= html_writer::start_tag('tbody');
 
@@ -179,6 +180,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         }
         $o .= html_writer::end_tag('tbody');
         $o .= html_writer::end_tag('table');
+        $o .= html_writer::end_tag('div');
 
         $o .= $this->construct_available_dragdrop_choices($qa, $question);
 

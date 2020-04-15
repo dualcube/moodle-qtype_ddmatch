@@ -1,7 +1,7 @@
 Drag-and-Drop Matching Question
 -------------------------------
 
-Author: Dualcube Team
+Author: Adriane Boyd (adrianeboyd@gmail.com)
 
 Description:
 
@@ -22,4 +22,9 @@ Grading:
 
 The grading is identical to the original matching question.
 
-This version can be used with Moodle 3.8.1 and other stable versions.
+This version can be used with Moodle 2.4.1 and ulterior versions.
+
+
+= Change log =
+* ddmatch did not fit on the screen - Fixed
+* Responsive 
