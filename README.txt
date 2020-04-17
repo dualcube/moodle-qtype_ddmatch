@@ -26,5 +26,6 @@ This version can be used with Moodle 2.4.1 and ulterior versions.
 
 
 = Change log =
+* relocates the activity chooser link displayed - Fixed
 * ddmatch did not fit on the screen - Fixed
 * Responsive 
