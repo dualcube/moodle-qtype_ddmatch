@@ -123,3 +123,20 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 .ddmatch .matchorigin li{font-size:12px;}
 .ddmatch li.matchdrag{height:28px;}
 }
+.ddmatch .matchtarget {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ddmatch ul.matchorigin {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
