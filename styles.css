@@ -5,10 +5,15 @@
 
 .ddmatch li.matchdrag {
     background-color: white;
-    border: 1px solid black;
-    height:36px;
+    border: 1px solid #908b8b;
+    padding: 10px;
+    font-size: 15px;
+    color: #333;
+    line-height:20px;
 }
-
+tr {
+    word-break: break-all;
+}
 .ddmatch li.placeholder {
     border: 1px dotted black;
     text-align: center;
@@ -18,7 +23,7 @@
     border: 1px solid gray;
     float: right;
     list-style: none;
-    margin: 6px;
+    margin: 0;
     padding: 4px;
     width: 35%;
     max-height:380px;
@@ -44,18 +49,25 @@
 .ddmatch li p {
     display: table-cell;
     vertical-align: middle;
+        word-break: break-word;
 }
 
 .ddmatch ul.matchdefault {
     border: 1px solid gray;
 }
+.que .formulation{
+    background:#f1f1f1 !Important;
+    padding:20px !Important;
+}
 
 .ddmatch td.text {
-    width: 25%;
+    width: 50%;
     padding:0;
 }
 .ddmatch td.control {
-    width: 75%;
+    width: 85%;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .ddmatch table.answer {
@@ -118,10 +130,26 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 .qtext p{margin:0;}
 .qtext p br{display:none;}
 .divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
+p, .text {
+    font-size: 15px !Important;
+    word-break: break-word;
+    line-height: 20px;
+    color: #333;
+}
+
 @media screen and (max-width: 768px) {
 .ddmatch li p{font-size:12px;}
 .ddmatch .matchorigin li{font-size:12px;}
-.ddmatch li.matchdrag{height:28px;}
+.ddmatch td.control {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.ddmatch td.text {
+    width: 100%;
+    padding: 0;
+    display: block;
+}
 }
 .ddmatch .matchtarget {
     -webkit-touch-callout: none;

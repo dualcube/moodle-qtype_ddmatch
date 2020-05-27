@@ -23,7 +23,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_ddmatch';
-$plugin->version   = 2020041701;
+$plugin->version   = 2020052700;
 
 $plugin->requires  = 2013050100;
 $plugin->dependencies = array(
