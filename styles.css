@@ -11,7 +11,7 @@
     color: #333;
     line-height:20px;
 }
-tr {
+.ddmatch tr {
     word-break: break-all;
 }
 .ddmatch li.placeholder {
@@ -130,7 +130,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 .qtext p{margin:0;}
 .qtext p br{display:none;}
 .divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
-p, .text {
+.ddmatch p, .ddmatch .text {
     font-size: 15px !Important;
     word-break: break-word;
     line-height: 20px;
