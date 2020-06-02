@@ -11,7 +11,7 @@
     color: #333;
     line-height:20px;
 }
-tr {
+.ddmatch tr {
     word-break: break-all;
 }
 .ddmatch li.placeholder {
@@ -55,7 +55,7 @@ tr {
 .ddmatch ul.matchdefault {
     border: 1px solid gray;
 }
-.que .formulation{
+.ddmatch .que .formulation{
     background:#f1f1f1 !Important;
     padding:20px !Important;
 }
@@ -88,7 +88,7 @@ tr {
     border: 2px dotted green;
 }
 
-.matchtarget .placeholder.hidden {
+.ddmatch .matchtarget .placeholder.hidden {
     display: none;
 }
 
@@ -120,23 +120,28 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     padding-bottom: 5px;
     padding-top: 5px;
 }
-.divanswer {
+.ddmatch .divanswer {
     max-height: 380px;
     overflow-y:auto;
     width: 60%;
     float: left;
 }
-.qtext{margin-bottom:0;}
-.qtext p{margin:0;}
-.qtext p br{display:none;}
-.divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
-p, .text {
+.ddmatch .qtext{margin-bottom:0;}
+.ddmatch .qtext p{margin:0;}
+.ddmatch .qtext p br{display:none;}
+.ddmatch .divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
+.ddmatch p{
     font-size: 15px !Important;
     word-break: break-word;
     line-height: 20px;
     color: #333;
 }
-
+.ddmatch .text {
+    font-size: 15px !Important;
+    word-break: break-word;
+    line-height: 20px;
+    color: #333;
+}
 @media screen and (max-width: 768px) {
 .ddmatch li p{font-size:12px;}
 .ddmatch .matchorigin li{font-size:12px;}
