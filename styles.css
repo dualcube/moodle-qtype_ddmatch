@@ -1,3 +1,7 @@
+#page-question-type-ddmatch div.editor_atto_content_wrap {
+    word-break: break-all;
+}
+
 .ddmatch li {
     margin: 6px;
     padding: 4px;
