@@ -22,7 +22,7 @@ Feature: Test editing a Drag and drop matching question
       | Test questions   | ddmatch | Ddmatching for editing | foursubq |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage
-    And I navigate to "Question bank" node in "Course administration"
+    And I navigate to "Question bank" in current page administration
 
   @javascript @_switch_window
   Scenario: Edit a Drag and drop matching question

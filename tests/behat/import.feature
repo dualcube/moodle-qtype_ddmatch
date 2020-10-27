@@ -19,7 +19,7 @@ Feature: Test importing Drag and drop matching questions
 
   @javascript @_file_upload
   Scenario: import Drag and drop matching question.
-    When I navigate to "Import" node in "Course administration > Question bank"
+    When I navigate to "Question bank > Import" in current page administration
     And I set the field "id_format_xml" to "1"
     And I upload "question/type/ddmatch/tests/fixtures/qtype_sample_ddmatch.xml" file to "Import" filemanager
     And I press "id_submitbutton"

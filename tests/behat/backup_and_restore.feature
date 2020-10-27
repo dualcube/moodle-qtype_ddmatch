@@ -31,7 +31,7 @@ Feature: Test duplicating a quiz containing a Drag and drop matching question
       | Confirmation | Filename | test_backup.mbz |
     And I restore "test_backup.mbz" backup into a new course using this options:
       | Schema | Course name | Course 2 |
-    And I navigate to "Question bank" node in "Course administration"
+    And I navigate to "Question bank" in current page administration
     And I click on "Edit" "link" in the "ddmatch-001" "table_row"
     Then the following fields match these values:
       | Question name                      | ddmatch-001                      |
