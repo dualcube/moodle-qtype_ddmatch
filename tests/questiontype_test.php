@@ -72,6 +72,8 @@ class qtype_ddmatch_test extends advanced_testcase {
         $q->createdby = $USER->id;
         $q->modifiedby = $USER->id;
 
+        $q->idnumber = '';
+
         $q->options = new stdClass();
         $q->options->shuffleanswers = false;
         test_question_maker::set_standard_combined_feedback_fields($q->options);
