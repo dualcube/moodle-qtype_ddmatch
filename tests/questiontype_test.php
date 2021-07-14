@@ -41,11 +41,11 @@ class qtype_ddmatch_test extends advanced_testcase {
     /** @var qtype_ddmatch instance of the question type class to test. */
     protected $qtype;
 
-    protected function setUp() {
+    protected function setUp(): void {
         $this->qtype = new qtype_ddmatch();
     }
 
-    protected function tearDown() {
+    protected function tearDown(): void {
         $this->qtype = null;
     }
 
