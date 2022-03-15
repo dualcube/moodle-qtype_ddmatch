@@ -26,7 +26,7 @@ Feature: Test editing a Drag and drop matching question
 
   @javascript @_switch_window
   Scenario: Edit a Drag and drop matching question
-    When I click on "Edit" "link" in the "Ddmatching for editing" "table_row"
+    When I choose "Edit question" action for "Ddmatching for editing" in the question bank
     And I set the following fields to these values:
       | Question name | |
     And I press "id_submitbutton"
@@ -35,14 +35,14 @@ Feature: Test editing a Drag and drop matching question
       | Question name | Edited Ddmatching name |
     And I press "id_submitbutton"
     Then I should see "Edited Ddmatching name"
-    When I click on "Edit" "link" in the "Edited Ddmatching name" "table_row"
+    When I choose "Edit question" action for "Edited Ddmatching name" in the question bank
     And I set the following fields to these values:
       | Shuffle    | 0   |
       | Question 2 | dog |
       | Question 4 | fly |
     And I press "id_submitbutton"
     Then I should see "Edited Ddmatching name"
-    When I click on "Preview" "link" in the "Edited Ddmatching name" "table_row"
+    When I choose "Preview" action for "Edited Ddmatching name" in the question bank
     And I switch to "questionpreview" window
     Then I should see "frog"
     And I should see "dog"
