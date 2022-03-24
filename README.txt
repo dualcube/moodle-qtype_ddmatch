@@ -22,10 +22,11 @@ Grading:
 
 The grading is identical to the original matching question.
 
-This version can be used with Moodle 2.4.1 and ulterior versions.
+This version can be used with Moodle 3.11.6+ and ulterior versions.
 
 
 = Change log =
+* Added compatibility of Moodle 3.11.6+.
 * relocates the activity chooser link displayed - Fixed
 * ddmatch did not fit on the screen - Fixed
 * Responsive 
