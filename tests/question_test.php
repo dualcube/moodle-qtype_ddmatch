@@ -23,6 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_ddmatch;
+
+use advanced_testcase;
+use qtype_ddmatch_test_helper;
+use question_attempt_step;
+use question_classified_response;
+use question_state;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,7 +44,7 @@ require_once($CFG->dirroot . '/question/type/ddmatch/tests/helper.php');
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_ddmatch_question_test extends advanced_testcase {
+class question_test extends advanced_testcase {
 
     public function test_get_expected_data() {
         $question = qtype_ddmatch_test_helper::make_a_ddmatching_question();
@@ -135,12 +142,12 @@ class qtype_ddmatch_question_test extends advanced_testcase {
         $ddmatch = qtype_ddmatch_test_helper::make_a_ddmatching_question();
         $ddmatch->start_attempt(new question_attempt_step(), 1);
         $qsummary = $ddmatch->get_question_summary();
-        $this->assertRegExp('/' . preg_quote($ddmatch->questiontext) . '/', $qsummary);
+        $this->assertMatchesRegularExpression('/' . preg_quote($ddmatch->questiontext, '/') . '/', $qsummary);
         foreach ($ddmatch->stems as $stem) {
-            $this->assertRegExp('/' . preg_quote($stem) . '/', $qsummary);
+            $this->assertMatchesRegularExpression('/' . preg_quote($stem, '/') . '/', $qsummary);
         }
         foreach ($ddmatch->choices as $choice) {
-            $this->assertRegExp('/' . preg_quote($choice) . '/', $qsummary);
+            $this->assertMatchesRegularExpression('/' . preg_quote($choice, '/') . '/', $qsummary);
         }
     }
 
@@ -151,7 +158,7 @@ class qtype_ddmatch_question_test extends advanced_testcase {
 
         $summary = $ddmatch->summarise_response(array('sub0' => 2, 'sub1' => 1));
 
-        $this->assertRegExp('/Dog -> \w+; Frog -> \w+/', $summary);
+        $this->assertMatchesRegularExpression('/Dog -> \w+; Frog -> \w+/', $summary);
     }
 
     public function test_classify_response() {

@@ -90,6 +90,7 @@ class qtype_ddmatch_test_helper extends question_test_helper {
         $q->penalty = 0.3333333;
         $q->length = 1;
         $q->hidden = 0;
+        $q->idnumber = null;
         $q->createdby = $USER->id;
         $q->modifiedby = $USER->id;
 
