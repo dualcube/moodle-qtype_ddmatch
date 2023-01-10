@@ -48,12 +48,13 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $output .= $this->construct_answerblock($qa, $question, $options);
 
         $this->page->requires->string_for_js('draganswerhere', 'qtype_ddmatch');
-        $this->page->requires->yui_module('moodle-qtype_ddmatch-dragdrop',
-                'M.qtype.ddmatch.init_dragdrop', array(array(
-                    'questionid' => $qa->get_outer_question_div_unique_id(),
-                    'readonly' => $options->readonly,
-                ))
-        );
+
+
+        // $this->page->requires->yui_module('moodle-qtype_ddmatch-dragdrop', 'M.qtype.ddmatch.init_dragdrop', array(array( 'questionid' => $qa->get_outer_question_div_unique_id(), 'readonly' => $options->readonly, )));
+
+
+        $this->page->requires->js_call_amd('qtype_ddmatch/dragdrop', 'init', [$qa->get_outer_question_div_unique_id(), $options->readonly]);
+       
 
         if ($qa->get_state() === question_state::$invalid) {
             $response = $qa->get_last_qt_data();
@@ -232,7 +233,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $attributes = array(
             'id'    => 'ultarget'.$question->id.'_'.$stemid,
             'name'  => $qa->get_qt_field_name($curfieldname),
-            'class' => 'matchtarget matchdefault',
+            'class' => 'place' . $stemid . ' drop active group1',
             'data-selectname' => $qa->get_qt_field_name($curfieldname),
         );
         $output = html_writer::tag('ul', $li, $attributes);
@@ -255,17 +256,18 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         foreach ($choiceorder as $key => $choiceid) {
             $attributes = array(
                     'data-id' => $key,
-                    'class' => 'matchdrag'
+                    'class' => 'draghome choice' . $key .' group1'
             );
             $li = html_writer::tag('li', $choices[$key], $attributes);
             $uldata .= $li;
         }
         $attributes = array(
             'id'    => 'ulorigin' . $question->id,
-            'class' => 'matchorigin visibleifjs');
+            'class' => 'draggrouphomes1 visibleifjs');
 
         $o = html_writer::tag('ul', $uldata, $attributes);
-
+        $classes = array('answercontainer');
+            $o = html_writer::tag('div', $o, array('class' => implode(' ', $classes)));
         return $o;
     }
 }

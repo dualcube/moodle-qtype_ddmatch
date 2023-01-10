@@ -7,14 +7,46 @@
     padding: 4px;
 }
 
-.ddmatch li.matchdrag {
+.ddmatch li.draghome {
     background-color: white;
     border: 1px solid #908b8b;
     padding: 10px;
     font-size: 15px;
     color: #333;
     line-height:20px;
+    cursor: move;
 }
+
+.que.ddmatch .draghome.beingdragged {
+    z-index: 3;
+    box-shadow: 3px 3px 4px #000;
+    position: absolute;
+    width: 35%;
+
+}
+
+.que.ddmatch .draghome.dragplaceholder {
+    display: none;
+}
+
+.que.ddmatch .draghome.dragplaceholder.active {
+    visibility: hidden;
+    display: inline-block;
+}
+
+.que.ddmatch .draghome.placed {
+    margin-bottom: 2px;
+    list-style: none;
+}
+
+.que.ddmatch .drop:focus,
+.que.ddmatch .drop.valid-drag-over-drop,
+.que.ddmatch .draghome.placed:focus:not(.beingdragged),
+.que.ddmatch .draghome.placed.valid-drag-over-drop {
+    border-color: #0a0;
+    box-shadow: 0 0 5px 5px rgba(255, 255, 150, 1);
+}
+
 .ddmatch tr {
     word-break: break-all;
 }
@@ -23,7 +55,7 @@
     text-align: center;
 }
 
-.ddmatch ul.matchorigin {
+.ddmatch ul.draggrouphomes1 {
     border: 1px solid gray;
     float: right;
     list-style: none;
@@ -31,23 +63,26 @@
     padding: 4px;
     width: 35%;
     max-height:380px;
-    overflow-y:auto;
 }
 
-.ddmatch .matchorigin li {
+.ddmatch .draggrouphomes1 li {
     list-style:none;
 }
 
-.ddmatch .matchtarget {
-    border: 1px solid black;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
+.ddmatch .drop {
+    display: none;
+}
+.que.ddmatch .drop.active {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #000;
+    margin-bottom: 2px;
 }
 
-.ddmatch .matchtarget li {
+
+.ddmatch .drop li {
     list-style:none;
+    box-sizing: content-box;
 }
 
 .ddmatch li p {
@@ -56,8 +91,9 @@
         word-break: break-word;
 }
 
-.ddmatch ul.matchdefault {
+.ddmatch ul.drop {
     border: 1px solid gray;
+    padding-left: 0rem;
 }
 .ddmatch .que .formulation{
     background:#f1f1f1 !Important;
@@ -84,19 +120,19 @@
     margin: 10px;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-active-valid {
+.ddmatch .drop.yui3-dd-drop-active-valid {
     border: 2px dotted red;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-over {
+.ddmatch .drop.yui3-dd-drop-over {
     border: 2px dotted green;
 }
 
-.ddmatch .matchtarget .placeholder.hidden {
+.ddmatch .drop .placeholder.hidden {
     display: none;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-over li {
+.ddmatch .drop.yui3-dd-drop-over li {
     opacity:0.5;
 }
 
@@ -148,7 +184,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 }
 @media screen and (max-width: 768px) {
 .ddmatch li p{font-size:12px;}
-.ddmatch .matchorigin li{font-size:12px;}
+.ddmatch .draggrouphomes1 li{font-size:12px;}
 .ddmatch td.control {
     width: 100%;
     margin-left: 0;
@@ -160,7 +196,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     display: block;
 }
 }
-.ddmatch .matchtarget {
+.ddmatch .drop {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -169,11 +205,19 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     user-select: none;
 }
 
-.ddmatch ul.matchorigin {
+.ddmatch ul.draggrouphomes1 {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.que.ddmatch .draghome.dragplaceholder {
+    display: none;
+}
+
+.que.ddmatch .draghome.dragplaceholder.active {
+    visibility: hidden;
+    display: inline-block;
 }
