@@ -48,14 +48,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $output .= $this->construct_answerblock($qa, $question, $options);
 
         $this->page->requires->string_for_js('draganswerhere', 'qtype_ddmatch');
-
-
-        // $this->page->requires->yui_module('moodle-qtype_ddmatch-dragdrop', 'M.qtype.ddmatch.init_dragdrop', array(array( 'questionid' => $qa->get_outer_question_div_unique_id(), 'readonly' => $options->readonly, )));
-
-
         $this->page->requires->js_call_amd('qtype_ddmatch/dragdrop', 'init', [$qa->get_outer_question_div_unique_id(), $options->readonly]);
-       
-
         if ($qa->get_state() === question_state::$invalid) {
             $response = $qa->get_last_qt_data();
             $output .= html_writer::nonempty_tag('div',
@@ -135,22 +128,18 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $stemorder = $question->get_stem_order();
         $response = $qa->get_last_qt_data();
         $choices = $this->format_choices($qa);
-
         $o  = html_writer::start_tag('div', array('class' => 'ablock'));
         $o .= html_writer::start_tag('div', array('class' => 'divanswer'));
         $o .= html_writer::start_tag('table', array('class' => 'answer'));
         $o .= html_writer::start_tag('tbody');
-
         $parity = 0;
         $curfieldname = null;
         foreach ($stemorder as $key => $stemid) {
             $o .= html_writer::start_tag('tr', array('class' => 'r' . $parity));
             $o .= html_writer::tag('td', $this->construct_stem_cell($qa, $question, $stemid),
                             array('class' => 'text'));
-
             $classes = array('control');
             $feedbackimage = '';
-
             $curfieldname = $question->get_field_name($key);
             if (array_key_exists($curfieldname, $response)) {
                 $selected = (int) $response[$curfieldname];
@@ -163,31 +152,24 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
                 $classes[]  = $this->feedback_class($fraction);
                 $feedbackimage = $this->feedback_image($fraction);
             }
-
             $dragdropclasses = $classes;
             $classes[] = 'hiddenifjs';
             $dragdropclasses[] = 'visibleifjs';
-
             $o .= html_writer::tag('td',
                     $this->construct_choice_cell_select($qa, $options, $choices, $stemid, $curfieldname, $selected) .
                     ' ' . $feedbackimage, array('class' => implode(' ', $classes)));
-
             $o .= html_writer::tag('td',
                     $this->construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) .
                     ' ' . $feedbackimage, array('class' => implode(' ', $dragdropclasses)));
-
             $o .= html_writer::end_tag('tr');
             $parity = 1 - $parity;
         }
         $o .= html_writer::end_tag('tbody');
         $o .= html_writer::end_tag('table');
         $o .= html_writer::end_tag('div');
-
         $o .= $this->construct_available_dragdrop_choices($qa, $question);
-
         $o .= html_writer::end_tag('div');
         $o .= html_writer::tag('div', '', array('class' => 'clearer'));
-
         return $o;
     }
 
@@ -203,10 +185,8 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     private function construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) {
-
         $placeholderclasses = array('placeholder');
         $li = '';
-
         // Check whether an answer has already been selected.
         if ($selected !== 0) {
             // An answer has already been selected, display it as well.
@@ -221,15 +201,12 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
             // Add the hidden placeholder class so that the placeholder is initially hidden.
             $placeholderclasses[] = 'hidden';
         }
-
         $placeholder = html_writer::tag('li', html_writer::tag('p',
             get_string('draganswerhere', 'qtype_ddmatch')), array(
             'class' => implode(' ', $placeholderclasses),
         ));
         $li = $placeholder . $li;
-
         $question = $qa->get_question();
-
         $attributes = array(
             'id'    => 'ultarget'.$question->id.'_'.$stemid,
             'name'  => $qa->get_qt_field_name($curfieldname),
@@ -237,7 +214,6 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
             'data-selectname' => $qa->get_qt_field_name($curfieldname),
         );
         $output = html_writer::tag('ul', $li, $attributes);
-
         return $output;
     }
 
@@ -264,7 +240,6 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $attributes = array(
             'id'    => 'ulorigin' . $question->id,
             'class' => 'draggrouphomes1 visibleifjs');
-
         $o = html_writer::tag('ul', $uldata, $attributes);
         $classes = array('answercontainer');
             $o = html_writer::tag('div', $o, array('class' => implode(' ', $classes)));
