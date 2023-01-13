@@ -32,11 +32,14 @@
 .que.ddmatch .draghome.dragplaceholder.active {
     visibility: hidden;
     display: inline-block;
+       margin: 0;
+}
+li.matchdrag.copy {
+    margin: 0.25rem;
 }
 
 .que.ddmatch .draghome.placed {
     margin: 0;
-    margin-right: -0.313rem;
     margin-bottom: 0.125rem;
     list-style: none;
 }
@@ -57,7 +60,7 @@
     text-align: center;
 }
 
-.ddmatch ul.draggrouphomes1 {
+.ddmatch ul.draghomes {
     border: 0.06rem solid gray;
     float: right;
     list-style: none;
@@ -67,7 +70,7 @@
     max-height:23.75rem;
 }
 
-.ddmatch .draggrouphomes1 li {
+.ddmatch .draghomes li {
     list-style:none;
 }
 
@@ -79,6 +82,7 @@
     width: 100%;
     text-align: center;
     border: 0.06rem solid #000;
+    margin: 0;
     margin-bottom: 0.125rem;
 }
 
@@ -187,7 +191,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 }
 @media screen and (max-width: 768px) {
 .ddmatch li p{font-size:0.75rem;}
-.ddmatch .draggrouphomes1 li{font-size:0.75rem;}
+.ddmatch .draghomes li{font-size:0.75rem;}
 .ddmatch td.control {
     width: 100%;
     margin-left: 0;
@@ -208,7 +212,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     user-select: none;
 }
 
-.ddmatch ul.draggrouphomes1 {
+.ddmatch ul.draghomes {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;

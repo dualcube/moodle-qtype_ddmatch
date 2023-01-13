@@ -210,7 +210,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $attributes = array(
             'id'    => 'ultarget'.$question->id.'_'.$stemid,
             'name'  => $qa->get_qt_field_name($curfieldname),
-            'class' => 'place' . $stemid . ' drop active group1',
+            'class' => 'place' . $stemid . ' drop active',
             'data-selectname' => $qa->get_qt_field_name($curfieldname),
         );
         $output = html_writer::tag('ul', $li, $attributes);
@@ -239,7 +239,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         }
         $attributes = array(
             'id'    => 'ulorigin' . $question->id,
-            'class' => 'draggrouphomes1 visibleifjs');
+            'class' => 'draghomes visibleifjs');
         $o = html_writer::tag('ul', $uldata, $attributes);
         $classes = array('answercontainer');
             $o = html_writer::tag('div', $o, array('class' => implode(' ', $classes)));

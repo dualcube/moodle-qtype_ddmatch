@@ -26,64 +26,9 @@ define([
         if (readOnly) {
             this.getRoot().addClass('qtype_ddmatch-readonly');
         }
-        // this.resizeAllDragsAndDrops();
         this.cloneDrags();
         this.positionDrags();
     }
-
-    /**
-     * In each group, resize all the items to be the same size.
-     */
-    DragDropToTextQuestion.prototype.resizeAllDragsAndDrops = function() {
-        var thisQ = this;
-        this.getRoot().find('.answercontainer > div').each(function(i, node) {
-            thisQ.resizeAllDragsAndDropsInGroup(
-                thisQ.getClassnameNumericSuffix($(node), 'draggrouphomes'));
-        });
-    };
-
-    /**
-     * In a given group, set all the drags and drops to be the same size.
-     *
-     * @param {int} group the group number.
-     */
-    DragDropToTextQuestion.prototype.resizeAllDragsAndDropsInGroup = function(group) {
-        var thisQ = this,
-            dragHomes = this.getRoot().find('.draggrouphomes' + group + ' li.draghome'),
-            maxWidth = 0,
-            maxHeight = 0;
-
-        // Find the maximum size of any drag in this groups.
-        dragHomes.each(function(i, drag) {
-            maxWidth = Math.max(maxWidth, Math.ceil(drag.offsetWidth));
-            maxHeight = Math.max(maxHeight, Math.ceil(0 + drag.offsetHeight));
-        });
-
-        // The size we will want to set is a bit bigger than this.
-        maxWidth += 8;
-        maxHeight += 2;
-
-        // Set each drag home to that size.
-        dragHomes.each(function(i, drag) {
-            thisQ.setElementSize(drag, maxWidth, maxHeight);
-        });
-
-        // Set each drop to that size.
-        this.getRoot().find('ul.drop.group' + group).each(function(i, drop) {
-            thisQ.setElementSize(drop, maxWidth, maxHeight);
-        });
-    };
-
-    /**
-     * Set a given DOM element to be a particular size.
-     *
-     * @param {HTMLElement} element
-     * @param {int} width
-     * @param {int} height
-     */
-    DragDropToTextQuestion.prototype.setElementSize = function(element, width, height) {
-        $(element).width(width).height(height).css('lineHeight', height + 'px');
-    };
 
     /**
      * Invisible 'drag homes' are output by the renderer. These have the same properties
@@ -97,8 +42,7 @@ define([
             var placeHolder = drag.clone();
             placeHolder.removeClass();
             placeHolder.addClass('draghome choice' +
-                thisQ.getChoice(drag) + ' group' +
-                thisQ.getGroup(drag) + ' dragplaceholder');
+                thisQ.getChoice(drag) + ' dragplaceholder');
             drag.before(placeHolder);
         });
     };
@@ -141,26 +85,14 @@ define([
             }
 
             // Get the unplaced drag.
-            var unplacedDrag = thisQ.getUnplacedChoice(thisQ.getGroup(input), choice[i]);
+            var unplacedDrag = thisQ.getUnplacedChoice(choice[i]);
             // Get the clone of the drag.
             var hiddenDrag = thisQ.getDragClone(unplacedDrag);
             if (hiddenDrag.length) {
-                // if (unplacedDrag.hasClass('infinite')) {                                     //test for infinite drag option
-                //     var noOfDrags = thisQ.noOfDropsInGroup(thisQ.getGroup(unplacedDrag));
-                //     var cloneDrags = thisQ.getInfiniteDragClones(unplacedDrag, false);
-                //     if (cloneDrags.length < noOfDrags) {
-                //         var cloneDrag = unplacedDrag.clone();
-                //         hiddenDrag.after(cloneDrag);
-                //         questionManager.addEventHandlersToDrag(cloneDrag);
-                //     } else {
-                //         hiddenDrag.addClass('active');
-                //     }
-                // } else {
-                    hiddenDrag.addClass('active');
-                // }
+                hiddenDrag.addClass('active');
             }
             // Send the drag to drop.
-            thisQ.sendDragToDrop(thisQ.getUnplacedChoice(thisQ.getGroup(input), choice[i]), drop);
+            thisQ.sendDragToDrop(thisQ.getUnplacedChoice(choice[i]), drop);
         });
 
         // Save the question answer.
@@ -174,9 +106,6 @@ define([
      */
     DragDropToTextQuestion.prototype.getQuestionAnsweredValues = function() {
         let result = {};
-        // this.getRoot().find('input.placeinput').each((i, inputNode) => {
-        //     result[inputNode.id] = inputNode.value;
-        // });
         this.getRoot().find('option[selected=selected]').each((i, option) => {
             result[option.closest('select').name] = option.value;
         });
@@ -236,23 +165,8 @@ define([
         } else {
             var hiddenDrag = thisQ.getDragClone(drag);
             if (hiddenDrag.length) {
-                // if (drag.hasClass('infinite')) {                                     //test for infinite drag option
-                //     var noOfDrags = this.noOfDropsInGroup(this.getGroup(drag));
-                //     var cloneDrags = this.getInfiniteDragClones(drag, false);
-                //     if (cloneDrags.length < noOfDrags) {
-                //         var cloneDrag = drag.clone();
-                //         cloneDrag.removeClass('beingdragged');
-                //         hiddenDrag.after(cloneDrag);
-                //         questionManager.addEventHandlersToDrag(cloneDrag);
-                //         drag.offset(cloneDrag.offset());
-                //     } else {
-                //         hiddenDrag.addClass('active');
-                //         drag.offset(hiddenDrag.offset());
-                //     }
-                // } else {
-                    hiddenDrag.addClass('active');
-                    drag.offset(hiddenDrag.offset());
-                // }
+                hiddenDrag.addClass('active');
+                drag.offset(hiddenDrag.offset());
             }
         }
 
@@ -272,7 +186,7 @@ define([
      */
     DragDropToTextQuestion.prototype.dragMove = function(pageX, pageY, drag) {
         var thisQ = this;
-        this.getRoot().find('ul.drop.group' + this.getGroup(drag)).each(function(i, dropNode) {
+        this.getRoot().find('ul.drop').each(function(i, dropNode) {
             var drop = $(dropNode);
             if (thisQ.isPointInDrop(pageX, pageY, drop)) {
                 drop.addClass('valid-drag-over-drop');
@@ -280,7 +194,7 @@ define([
                 drop.removeClass('valid-drag-over-drop');
             }
         });
-        this.getRoot().find('li.draghome.placed.group' + this.getGroup(drag)).not('.beingdragged').each(function(i, dropNode) {
+        this.getRoot().find('li.draghome.placed').not('.beingdragged').each(function(i, dropNode) {
             var drop = $(dropNode);
             if (thisQ.isPointInDrop(pageX, pageY, drop) && !thisQ.isDragSameAsDrop(drag, drop)) {
                 drop.addClass('valid-drag-over-drop');
@@ -301,7 +215,7 @@ define([
         var thisQ = this,
             root = this.getRoot(),
             placed = false;
-        root.find('ul.drop.group' + this.getGroup(drag)).each(function(i, dropNode) {
+        root.find('ul.drop').each(function(i, dropNode) {
             var drop = $(dropNode);
             if (!thisQ.isPointInDrop(pageX, pageY, drop)) {
                 // Not this drop.
@@ -315,7 +229,7 @@ define([
             return false; // Stop the each() here.
         });
 
-        root.find('li.draghome.placed.group' + this.getGroup(drag)).not('.beingdragged').each(function(i, placedNode) {
+        root.find('li.draghome.placed').not('.beingdragged').each(function(i, placedNode) {
             var placedDrag = $(placedNode);
             if (!thisQ.isPointInDrop(pageX, pageY, placedDrag) || thisQ.isDragSameAsDrop(drag, placedDrag)) {
                 // Not this placed drag.
@@ -356,9 +270,6 @@ define([
 
         if (drag.length === 0) {
             this.setInputValue(drop.attr('name'), 0);
-            if (drop.data('isfocus')) {
-                drop.focus();
-            }
         } else {
             this.setInputValue(drop.attr('name'), this.getChoice(drag));
             drag.removeClass('unplaced')
@@ -380,7 +291,7 @@ define([
         }
         drag.data('unplaced', true);
 
-        this.animateTo(drag, this.getDragHome(this.getGroup(drag), this.getChoice(drag)));
+        this.animateTo(drag, this.getDragHome(this.getChoice(drag)));
     };
 
     /**
@@ -407,12 +318,12 @@ define([
             case keys.space:
             case keys.arrowRight:
             case keys.arrowDown:
-                nextDrag = this.getNextDrag(this.getGroup(drop), currentDrag);
+                nextDrag = this.getNextDrag(currentDrag);
                 break;
 
             case keys.arrowLeft:
             case keys.arrowUp:
-                nextDrag = this.getPreviousDrag(this.getGroup(drop), currentDrag);
+                nextDrag = this.getPreviousDrag(currentDrag);
                 break;
 
             case keys.escape:
@@ -424,31 +335,12 @@ define([
         }
 
         if (nextDrag.length) {
-            nextDrag.data('isfocus', true);
             nextDrag.addClass('beingdragged');
             var hiddenDrag = this.getDragClone(nextDrag);
             if (hiddenDrag.length) {
-                // if (nextDrag.hasClass('infinite')) {                                     //test for infinite drag option
-                //     var noOfDrags = this.noOfDropsInGroup(this.getGroup(nextDrag));
-                //     var cloneDrags = this.getInfiniteDragClones(nextDrag, false);
-                //     if (cloneDrags.length < noOfDrags) {
-                //         var cloneDrag = nextDrag.clone();
-                //         cloneDrag.removeClass('beingdragged');
-                //         cloneDrag.removeAttr('tabindex');
-                //         hiddenDrag.after(cloneDrag);
-                //         questionManager.addEventHandlersToDrag(cloneDrag);
-                //         nextDrag.offset(cloneDrag.offset());
-                //     } else {
-                //         hiddenDrag.addClass('active');
-                //         nextDrag.offset(hiddenDrag.offset());
-                //     }
-                // } else {
-                    hiddenDrag.addClass('active');
-                    nextDrag.offset(hiddenDrag.offset());
-                // }
+                hiddenDrag.addClass('active');
+                nextDrag.offset(hiddenDrag.offset());
             }
-        } else {
-            drop.data('isfocus', true);
         }
 
         e.preventDefault();
@@ -456,15 +348,12 @@ define([
     };
 
     /**
-     * Choose the next drag in a group.
-     *
-     * @param {int} group which group.
+     * Choose the next drag .
      * @param {jQuery} drag current choice (empty jQuery if there isn't one).
-     * @return {jQuery} the next drag in that group, or null if there wasn't one.
+     * @return {jQuery} the next drag , or null if there wasn't one.
      */
-    DragDropToTextQuestion.prototype.getNextDrag = function(group, drag) {
-        var choice,
-            numChoices = this.noOfChoicesInGroup(group);
+    DragDropToTextQuestion.prototype.getNextDrag = function(drag) {
+        var choice;
 
         if (drag.length === 0) {
             choice = 1; // Was empty, so we want to select the first choice.
@@ -472,35 +361,32 @@ define([
             choice = this.getChoice(drag) + 1;
         }
 
-        var next = this.getUnplacedChoice(group, choice);
+        var next = this.getUnplacedChoice(choice);
         while (next.length === 0 && choice < numChoices) {
             choice++;
-            next = this.getUnplacedChoice(group, choice);
+            next = this.getUnplacedChoice(choice);
         }
 
         return next;
     };
 
     /**
-     * Choose the previous drag in a group.
+     * Choose the previous drag.
      *
-     * @param {int} group which group.
      * @param {jQuery} drag current choice (empty jQuery if there isn't one).
-     * @return {jQuery} the next drag in that group, or null if there wasn't one.
+     * @return {jQuery} the next drag , or null if there wasn't one.
      */
-    DragDropToTextQuestion.prototype.getPreviousDrag = function(group, drag) {
+    DragDropToTextQuestion.prototype.getPreviousDrag = function(drag) {
         var choice;
 
-        if (drag.length === 0) {
-            choice = this.noOfChoicesInGroup(group);
-        } else {
+        if (drag.length !== 0) {
             choice = this.getChoice(drag) - 1;
         }
 
-        var previous = this.getUnplacedChoice(group, choice);
+        var previous = this.getUnplacedChoice(choice);
         while (previous.length === 0 && choice > 1) {
             choice--;
-            previous = this.getUnplacedChoice(group, choice);
+            previous = this.getUnplacedChoice(choice);
         }
 
         // Does this choice exist?
@@ -581,30 +467,26 @@ define([
 
     /**
      * Get drag home for a given choice.
-     *
-     * @param {int} group the group.
+     *.
      * @param {int} choice the choice number.
      * @returns {jQuery} containing that div.
      */
-    DragDropToTextQuestion.prototype.getDragHome = function(group, choice) {
-        if (!this.getRoot().find('.draghome.dragplaceholder.group' + group + '.choice' + choice).is(':visible')) {
-            return this.getRoot().find('.draggrouphomes' + group +
-                ' li.draghome' +
-                '.choice' + choice +
-                '.group' + group);
+    DragDropToTextQuestion.prototype.getDragHome = function(choice) {
+        if (!this.getRoot().find('.draghome.dragplaceholder.choice' + choice).is(':visible')) {
+            return this.getRoot().find('.draghomes li.draghome' +
+                '.choice' + choice);
         }
-        return this.getRoot().find('.draghome.dragplaceholder.group' + group + '.choice' + choice);
+        return this.getRoot().find('.draghome.dragplaceholder.choice' + choice);
     };
 
     /**
-     * Get an unplaced choice for a particular group.
+     * Get an unplaced choice .
      *
-     * @param {int} group the group.
      * @param {int} choice the choice number.
      * @returns {jQuery} jQuery wrapping the unplaced choice. If there isn't one, the jQuery will be empty.
      */
-    DragDropToTextQuestion.prototype.getUnplacedChoice = function(group, choice) {
-        return this.getRoot().find('.draghome.group' + group + '.choice' + choice + '.unplaced').slice(0, 1);
+    DragDropToTextQuestion.prototype.getUnplacedChoice = function(choice) {
+        return this.getRoot().find('.draghome.choice' + choice + '.unplaced').slice(0, 1);
     };
 
     /**
@@ -617,25 +499,6 @@ define([
         return this.getRoot().find('li.draghome.inplace' + place);
     };
 
-    /**
-     * Return the number of blanks in a given group.
-     *
-     * @param {int} group the group number.
-     * @returns {int} the number of drops.
-     */
-    DragDropToTextQuestion.prototype.noOfDropsInGroup = function(group) {
-        return this.getRoot().find('.drop.group' + group).length;
-    };
-
-    /**
-     * Return the number of choices in a given group.
-     *
-     * @param {int} group the group number.
-     * @returns {int} the number of choices.
-     */
-    DragDropToTextQuestion.prototype.noOfChoicesInGroup = function(group) {
-        return this.getRoot().find('.draghome.group' + group).length;
-    };
 
     /**
      * Return the number at the end of the CSS class name with the given prefix.
@@ -670,16 +533,6 @@ define([
         return this.getClassnameNumericSuffix(drag, 'choice');
     };
 
-    /**
-     * Given a DOM node that is significant to this question
-     * (drag, drop, ...) get the group it belongs to.
-     *
-     * @param {jQuery} node a DOM node.
-     * @returns {Number} the group it belongs to.
-     */
-    DragDropToTextQuestion.prototype.getGroup = function(node) {
-        return this.getClassnameNumericSuffix(node, 'group');
-    };
 
     /**
      * Get the place number of a drop, or its corresponding hidden input.
@@ -698,35 +551,10 @@ define([
      * @returns {jQuery} the drag's clone.
      */
     DragDropToTextQuestion.prototype.getDragClone = function(drag) {
-        return this.getRoot().find('.draggrouphomes' +
-            this.getGroup(drag) +
-            ' li.draghome' +
+        return this.getRoot().find('.draghomes li.draghome' +
             '.choice' + this.getChoice(drag) +
-            '.group' + this.getGroup(drag) +
             '.dragplaceholder');
     };
-    //test for infinite drag option
-    /**
-     * Get infinite drag clones for given drag.
-     *
-     * @param {jQuery} drag the drag.
-     * @param {Boolean} inHome in the home area or not.
-     * @returns {jQuery} the drag's clones.
-     */
-    // DragDropToTextQuestion.prototype.getInfiniteDragClones = function(drag, inHome) {
-    //     if (inHome) {
-    //         return this.getRoot().find('.draggrouphomes' +
-    //             this.getGroup(drag) +
-    //             ' li.draghome' +
-    //             '.choice' + this.getChoice(drag) +
-    //             '.group' + this.getGroup(drag) +
-    //             '.infinite').not('.dragplaceholder');
-    //     }
-    //     return this.getRoot().find('li.draghome' +
-    //         '.choice' + this.getChoice(drag) +
-    //         '.group' + this.getGroup(drag) +
-    //         '.infinite').not('.dragplaceholder');
-    // };
 
     /**
      * Get drop for a given drag and place.
@@ -736,7 +564,7 @@ define([
      * @returns {jQuery} the drop's clone.
      */
     DragDropToTextQuestion.prototype.getDrop = function(drag, currentPlace) {
-        return this.getRoot().find('.drop.group' + this.getGroup(drag) + '.place' + currentPlace);
+        return this.getRoot().find('.drop.place' + currentPlace);
     };
 
     /**
@@ -747,7 +575,7 @@ define([
      * @returns {boolean}
      */
     DragDropToTextQuestion.prototype.isDragSameAsDrop = function(drag, drop) {
-        return this.getChoice(drag) === this.getChoice(drop) && this.getGroup(drag) === this.getGroup(drop);
+        return this.getChoice(drag) === this.getChoice(drop);
     };
 
     /**
@@ -882,16 +710,6 @@ define([
                 drag.removeClass('placed').addClass('unplaced');
                 drag.removeAttr('tabindex');
                 drag.removeData('unplaced');
-                // if (drag.hasClass('infinite') && thisQ.getInfiniteDragClones(drag, true).length > 1) {                                     //test for infinite drag option
-                //     thisQ.getInfiniteDragClones(drag, true).first().remove();
-                // }
-            }
-            if (typeof drag.data('isfocus') !== 'undefined' && drag.data('isfocus') === true) {
-                drag.focus();
-                drag.removeData('isfocus');
-            }
-            if (typeof target.data('isfocus') !== 'undefined' && target.data('isfocus') === true) {
-                target.removeData('isfocus');
             }
             if (questionManager.isKeyboardNavigation) {
                 questionManager.isKeyboardNavigation = false;
