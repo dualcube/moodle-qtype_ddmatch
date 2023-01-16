@@ -3,51 +3,93 @@
 }
 
 .ddmatch li {
-    margin: 6px;
-    padding: 4px;
+    margin: 0.375rem;
+    padding: 0.25rem;
 }
 
-.ddmatch li.matchdrag {
+.ddmatch li.draghome {
     background-color: white;
-    border: 1px solid #908b8b;
-    padding: 10px;
-    font-size: 15px;
+    border: 0.06rem solid #908b8b;
+    padding: 0.625rem;
+    font-size: 0.938rem;
     color: #333;
-    line-height:20px;
+    line-height:1.25rem;
+    cursor: move;
 }
+
+.que.ddmatch .draghome.beingdragged {
+    z-index: 3;
+    box-shadow: 0.188rem 0.188rem 0.25rem #000;
+    position: absolute;
+    width: 35%;
+
+}
+
+.que.ddmatch .draghome.dragplaceholder {
+    display: none;
+}
+
+.que.ddmatch .draghome.dragplaceholder.active {
+    visibility: hidden;
+    display: inline-block;
+       margin: 0;
+}
+li.matchdrag.copy {
+    margin: 0.25rem;
+}
+
+.que.ddmatch .draghome.placed {
+    margin: 0;
+    margin-bottom: 0.125rem;
+    list-style: none;
+}
+
+.que.ddmatch .drop:focus,
+.que.ddmatch .drop.valid-drag-over-drop,
+.que.ddmatch .draghome.placed:focus:not(.beingdragged),
+.que.ddmatch .draghome.placed.valid-drag-over-drop {
+    border-color: #0a0;
+    box-shadow: 0 0 0.313rem 0.313rem rgba(255, 255, 150, 1);
+}
+
 .ddmatch tr {
     word-break: break-all;
 }
 .ddmatch li.placeholder {
-    border: 1px dotted black;
+    border: 0.06rem dotted black;
     text-align: center;
 }
 
-.ddmatch ul.matchorigin {
-    border: 1px solid gray;
+.ddmatch ul.draghomes {
+    border: 0.06rem solid gray;
     float: right;
     list-style: none;
     margin: 0;
-    padding: 4px;
+    padding: 0.25rem;
     width: 35%;
-    max-height:380px;
-    overflow-y:auto;
+    max-height:23.75rem;
 }
 
-.ddmatch .matchorigin li {
+.ddmatch .draghomes li {
     list-style:none;
 }
 
-.ddmatch .matchtarget {
-    border: 1px solid black;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.ddmatch .drop {
+    display: none;
+}
+.que.ddmatch .drop.active {
+    display: inline-block;
     width: 100%;
+    text-align: center;
+    border: 0.06rem solid #000;
+    margin: 0;
+    margin-bottom: 0.125rem;
 }
 
-.ddmatch .matchtarget li {
+
+.ddmatch .drop li {
     list-style:none;
+    box-sizing: content-box;
 }
 
 .ddmatch li p {
@@ -56,12 +98,13 @@
         word-break: break-word;
 }
 
-.ddmatch ul.matchdefault {
-    border: 1px solid gray;
+.ddmatch ul.drop {
+    border: 0.06rem solid gray;
+    padding-left: 0rem;
 }
 .ddmatch .que .formulation{
     background:#f1f1f1 !Important;
-    padding:20px !Important;
+    padding:1.25rem !Important;
 }
 
 .ddmatch td.text {
@@ -70,8 +113,8 @@
 }
 .ddmatch td.control {
     width: 85%;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 0.938rem;
+    margin-right: 0.938rem;
 }
 
 .ddmatch table.answer {
@@ -81,34 +124,34 @@
 }
 
 .ddmatch .correctanswertable {
-    margin: 10px;
+    margin: 0.625rem;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-active-valid {
-    border: 2px dotted red;
+.ddmatch .drop.yui3-dd-drop-active-valid {
+    border: 0.125rem dotted red;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-over {
-    border: 2px dotted green;
+.ddmatch .drop.yui3-dd-drop-over {
+    border: 0.125rem dotted green;
 }
 
-.ddmatch .matchtarget .placeholder.hidden {
+.ddmatch .drop .placeholder.hidden {
     display: none;
 }
 
-.ddmatch .matchtarget.yui3-dd-drop-over li {
+.ddmatch .drop.yui3-dd-drop-over li {
     opacity:0.5;
 }
 
 /* Editing form. */
 body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] {
     background: #EEE;
-    border: 1px solid #BBB;
+    border: 0.06rem solid #BBB;
     border-bottom: 0;
     margin-top: 0;
     margin-bottom: 0;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 0.313rem;
+    padding-top: 0.313rem;
 }
 
 body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] .fitemtitle {
@@ -117,16 +160,16 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] .fitemtitl
 
 body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     background: #EEE;
-    border: 1px solid #BBB;
+    border: 0.06rem solid #BBB;
     border-top: 0;
     margin-bottom: 2em;
     margin-top: 0;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 0.313rem;
+    padding-top: 0.313rem;
 }
 .ddmatch .divanswer {
-    max-height: 380px;
-    overflow-y:auto;
+    max-height: 23.75rem;
+    /* overflow-y:auto; */   /*----it is for scroll question table purpose----*/
     width: 60%;
     float: left;
 }
@@ -135,20 +178,20 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 .ddmatch .qtext p br{display:none;}
 .ddmatch .divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
 .ddmatch p{
-    font-size: 15px !Important;
+    font-size: 0.938rem !Important;
     word-break: break-word;
-    line-height: 20px;
+    line-height: 1.25rem;
     color: #333;
 }
 .ddmatch .text {
-    font-size: 15px !Important;
+    font-size: 0.938rem !Important;
     word-break: break-word;
-    line-height: 20px;
+    line-height: 1.25rem;
     color: #333;
 }
 @media screen and (max-width: 768px) {
-.ddmatch li p{font-size:12px;}
-.ddmatch .matchorigin li{font-size:12px;}
+.ddmatch li p{font-size:0.75rem;}
+.ddmatch .draghomes li{font-size:0.75rem;}
 .ddmatch td.control {
     width: 100%;
     margin-left: 0;
@@ -160,7 +203,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     display: block;
 }
 }
-.ddmatch .matchtarget {
+.ddmatch .drop {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -169,11 +212,20 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     user-select: none;
 }
 
-.ddmatch ul.matchorigin {
+.ddmatch ul.draghomes {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.que.ddmatch .draghome.dragplaceholder {
+    display: none;
+}
+
+.que.ddmatch .draghome.dragplaceholder.active {
+    visibility: hidden;
+    display: inline-block;
+    width: 100%;
 }
