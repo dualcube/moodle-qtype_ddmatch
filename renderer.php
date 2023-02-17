@@ -232,7 +232,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         foreach ($choiceorder as $key => $choiceid) {
             $attributes = array(
                     'data-id' => $key,
-                    'class' => 'draghome choice' . $key .' group1'
+                    'class' => 'draghome infinite choice' . $key 
             );
             $li = html_writer::tag('li', $choices[$key], $attributes);
             $uldata .= $li;

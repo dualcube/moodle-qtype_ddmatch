@@ -3,12 +3,10 @@ define([
     'jquery',
     'core/dragdrop',
     'core/key_codes',
-    'core_form/changechecker'
 ], function(
     $,
     dragDrop,
     keys,
-    FormChangeChecker
 ) {
 
     "use strict";
@@ -89,7 +87,19 @@ define([
             // Get the clone of the drag.
             var hiddenDrag = thisQ.getDragClone(unplacedDrag);
             if (hiddenDrag.length) {
-                hiddenDrag.addClass('active');
+                if (unplacedDrag.hasClass('infinite')) {
+                    var noOfDrags = thisQ.noOfDropsIn();
+                    var cloneDrags = thisQ.getInfiniteDragClones(unplacedDrag, false);
+                    if (cloneDrags.length < noOfDrags) {
+                        var cloneDrag = unplacedDrag.clone();
+                        hiddenDrag.after(cloneDrag);
+                        questionManager.addEventHandlersToDrag(cloneDrag);
+                    } else {
+                        hiddenDrag.addClass('active');
+                    }
+                } else {
+                    hiddenDrag.addClass('active');
+                }
             }
             // Send the drag to drop.
             thisQ.sendDragToDrop(thisQ.getUnplacedChoice(choice[i]), drop);
@@ -165,8 +175,23 @@ define([
         } else {
             var hiddenDrag = thisQ.getDragClone(drag);
             if (hiddenDrag.length) {
-                hiddenDrag.addClass('active');
-                drag.offset(hiddenDrag.offset());
+                if (drag.hasClass('infinite')) {
+                    var noOfDrags = this.noOfDropsIn();
+                    var cloneDrags = this.getInfiniteDragClones(drag, false);
+                    if (cloneDrags.length < noOfDrags) {
+                        var cloneDrag = drag.clone();
+                        cloneDrag.removeClass('beingdragged');
+                        hiddenDrag.after(cloneDrag);
+                        questionManager.addEventHandlersToDrag(cloneDrag);
+                        drag.offset(cloneDrag.offset());
+                    } else {
+                        hiddenDrag.addClass('active');
+                        drag.offset(hiddenDrag.offset());
+                    }
+                } else {
+                    hiddenDrag.addClass('active');
+                    drag.offset(hiddenDrag.offset());
+                }
             }
         }
 
@@ -338,8 +363,24 @@ define([
             nextDrag.addClass('beingdragged');
             var hiddenDrag = this.getDragClone(nextDrag);
             if (hiddenDrag.length) {
-                hiddenDrag.addClass('active');
-                nextDrag.offset(hiddenDrag.offset());
+                if (nextDrag.hasClass('infinite')) {
+                    var noOfDrags = this.noOfDropsIn();
+                    var cloneDrags = this.getInfiniteDragClones(nextDrag, false);
+                    if (cloneDrags.length < noOfDrags) {
+                        var cloneDrag = nextDrag.clone();
+                        cloneDrag.removeClass('beingdragged');
+                        cloneDrag.removeAttr('tabindex');
+                        hiddenDrag.after(cloneDrag);
+                        questionManager.addEventHandlersToDrag(cloneDrag);
+                        nextDrag.offset(cloneDrag.offset());
+                    } else {
+                        hiddenDrag.addClass('active');
+                        nextDrag.offset(hiddenDrag.offset());
+                    }
+                } else {
+                    hiddenDrag.addClass('active');
+                    nextDrag.offset(hiddenDrag.offset());
+                }
             }
         }
 
@@ -473,7 +514,7 @@ define([
      */
     DragDropToTextQuestion.prototype.getDragHome = function(choice) {
         if (!this.getRoot().find('.draghome.dragplaceholder.choice' + choice).is(':visible')) {
-            return this.getRoot().find('.draghomes li.draghome' +
+            return this.getRoot().find('.draghomes li.draghome.infinite' +
                 '.choice' + choice);
         }
         return this.getRoot().find('.draghome.dragplaceholder.choice' + choice);
@@ -499,6 +540,14 @@ define([
         return this.getRoot().find('li.draghome.inplace' + place);
     };
 
+    /**
+     * Return the number of blanks in question set.
+     *
+     * @returns {int} the number of drops.
+     */
+    DragDropToTextQuestion.prototype.noOfDropsIn = function() {
+        return this.getRoot().find('.drop' ).length;
+    };
 
     /**
      * Return the number at the end of the CSS class name with the given prefix.
@@ -554,6 +603,25 @@ define([
         return this.getRoot().find('.draghomes li.draghome' +
             '.choice' + this.getChoice(drag) +
             '.dragplaceholder');
+    };
+
+    /**
+     * Get infinite drag clones for given drag.
+     *
+     * @param {jQuery} drag the drag.
+     * @param {Boolean} inHome in the home area or not.
+     * @returns {jQuery} the drag's clones.
+     */
+    DragDropToTextQuestion.prototype.getInfiniteDragClones = function(drag, inHome) {
+        if (inHome) {
+            return this.getRoot().find(
+                ' li.draghome' +
+                '.choice' + this.getChoice(drag) +
+                '.infinite').not('.dragplaceholder');
+        }
+        return this.getRoot().find('li.draghome' +
+            '.choice' + this.getChoice(drag) +
+            '.infinite').not('.dragplaceholder');
     };
 
     /**
@@ -710,25 +778,20 @@ define([
                 drag.removeClass('placed').addClass('unplaced');
                 drag.removeAttr('tabindex');
                 drag.removeData('unplaced');
+                if (drag.hasClass('infinite') && thisQ.getInfiniteDragClones(drag, true).length > 1) {
+                    thisQ.getInfiniteDragClones(drag, true).first().remove();
+                }
             }
             if (questionManager.isKeyboardNavigation) {
                 questionManager.isKeyboardNavigation = false;
             }
             if (thisQ.isQuestionInteracted()) {
-                // The user has interacted with the draggable items. We need to mark the form as dirty.
-                questionManager.handleFormDirty();
                 // Save the new answered value.
                 thisQ.questionAnswer = thisQ.getQuestionAnsweredValues();
             }
         },
 
-        /**
-         * Handle when the form is dirty.
-         */
-        handleFormDirty: function() {
-            const responseForm = document.getElementById('responseform');
-            FormChangeChecker.markFormAsDirty(responseForm);
-        }
+        
     };
 
     /**
