@@ -229,3 +229,6 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     display: inline-block;
     width: 100%;
 }
+.ddmatch .divanswer{
+    max-height: fit-content;
+}

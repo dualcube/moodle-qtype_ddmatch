@@ -18,7 +18,7 @@ define([
      * @param {boolean} readOnly whether the question is being displayed read-only.
      * @constructor
      */
-    function DragDropToTextQuestion(containerId, readOnly) {
+    function DragDropToMatch(containerId, readOnly) {
         this.containerId = containerId;
         this.questionAnswer = {};
         if (readOnly) {
@@ -33,7 +33,7 @@ define([
      * as the drag items but are invisible. We clone these invisible elements to make the
      * actual drag items.
      */
-    DragDropToTextQuestion.prototype.cloneDrags = function() {
+    DragDropToMatch.prototype.cloneDrags = function() {
         var thisQ = this;
         thisQ.getRoot().find('li.draghome').each(function(index, draghome) {
             var drag = $(draghome);
@@ -48,7 +48,7 @@ define([
     /**
      * Update the position of drags.
      */
-    DragDropToTextQuestion.prototype.positionDrags = function() {
+    DragDropToMatch.prototype.positionDrags = function() {
         var thisQ = this,
             root = this.getRoot();
 
@@ -114,7 +114,7 @@ define([
      *
      * @return {Object} Contain key-value with key is the input id and value is the input value.
      */
-    DragDropToTextQuestion.prototype.getQuestionAnsweredValues = function() {
+    DragDropToMatch.prototype.getQuestionAnsweredValues = function() {
         let result = {};
         this.getRoot().find('option[selected=selected]').each((i, option) => {
             result[option.closest('select').name] = option.value;
@@ -127,7 +127,7 @@ define([
      *
      * @return {boolean} Return true if the user has changed the question-answer.
      */
-    DragDropToTextQuestion.prototype.isQuestionInteracted = function() {
+    DragDropToMatch.prototype.isQuestionInteracted = function() {
         const oldAnswer = this.questionAnswer;
         const newAnswer = this.getQuestionAnsweredValues();
         let isInteracted = false;
@@ -152,7 +152,7 @@ define([
      *
      * @param {Event} e the touch start or mouse down event.
      */
-    DragDropToTextQuestion.prototype.handleDragStart = function(e) {
+    DragDropToMatch.prototype.handleDragStart = function(e) {
         var thisQ = this,
             drag = $(e.target).closest('.draghome');
 
@@ -209,7 +209,7 @@ define([
      * @param {Number} pageY the y position.
      * @param {jQuery} drag the item being moved.
      */
-    DragDropToTextQuestion.prototype.dragMove = function(pageX, pageY, drag) {
+    DragDropToMatch.prototype.dragMove = function(pageX, pageY, drag) {
         var thisQ = this;
         this.getRoot().find('ul.drop').each(function(i, dropNode) {
             var drop = $(dropNode);
@@ -236,7 +236,7 @@ define([
      * @param {Number} pageY the y position.
      * @param {jQuery} drag the item being moved.
      */
-    DragDropToTextQuestion.prototype.dragEnd = function(pageX, pageY, drag) {
+    DragDropToMatch.prototype.dragEnd = function(pageX, pageY, drag) {
         var thisQ = this,
             root = this.getRoot(),
             placed = false;
@@ -281,7 +281,7 @@ define([
      * @param {jQuery|null} drag the item to place. If null, clear the place.
      * @param {jQuery} drop the place to put it.
      */
-    DragDropToTextQuestion.prototype.sendDragToDrop = function(drag, drop) {
+    DragDropToMatch.prototype.sendDragToDrop = function(drag, drop) {
         // Is there already a drag in this drop? if so, evict it.
         var oldDrag = this.getCurrentDragInPlace(this.getPlace(drop));
         if (oldDrag.length !== 0) {
@@ -309,7 +309,7 @@ define([
      *
      * @param {jQuery} drag the item being moved.
      */
-    DragDropToTextQuestion.prototype.sendDragHome = function(drag) {
+    DragDropToMatch.prototype.sendDragHome = function(drag) {
         var currentPlace = this.getClassnameNumericSuffix(drag, 'inplace');
         if (currentPlace !== null) {
             drag.removeClass('inplace' + currentPlace);
@@ -327,7 +327,7 @@ define([
      *
      * @param {KeyboardEvent} e
      */
-    DragDropToTextQuestion.prototype.handleKeyPress = function(e) {
+    DragDropToMatch.prototype.handleKeyPress = function(e) {
         var drop = $(e.target).closest('.drop');
         if (drop.length === 0) {
             var placedDrag = $(e.target);
@@ -393,7 +393,7 @@ define([
      * @param {jQuery} drag current choice (empty jQuery if there isn't one).
      * @return {jQuery} the next drag , or null if there wasn't one.
      */
-    DragDropToTextQuestion.prototype.getNextDrag = function(drag) {
+    DragDropToMatch.prototype.getNextDrag = function(drag) {
         var choice;
 
         if (drag.length === 0) {
@@ -417,7 +417,7 @@ define([
      * @param {jQuery} drag current choice (empty jQuery if there isn't one).
      * @return {jQuery} the next drag , or null if there wasn't one.
      */
-    DragDropToTextQuestion.prototype.getPreviousDrag = function(drag) {
+    DragDropToMatch.prototype.getPreviousDrag = function(drag) {
         var choice;
 
         if (drag.length !== 0) {
@@ -440,7 +440,7 @@ define([
      * @param {jQuery} drag the element to be animated.
      * @param {jQuery} target element marking the place to move it to.
      */
-    DragDropToTextQuestion.prototype.animateTo = function(drag, target) {
+    DragDropToMatch.prototype.animateTo = function(drag, target) {
         var currentPos = drag.offset(),
             targetPos = target.offset(),
             thisQ = this;
@@ -473,7 +473,7 @@ define([
      * @param {jQuery} drop the node to check (typically a drop).
      * @return {boolean} whether the point is inside the node.
      */
-    DragDropToTextQuestion.prototype.isPointInDrop = function(pageX, pageY, drop) {
+    DragDropToMatch.prototype.isPointInDrop = function(pageX, pageY, drop) {
         var position = drop.offset();
         return pageX >= position.left && pageX < position.left + drop.width()
                 && pageY >= position.top && pageY < position.top + drop.height();
@@ -485,7 +485,7 @@ define([
      * @param {int} place which place to set the input value for.
      * @param {int} choice the value to set.
      */
-    DragDropToTextQuestion.prototype.setInputValue = function(place, choice) {
+    DragDropToMatch.prototype.setInputValue = function(place, choice) {
         if(place === undefined){
         }else{
             var name = place.replace( /:/g, "\\:" );
@@ -502,7 +502,7 @@ define([
      *
      * @returns {jQuery} containing that div.
      */
-    DragDropToTextQuestion.prototype.getRoot = function() {
+    DragDropToMatch.prototype.getRoot = function() {
         return $(document.getElementById(this.containerId));
     };
 
@@ -512,7 +512,7 @@ define([
      * @param {int} choice the choice number.
      * @returns {jQuery} containing that div.
      */
-    DragDropToTextQuestion.prototype.getDragHome = function(choice) {
+    DragDropToMatch.prototype.getDragHome = function(choice) {
         if (!this.getRoot().find('.draghome.dragplaceholder.choice' + choice).is(':visible')) {
             return this.getRoot().find('.draghomes li.draghome.infinite' +
                 '.choice' + choice);
@@ -526,7 +526,7 @@ define([
      * @param {int} choice the choice number.
      * @returns {jQuery} jQuery wrapping the unplaced choice. If there isn't one, the jQuery will be empty.
      */
-    DragDropToTextQuestion.prototype.getUnplacedChoice = function(choice) {
+    DragDropToMatch.prototype.getUnplacedChoice = function(choice) {
         return this.getRoot().find('.draghome.choice' + choice + '.unplaced').slice(0, 1);
     };
 
@@ -536,7 +536,7 @@ define([
      * @param {int} place the place number.
      * @return {jQuery} the current drag (or an empty jQuery if none).
      */
-    DragDropToTextQuestion.prototype.getCurrentDragInPlace = function(place) {
+    DragDropToMatch.prototype.getCurrentDragInPlace = function(place) {
         return this.getRoot().find('li.draghome.inplace' + place);
     };
 
@@ -545,7 +545,7 @@ define([
      *
      * @returns {int} the number of drops.
      */
-    DragDropToTextQuestion.prototype.noOfDropsIn = function() {
+    DragDropToMatch.prototype.noOfDropsIn = function() {
         return this.getRoot().find('.drop' ).length;
     };
 
@@ -556,7 +556,7 @@ define([
      * @param {String} prefix name prefix
      * @returns {Number|null} the suffix if found, else null.
      */
-    DragDropToTextQuestion.prototype.getClassnameNumericSuffix = function(node, prefix) {
+    DragDropToMatch.prototype.getClassnameNumericSuffix = function(node, prefix) {
         var classes = node.attr('class');
         if (classes !== '') {
             var classesArr = classes.split(' ');
@@ -578,7 +578,7 @@ define([
      * @param {jQuery} drag the drag.
      * @returns {Number} the choice number.
      */
-    DragDropToTextQuestion.prototype.getChoice = function(drag) {
+    DragDropToMatch.prototype.getChoice = function(drag) {
         return this.getClassnameNumericSuffix(drag, 'choice');
     };
 
@@ -589,7 +589,7 @@ define([
      * @param {jQuery} node the DOM node.
      * @returns {Number} the place number.
      */
-    DragDropToTextQuestion.prototype.getPlace = function(node) {
+    DragDropToMatch.prototype.getPlace = function(node) {
         return this.getClassnameNumericSuffix(node, 'place');
     };
 
@@ -599,7 +599,7 @@ define([
      * @param {jQuery} drag the drag.
      * @returns {jQuery} the drag's clone.
      */
-    DragDropToTextQuestion.prototype.getDragClone = function(drag) {
+    DragDropToMatch.prototype.getDragClone = function(drag) {
         return this.getRoot().find('.draghomes li.draghome' +
             '.choice' + this.getChoice(drag) +
             '.dragplaceholder');
@@ -612,14 +612,14 @@ define([
      * @param {Boolean} inHome in the home area or not.
      * @returns {jQuery} the drag's clones.
      */
-    DragDropToTextQuestion.prototype.getInfiniteDragClones = function(drag, inHome) {
+    DragDropToMatch.prototype.getInfiniteDragClones = function(drag, inHome) {
         if (inHome) {
             return this.getRoot().find(
-                ' li.draghome' +
+                '.draghomes li.draghome' +
                 '.choice' + this.getChoice(drag) +
                 '.infinite').not('.dragplaceholder');
         }
-        return this.getRoot().find('li.draghome' +
+        return this.getRoot().find('.draghomes li.draghome' +
             '.choice' + this.getChoice(drag) +
             '.infinite').not('.dragplaceholder');
     };
@@ -631,7 +631,7 @@ define([
      * @param {Integer} currentPlace the current place of drag.
      * @returns {jQuery} the drop's clone.
      */
-    DragDropToTextQuestion.prototype.getDrop = function(drag, currentPlace) {
+    DragDropToMatch.prototype.getDrop = function(drag, currentPlace) {
         return this.getRoot().find('.drop.place' + currentPlace);
     };
 
@@ -642,7 +642,7 @@ define([
      * @param {jQuery} drop The drop.
      * @returns {boolean}
      */
-    DragDropToTextQuestion.prototype.isDragSameAsDrop = function(drag, drop) {
+    DragDropToMatch.prototype.isDragSameAsDrop = function(drag, drop) {
         return this.getChoice(drag) === this.getChoice(drop);
     };
 
@@ -670,7 +670,7 @@ define([
         isKeyboardNavigation: false,
 
         /**
-         * {DragDropToTextQuestion[]} all the questions on this page, indexed by containerId (id on the .que div).
+         * {DragDropToMatch[]} all the questions on this page, indexed by containerId (id on the .que div).
          */
         questions: {},
 
@@ -681,7 +681,7 @@ define([
          * @param {boolean} readOnly whether the question is being displayed read-only.
          */
         init: function(containerId, readOnly) {
-            questionManager.questions[containerId] = new DragDropToTextQuestion(containerId, readOnly);
+            questionManager.questions[containerId] = new DragDropToMatch(containerId, readOnly);
             if (!questionManager.eventHandlersInitialised) {
                 questionManager.setupEventHandlers();
                 questionManager.eventHandlersInitialised = true;
@@ -754,7 +754,7 @@ define([
          * Given an event, work out which question it affects.
          *
          * @param {Event} e the event.
-         * @returns {DragDropToTextQuestion|undefined} The question, or undefined.
+         * @returns {DragDropToMatch|undefined} The question, or undefined.
          */
         getQuestionForEvent: function(e) {
             var containerId = $(e.currentTarget).closest('.que.ddmatch').attr('id');
@@ -767,7 +767,7 @@ define([
          * @param {Event} e the event.
          * @param {jQuery} drag the drag
          * @param {jQuery} target the target
-         * @param {DragDropToTextQuestion} thisQ the question.
+         * @param {DragDropToMatch} thisQ the question.
          */
         handleDragMoved: function(e, drag, target, thisQ) {
             drag.removeClass('beingdragged');
