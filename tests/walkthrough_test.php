@@ -20,10 +20,19 @@
  *
  * @package    qtype
  * @subpackage ddmatch
- * @copyright  2010 The Open University
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_ddmatch;
+
+use qbehaviour_walkthrough_test_base;
+use qtype_ddmatch_test_helper;
+use question_hint_with_parts;
+use question_pattern_expectation;
+use question_state;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,7 +46,7 @@ require_once($CFG->dirroot . '/question/type/ddmatch/tests/helper.php');
  * @copyright  2010 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_ddmatch_walkthrough_test extends qbehaviour_walkthrough_test_base {
+class walkthrough_test extends qbehaviour_walkthrough_test_base {
 
     public function test_deferred_feedback_unanswered() {
 

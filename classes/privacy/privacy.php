@@ -18,7 +18,9 @@
  * Privacy Subsystem implementation for format_tabtopics.
  *
  * @package    qtype_ddmatch
- * @copyright  2019 Amr Hourani <amr.hourani@let.ethz.ch>
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

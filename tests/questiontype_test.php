@@ -19,10 +19,19 @@
  *
  * @package    qtype
  * @subpackage ddmatch
- * @copyright  2009 The Open University
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_ddmatch;
+
+use advanced_testcase;
+use qtype_ddmatch;
+use question_possible_response;
+use stdClass;
+use test_question_maker;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,15 +46,15 @@ require_once($CFG->dirroot . '/question/type/ddmatch/questiontype.php');
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_ddmatch_test extends advanced_testcase {
+class questiontype_test extends advanced_testcase {
     /** @var qtype_ddmatch instance of the question type class to test. */
     protected $qtype;
 
-    protected function setUp() {
+    protected function setUp(): void {
         $this->qtype = new qtype_ddmatch();
     }
 
-    protected function tearDown() {
+    protected function tearDown(): void {
         $this->qtype = null;
     }
 
@@ -67,11 +76,13 @@ class qtype_ddmatch_test extends advanced_testcase {
         $q->stamp = make_unique_id_code();
         $q->version = make_unique_id_code();
         $q->hidden = 0;
+        $q->idnumber = null;
         $q->timecreated = time();
         $q->timemodified = time();
         $q->createdby = $USER->id;
         $q->modifiedby = $USER->id;
 
+        $q->idnumber = '';
         $q->options = new stdClass();
         $q->options->shuffleanswers = false;
         test_question_maker::set_standard_combined_feedback_fields($q->options);
@@ -116,7 +127,7 @@ class qtype_ddmatch_test extends advanced_testcase {
 
     public function test_get_random_guess_score() {
         $q = $this->get_test_question_data();
-        $this->assertEquals(0.3333333, $this->qtype->get_random_guess_score($q), '', 0.0000001);
+        $this->assertEqualsWithDelta(0.3333333, $this->qtype->get_random_guess_score($q), 0.0000001);
     }
 
     public function test_get_possible_responses() {
