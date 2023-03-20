@@ -15,18 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * 
  * @package    qtype_ddmatch
- * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_ddmatch';
-$plugin->version   = 2023022200;
+$plugin->version   = 2023031700;
 $plugin->requires  = 2012120301;
+$plugin->maturity  = MATURITY_STABLE;
 $plugin->dependencies = array(
     'qtype_match' => 2015111600,
 );
-$plugin->release = '2.3 (Build: 2023021700)';
-$plugin->maturity  = MATURITY_STABLE;
+$plugin->release = '2.4 (Build: 2023031700)';

@@ -18,7 +18,9 @@
  * Contains the helper class for the select missing words question type tests.
  *
  * @package    qtype_ddmatch
- * @copyright  2018 Jean-Michel Vedrine
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -90,6 +92,7 @@ class qtype_ddmatch_test_helper extends question_test_helper {
         $q->penalty = 0.3333333;
         $q->length = 1;
         $q->hidden = 0;
+        $q->idnumber = null;
         $q->createdby = $USER->id;
         $q->modifiedby = $USER->id;
 

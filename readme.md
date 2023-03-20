@@ -6,6 +6,10 @@ Installation:-
 Go to [ Site administration > Plugins(Plugins) > Install plugins ] and just upload or drag & drop downloaed ZIP file.
 To install, place all downloaded files in /question/type/ddmatch and visit /admin/index.php in your browser.
 
+Setup:-
+-----
+On Course > Create new Quiz > Add Question > Drag-and-Drop Matching 
+
 Overview:-
 --------
 The drag-and-drop question is adapted from the existing matching question. 
@@ -26,6 +30,10 @@ This version can be used with Moodle 2.4.1 and ulterior versions.
 Grading:-
 -------
 The grading is identical to the original matching question.
+
+Requirements
+------------
+* Moodle 2.4.1 - 4.1
 
 Uninstall
 ---------

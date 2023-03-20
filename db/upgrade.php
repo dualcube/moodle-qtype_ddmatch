@@ -18,7 +18,9 @@
  * Drag and drop matching question type upgrade code.
  *
  * @package    qtype_ddmatch
- * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

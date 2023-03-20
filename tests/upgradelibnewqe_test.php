@@ -19,10 +19,15 @@
  * ddmatch questions.
  *
  * @package    qtype_ddmatch
- * @copyright  2009 The Open University
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_ddmatch;
+
+use question_attempt_upgrader_test_base;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -36,7 +41,7 @@ require_once($CFG->dirroot . '/question/engine/upgrade/tests/helper.php');
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qtype_ddmatch_attempt_upgrader_test extends question_attempt_upgrader_test_base {
+class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
 
     public function test_ddmatch_deferredfeedback_history6220() {
         $quiz = (object) array(
