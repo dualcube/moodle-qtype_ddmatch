@@ -140,7 +140,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         foreach ($stemorder as $key => $stemid) {
             $o .= html_writer::start_tag('tr', array('class' => 'r' . $parity));
             $o .= html_writer::tag('td', $this->construct_stem_cell($qa, $question, $stemid),
-                            array('class' => 'text'));
+                            array('class' => 'text dragdrop-question'));
             $classes = array('control');
             $feedbackimage = '';
             $curfieldname = $question->get_field_name($key);
@@ -235,7 +235,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         foreach ($choiceorder as $key => $choiceid) {
             $attributes = array(
                     'data-id' => $key,
-                    'class' => 'draghome infinite choice' . $key 
+                    'class' => 'draghome infinite dragdrop-choice choice' . $key 
             );
             $li = html_writer::tag('li', $choices[$key], $attributes);
             $uldata .= $li;

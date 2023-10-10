@@ -232,3 +232,35 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 .ddmatch .divanswer{
     max-height: fit-content;
 }
+
+.dragdrop-choice {
+    max-height: 100px;
+    overflow: scroll;
+}
+
+.dragdrop-question h3,
+.dragdrop-question p {
+    max-height: 100px;
+    overflow: scroll;
+    background-color: #f9f8fb;
+    padding: 0.5rem 1rem;
+}
+
+.dragdrop-choice::-webkit-scrollbar,
+.dragdrop-question h3::-webkit-scrollbar,
+.dragdrop-question p::-webkit-scrollbar {
+    width: 0.125rem;
+    height: 0.125rem;
+}
+
+.dragdrop-choice::-webkit-scrollbar-thumb,
+.dragdrop-question h3::-webkit-scrollbar-thumb,
+.dragdrop-question p::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.dragdrop-choice::-webkit-scrollbar-track,
+.dragdrop-question h3::-webkit-scrollbar-track,
+.dragdrop-question p::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
