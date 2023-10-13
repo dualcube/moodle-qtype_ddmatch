@@ -67,7 +67,7 @@ li.matchdrag.copy {
     margin: 0;
     padding: 0.25rem;
     width: 35%;
-    max-height:23.75rem;
+    max-height:fit-content;
 }
 
 .ddmatch .draghomes li {
@@ -168,7 +168,7 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     padding-top: 0.313rem;
 }
 .ddmatch .divanswer {
-    max-height: 23.75rem;
+    max-height: fit-content;
     /* overflow-y:auto; */   /*----it is for scroll question table purpose----*/
     width: 60%;
     float: left;
@@ -228,9 +228,6 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     visibility: hidden;
     display: inline-block;
     width: 100%;
-}
-.ddmatch .divanswer{
-    max-height: fit-content;
 }
 
 .dragdrop-choice {
