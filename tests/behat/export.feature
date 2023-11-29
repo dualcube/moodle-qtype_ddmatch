@@ -20,12 +20,9 @@ Feature: Test exporting Drag and drop matching questions
     And the following "questions" exist:
       | questioncategory | qtype    | name         | template |
       | Test questions   | ddmatch  | ddmatch-001  | foursubq |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
 
   Scenario: Export a Drag and drop matching question
-    When I navigate to "Question bank > Export" in current page administration
-    And I click on "Export" "link"
+    When I am on the "Course 1" "core_question > course question export" page logged in as teacher1
     And I set the field "id_format_xml" to "1"
     And I press "Export questions to file"
     Then following "click here" should download between "1000" and "5000" bytes
