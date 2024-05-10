@@ -27,10 +27,10 @@
 
 $string['pluginname'] = 'Drag-and-Drop Matching';
 $string['draganswerhere'] = 'Drag answer here';
-$string['editingddmatch'] = 'Editing Drag-and-Drop Matching Question';
-$string['pluginname_help'] = 'Drag-and-drop matching questions require the respondent to correctly match a list of names or statements (questions) to another list of names or statements (answers).';
+$string['editingddmatch'] = 'Editing Drag-and-Drop matching question';
+$string['pluginname_help'] = 'Drag-and-Drop matching questions require the respondent to correctly match a list of names or statements (questions) to another list of names or statements (answers).';
 $string['pluginname_link'] = 'question/type/ddmatch';
-$string['pluginnameadding'] = 'Adding Drag-and-Drop Matching Question';
-$string['pluginnameediting'] = 'Editing Drag-and-Drop Matching Question';
+$string['pluginnameadding'] = 'Adding Drag-and-Drop matching question';
+$string['pluginnameediting'] = 'Editing Drag-and-Drop matching question';
 $string['pluginnamesummary'] = 'An extension of the matching question that allows the user to drag and drop items to match answers to subquestions.';
 $string['privacy:metadata'] = 'The question type ddmatch plugin does not store any personal data';

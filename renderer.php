@@ -1,4 +1,4 @@
-<?php
+    <?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -17,14 +17,12 @@
 /**
  * Drag&drop matching question renderer class.
  *
- * @package    qtype_ddmatch
- * 
+ * @package   qtype_ddmatch
+ *
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 
@@ -71,11 +69,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $question = $qa->get_question();
         $choices = array();
         foreach ($question->get_choice_order() as $key => $choiceid) {
-            $choice = $question->choices[$choiceid];
-            $choice = $question->format_text(
-                    $choice, $question->choiceformat[$choiceid],
-                    $qa, 'qtype_ddmatch', 'subanswer', $choiceid);
-            $choices[$key] = $choice;
+            $choices[$key] = format_string($question->choices[$choiceid]);;
         }
         return $choices;
     }

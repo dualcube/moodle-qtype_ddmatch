@@ -47,7 +47,7 @@ class qtype_ddmatch_question extends qtype_match_question {
 
         $choices = array();
         foreach ($this->choiceorder as $choiceid) {
-            $choices[] = $this->html_to_text($this->choices[$choiceid], $this->choiceformat[$choiceid]);
+            $choices[] = $this->choices[$choiceid];
         }
 
         return $question . ' {' . implode('; ', $stems) . '} -> {' .
@@ -58,13 +58,9 @@ class qtype_ddmatch_question extends qtype_match_question {
         $matches = array();
         foreach ($this->stemorder as $key => $stemid) {
             if (array_key_exists($this->field($key), $response) && $response[$this->field($key)]) {
-                $stemssummarise = $this->html_to_text($this->stems[$stemid],
-                        $this->stemformat[$stemid]);
-
-                $choiceid = $this->choiceorder[$response[$this->field($key)]];
-                $choicesummarise = $this->html_to_text($this->choices[$choiceid],
-                        $this->choiceformat[$choiceid]);
-                $matches[] = $stemssummarise. ' -> ' .$choicesummarise;
+                $matches[] = $this->html_to_text($this->stems[$stemid],
+                        $this->stemformat[$stemid]) . ' -> ' .
+                        $this->choices[$this->choiceorder[$response[$this->field($key)]]];
             }
         }
 
