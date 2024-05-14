@@ -29,11 +29,15 @@ namespace qtype_ddmatch\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The format_tabtopics
+ * Privacy Subsystem implementation for format_tabtopics.
  *
+ * @package    qtype_ddmatch
+ * 
+ * @author DualCube <admin@dualcube.com>
+ * @copyright  2007 DualCube (https://dualcube.com) 
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider
-{
+class provider implements \core_privacy\local\metadata\null_provider{
     /**
      * Get the language string identifier with the component's language
      * file to explain why this plugin stores no data.
