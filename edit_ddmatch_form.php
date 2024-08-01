@@ -18,19 +18,16 @@
  * Defines the editing form for the drag&drop match question type.
  *
  * @package    qtype_ddmatch
- * 
  * @author DualCube <admin@dualcube.com>
  * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Drag&drop match question type editing form definition.
- *
+ * 
  * @author DualCube <admin@dualcube.com>
  * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
