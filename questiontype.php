@@ -128,12 +128,10 @@ class qtype_ddmatch extends question_type {
         $question->right = array();
 
         foreach ($questiondata->options->subquestions as $matchsub) {
-            $ans = $matchsub->answertext;
             $key = array_search($matchsub->answertext, $question->choices);
             if ($key === false) {
                 $key = $matchsub->id;
                 $question->choices[$key] = $matchsub->answertext;
-                $question->choiceformat[$key] = $matchsub->answertextformat;
             }
 
             if ($matchsub->questiontext !== '') {

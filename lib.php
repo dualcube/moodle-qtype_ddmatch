@@ -26,6 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * function for renderening question file 
+ */
 function qtype_ddmatch_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $CFG;
     require_once($CFG->libdir . '/questionlib.php');
