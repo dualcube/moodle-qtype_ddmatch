@@ -70,7 +70,14 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $question = $qa->get_question();
         $choices = array();
         foreach ($question->get_choice_order() as $key => $choiceid) {
-            $choices[$key] = format_string($question->choices[$choiceid]);;
+            $choices[$key] = $question->format_text(
+                $question->choices[$choiceid],
+                FORMAT_MOODLE,
+                $qa,
+                'qtype_ddmatch',
+                'subanswer',
+                $choiceid
+            );
         }
         return $choices;
     }
