@@ -26,10 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_ddmatch';
-$plugin->version = 2025010801;
+$plugin->version = 2025051900;
 $plugin->requires = 2022112815;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = array(
     'qtype_match' => 2015111600,
 );
-$plugin->release = '2.5.3 (Build: 2025010801)';
+$plugin->release = '2.5.4 (Build: 2025051900)';
