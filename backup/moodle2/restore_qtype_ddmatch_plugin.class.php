@@ -128,6 +128,38 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
         $oldquestionid   = $this->get_old_parentid('question');
         $newquestionid   = $this->get_new_parentid('question');
         $questioncreated = $this->get_mappingid('question_created', $oldquestionid) ? true : false;
+        
+        // Get the decoder for the task.
+        $decoder = $this->task->get_decoder();
+
+        // Add Book activity decode rules.
+        $bookrules = restore_book_activity_task::define_decode_rules();
+        foreach ($bookrules as $rule) {
+            $decoder->add_rule($rule);
+        }
+
+        // Add Resource activity decode rules.
+        $resourcerules = restore_resource_activity_task::define_decode_rules();
+        foreach ($resourcerules as $rule) {
+            $decoder->add_rule($rule);
+        }
+
+        // Add Glossary activity decode rules.
+        $glossaryrules = restore_glossary_activity_task::define_decode_rules();
+        foreach ($glossaryrules as $rule) {
+            $decoder->add_rule($rule);
+        }
+
+        // Decode the questiontext and answertext fields in $data.
+        $decodedquestiontext = $decoder->decode_content($data->questiontext);
+        if ($decodedquestiontext !== false) {
+            $data->questiontext = $decodedquestiontext;
+        }
+
+        $decodedanswertext = $decoder->decode_content($data->answertext);
+        if ($decodedanswertext !== false) {
+            $data->answertext = $decodedanswertext;
+        }
 
         if ($questioncreated) {
             // If the question has been created by restore, we need to create its
