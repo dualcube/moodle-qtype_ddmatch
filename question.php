@@ -39,6 +39,8 @@ require_once($CFG->dirroot . '/question/type/match/question.php');
  */
 class qtype_ddmatch_question extends qtype_match_question {
 
+    public mixed $choiceformat = [];
+
     public function get_question_summary() {
         $question = $this->html_to_text($this->questiontext, $this->questiontextformat);
 
