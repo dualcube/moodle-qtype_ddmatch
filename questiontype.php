@@ -42,9 +42,9 @@ class qtype_ddmatch extends question_type {
         global $DB;
         parent::get_question_options($question);
         $question->options = $DB->get_record('qtype_ddmatch_options',
-                array('questionid' => $question->id));
+                array('questionid' => $question->id)) ?: new \stdClass();
         $question->options->subquestions = $DB->get_records('qtype_ddmatch_subquestions',
-                array('questionid' => $question->id), 'id ASC');
+                array('questionid' => $question->id), 'id ASC') ?: [];
         return true;
     }
 
