@@ -41,10 +41,19 @@ class qtype_ddmatch extends question_type {
     public function get_question_options($question) {
         global $DB;
         parent::get_question_options($question);
-        $question->options = $DB->get_record('qtype_ddmatch_options',
-                array('questionid' => $question->id));
-        $question->options->subquestions = $DB->get_records('qtype_ddmatch_subquestions',
-                array('questionid' => $question->id), 'id ASC');
+        $question->options = $DB->get_record('qtype_ddmatch_options',array('questionid' => $question->id));
+        if ($question->options === false) {
+                $question->options = new stdClass();
+                $question->options->questionid = $question->id;
+                $question->options->subquestions = array();
+                $question->options->shuffleanswers = 1; 
+                return false;
+        }
+        $question->options->subquestions = $DB->get_records('qtype_ddmatch_subquestions', array('questionid' => $question->id), 'id ASC');
+        // Even if options exist, subquestions might not be restored yet
+        if ($question->options->subquestions === false) {
+            $question->options->subquestions = array();
+        }
         return true;
     }
 
