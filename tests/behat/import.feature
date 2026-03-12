@@ -14,13 +14,9 @@ Feature: Test importing Drag and drop matching questions
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-
   @javascript @_file_upload
   Scenario: import Drag and drop matching question.
-    When I navigate to "Question bank > Import" in current page administration
-    And I click on "Import" "link"
+   When I am on the "Course 1" "core_question > course question import" page logged in as teacher1
     And I set the field "id_format_xml" to "1"
     And I upload "question/type/ddmatch/tests/fixtures/qtype_sample_ddmatch.xml" file to "Import" filemanager
     And I press "id_submitbutton"

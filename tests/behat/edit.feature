@@ -43,7 +43,6 @@ Feature: Test editing a Drag and drop matching question
     And I press "id_submitbutton"
     Then I should see "Edited Ddmatching name"
     When I choose "Preview" action for "Edited Ddmatching name" in the question bank
-    And I switch to "questionpreview" window
     Then I should see "frog"
     And I should see "dog"
     And I should see "newt"

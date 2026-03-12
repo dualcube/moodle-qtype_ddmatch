@@ -47,7 +47,7 @@ class moodle1_qtype_ddmatch_handler extends moodle1_qtype_handler {
         // Populate the list of matches first to get their ids.
         // Note that the field is re-populated on restore anyway but let us
         // do our best to produce valid backup files.
-        $matchids = array();
+        $matchids = [];
         if (isset($data['ddmatchs']['match'])) {
             foreach ($data['ddmatchs']['match'] as $match) {
                 $matchids[] = $match['id'];
