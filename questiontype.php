@@ -167,11 +167,15 @@ class qtype_ddmatch extends question_type {
         $q = $this->make_question($questiondata);
 
         foreach ($q->stems as $stemid => $stem) {
-
             $responses = array();
             foreach ($q->choices as $choiceid => $choice) {
+                $choiceformat = FORMAT_PLAIN;
+                if (isset($q->choiceformat[$choiceid])) {
+                    $choiceformat = $q->html_to_text($choice, $q->choiceformat[$choiceid]);
+                }
                 $stemhtml = $q->html_to_text($stem, $q->stemformat[$stemid]);
-                $choicehtml = $q->html_to_text($choice, $q->choiceformat[$choiceid]);
+
+                $choicehtml = $q->html_to_text($choice, $choiceformat);
 
                 $responses[$choiceid] = new question_possible_response(
                          $stemhtml. ': ' . $choicehtml,

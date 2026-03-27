@@ -61,7 +61,7 @@ class walkthrough_test extends qbehaviour_walkthrough_test_base {
         foreach ($choiceorder as $key => $choice) {
             $choices[$key] = $m->choices[$choice];
         }
-
+	$this->expectOutputString('    ');
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
