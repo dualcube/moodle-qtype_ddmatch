@@ -18,9 +18,9 @@
  * Question type class for the drag&drop matching question type.
  *
  * @package    qtype_ddmatch
- * 
+ *
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -170,11 +170,10 @@ class qtype_ddmatch extends question_type {
             $responses = array();
             foreach ($q->choices as $choiceid => $choice) {
                 $stemhtml = $q->html_to_text($stem, $q->stemformat[$stemid]);
-                $choicehtml = $q->html_to_text($choice, $q->choiceformat[$choiceid]);
 
                 $responses[$choiceid] = new question_possible_response(
-                         $stemhtml. ': ' . $choicehtml,
-                        ($choiceid == $q->right[$stemid]) / count($q->stems));
+                    $stemhtml . ': ' . $choice,
+                    ($choiceid == $q->right[$stemid]) / count($q->stems));
             }
             $responses[null] = question_possible_response::no_response();
 
