@@ -15,27 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Moodle 1.9 backup conversion code for the drag and drop matching question type.
+ *
  * @package    qtype_ddmatch
  *
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Matching question type conversion handler.
  */
 class moodle1_qtype_ddmatch_handler extends moodle1_qtype_handler {
-
     /**
+     * Get the paths within the question that this handler needs to process.
+     *
      * @return array
      */
     public function get_question_subpaths() {
-        return array(
-            'DDMATCHS/MATCH'
-        );
+        return [
+            'DDMATCHS/MATCH',
+        ];
     }
 
     /**
@@ -55,11 +56,11 @@ class moodle1_qtype_ddmatch_handler extends moodle1_qtype_handler {
         }
 
         // Convert match options.
-        $matchoptions = array();
+        $matchoptions = [];
         $matchoptions['id'] = $this->converter->get_nextid();
         $matchoptions['subquestions'] = implode(',', $matchids);
         $matchoptions['shuffleanswers'] = $data['shuffleanswers'];
-        $this->write_xml('matchoptions', $matchoptions, array('/matchoptions/id'));
+        $this->write_xml('matchoptions', $matchoptions, ['/matchoptions/id']);
 
         // Convert ddmatches.
         $this->xmlwriter->begin_tag('matches');
@@ -67,23 +68,31 @@ class moodle1_qtype_ddmatch_handler extends moodle1_qtype_handler {
             foreach ($data['ddmatchs']['match'] as $match) {
                 // Replay the upgrade step 2009072100.
                 $match['questiontextformat'] = 0;
-                if ($CFG->texteditors !== 'textarea' and $data['oldquestiontextformat'] == FORMAT_MOODLE) {
+                if ($CFG->texteditors !== 'textarea' && $data['oldquestiontextformat'] == FORMAT_MOODLE) {
                     $match['questiontext'] = text_to_html($match['questiontext'], false, false, true);
                     $match['questiontextformat'] = FORMAT_HTML;
                 } else {
                     $match['questiontextformat'] = $data['oldquestiontextformat'];
                 }
-                if ($CFG->texteditors !== 'textarea' and $data['oldquestiontextformat'] == FORMAT_MOODLE) {
+                if ($CFG->texteditors !== 'textarea' && $data['oldquestiontextformat'] == FORMAT_MOODLE) {
                     $match['answertext'] = text_to_html($match['answertext'], false, false, true);
                     $match['answertextformat'] = FORMAT_HTML;
                 } else {
                     $match['answertextformat'] = $data['oldquestiontextformat'];
                 }
                 $match['questiontext'] = $this->migrate_files(
-                        $match['questiontext'], 'qtype_ddmatch', 'subquestion', $match['id']);
+                    $match['questiontext'],
+                    'qtype_ddmatch',
+                    'subquestion',
+                    $match['id']
+                );
                 $match['answertext'] = $this->migrate_files(
-                        $match['answertext'], 'qtype_ddmatch', 'subanswer', $match['id']);
-                $this->write_xml('match', $match, array('/match/id'));
+                    $match['answertext'],
+                    'qtype_ddmatch',
+                    'subanswer',
+                    $match['id']
+                );
+                $this->write_xml('match', $match, ['/match/id']);
             }
         }
         $this->xmlwriter->end_tag('matches');
