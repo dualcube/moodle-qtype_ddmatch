@@ -311,11 +311,12 @@ class qtype_ddmatch extends question_type {
     }
 
     /**
-     * Provide export functionality for xml format
-     * @param question object the question object
-     * @param format object the format object so that helper methods can be used
-     * @param extra mixed any additional format specific data that may be passed by the format (see format code for info)
-     * @return string the data to append to the output buffer or false if error
+     * Provide export functionality for xml format.
+     *
+     * @param object $question the question object.
+     * @param qformat_xml $format the format object so that helper methods can be used.
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info).
+     * @return string the data to append to the output buffer or false if error.
      */
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $expout = '';
@@ -347,12 +348,13 @@ class qtype_ddmatch extends question_type {
     }
 
     /**
-     * Provide import functionality for xml format
-     * @param $xml mixed the segment of data containing the question
-     * @param $fromform object question object processed (so far) by standard import code
-     * @param $format object the format object so that helper methods can be used (in particular error() )
-     * @param $extra mixed any additional format specific data that may be passed by the format (see format code for info)
-     * @return object question object suitable for save_options() call or false if cannot handle
+     * Provide import functionality for xml format.
+     *
+     * @param array $xml the segment of data containing the question.
+     * @param object $fromform question object processed (so far) by standard import code.
+     * @param qformat_xml $format the format object so that helper methods can be used (in particular error()).
+     * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info).
+     * @return object|bool question object suitable for save_options() call or false if cannot handle.
      */
     public function import_from_xml($xml, $fromform, qformat_xml $format, $extra = null) {
         // Check question is for us.

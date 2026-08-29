@@ -119,6 +119,8 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
     /**
      * Process the qtype/matchoptions element.
+     *
+     * @param array $data the parsed backup data.
      */
     public function process_matchoptions($data) {
         global $DB;
@@ -165,6 +167,8 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
     /**
      * Process the qtype/matches/match element.
+     *
+     * @param array $data the parsed backup data.
      */
     public function process_match($data) {
         global $DB;
@@ -210,7 +214,7 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
                 $this->questionsubcacheid = $newquestionid;
                 // Cache all cleaned answers and questiontext.
                 foreach ($potentialsubs as $potentialsub) {
-                    // Clean in the same way than {@link xml_writer::xml_safe_utf8()}.
+                    // Clean in the same way than xml_writer::xml_safe_utf8().
                     $cleanquestion = preg_replace(
                         '/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i',
                         '',
@@ -264,6 +268,9 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      * answer is one comma separated list of hypen separated pairs
      * containing question_ddmatch_sub->id and question_ddmatch_sub->code, which
      * has been remapped to be qtype_ddmatch_subquestions->id, since code no longer exists.
+     *
+     * @param object $state the question_states record.
+     * @return string the recoded answer.
      */
     public function recode_legacy_state_answer($state) {
         $answer = $state->answer;

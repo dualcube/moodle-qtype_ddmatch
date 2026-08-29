@@ -41,6 +41,9 @@ class moodle1_qtype_ddmatch_handler extends moodle1_qtype_handler {
 
     /**
      * Appends the ddmatch specific information to the question.
+     *
+     * @param array $data the parsed backup data.
+     * @param array $raw the raw backup data.
      */
     public function process_question(array $data, array $raw) {
         global $CFG;
