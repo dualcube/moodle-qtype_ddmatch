@@ -25,15 +25,13 @@ to a target puts the answer in the target.  The current answer
 for a question can be changed by dragging the answer off the target or by 
 dropping another answer on the target.
 
-This version can be used with Moodle 3.9.0 and ulterior versions.
-
 Grading:-
 -------
 The grading is identical to the original matching question.
 
 Requirements
 ------------
-* Moodle 2.4.1 - 4.1
+* Moodle 4.4 - 5.3
 
 Uninstall
 ---------

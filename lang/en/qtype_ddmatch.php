@@ -18,6 +18,7 @@
  * The language strings for the match question type.
  *
  * @package    qtype_ddmatch
+ * @copyright  Adriane Boyd (adrianeboyd@gmail.com)
  * @author DualCube <admin@dualcube.com>
  * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

@@ -18,6 +18,7 @@
  * Drag&drop matching question renderer class.
  *
  * @package   qtype_ddmatch
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
  * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,6 +27,7 @@
 /**
  * Generates the output for drag&drop matching questions.
  *
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
  * @copyright  2007 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
