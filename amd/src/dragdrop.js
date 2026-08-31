@@ -92,7 +92,9 @@ DragDropToMatch.prototype.positionDrags = function() {
         drop.data('prev-top', dropPosition.top).data('prev-left', dropPosition.left);
 
         if (choice[i] === '0') {
-            // No item in this place.
+            // No item in this place: evict whatever is currently there (if anything)
+            // so it goes back to the available answers, and clear the input.
+            thisQ.sendDragToDrop($(), drop);
             return;
         }
 
@@ -721,6 +723,9 @@ var questionManager = {
             .on('keydown',
                 '.que.ddmatch:not(.qtype_ddmatch-readonly) li.draghome.placed:not(.beingdragged)',
                 questionManager.handleKeyPress)
+            .on('change',
+                '.que.ddmatch:not(.qtype_ddmatch-readonly) select',
+                questionManager.handleSelectChange)
             .on('qtype_ddmatch-dragmoved', questionManager.handleDragMoved);
     },
 
@@ -744,6 +749,19 @@ var questionManager = {
         var question = questionManager.getQuestionForEvent(e);
         if (question) {
             question.handleDragStart(e);
+        }
+    },
+
+    /**
+     * Handle the fallback select being changed, keeping the drag-drop UI
+     * (including which answers remain available on the right) in sync.
+     *
+     * @param {Event} e the change event.
+     */
+    handleSelectChange: function(e) {
+        var question = questionManager.getQuestionForEvent(e);
+        if (question) {
+            question.positionDrags();
         }
     },
 
