@@ -23,7 +23,7 @@
  *
  * @copyright  2010 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

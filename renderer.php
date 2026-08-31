@@ -20,17 +20,12 @@
  * @package   qtype_ddmatch
  * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Generates the output for drag&drop matching questions.
- *
- * @copyright  2009 The Open University
- * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
     /**

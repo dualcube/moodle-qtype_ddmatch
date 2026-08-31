@@ -21,7 +21,7 @@
  *
  * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,11 +32,6 @@ require_once($CFG->dirroot . '/question/type/match/question.php');
 /**
  * Represents a drag&drop matching question.
  * Based on core matching question.
- *
- * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
- * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_ddmatch_question extends qtype_match_question {
     /** @var array format of each choice, keyed by choice id. */
