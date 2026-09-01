@@ -136,24 +136,6 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
         // If the question has been created by restore, we need to create its qtype_ddmatch_options too.
         if ($questioncreated) {
-            // Fill in some field that were added in 2.1, and so which may be missing
-            // from backups made in older versions of Moodle.
-            if (!isset($data->correctfeedback)) {
-                $data->correctfeedback = '';
-                $data->correctfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->partiallycorrectfeedback)) {
-                $data->partiallycorrectfeedback = '';
-                $data->partiallycorrectfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->incorrectfeedback)) {
-                $data->incorrectfeedback = '';
-                $data->incorrectfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->shownumcorrect)) {
-                $data->shownumcorrect = 0;
-            }
-
             // Adjust some columns.
             $data->questionid = $newquestionid;
 
