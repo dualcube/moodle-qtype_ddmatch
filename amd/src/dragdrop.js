@@ -17,7 +17,7 @@
  * Drag and drop frontend handling, using jQuery.
  *
  * @module     qtype_ddmatch/dragdrop
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
