@@ -18,8 +18,9 @@
  * Privacy Subsystem implementation for qtype_ddmatch.
  *
  * @package    qtype_ddmatch
+ * @copyright  2019 Amr Hourani <amr.hourani@let.ethz.ch>, 2021 Thomas Ludwig, ISB
  * @author DualCube <admin@dualcube.com>
- * @copyright  2017 DualCube (https://dualcube.com)
+ * @copyright  2026 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
