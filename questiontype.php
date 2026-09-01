@@ -237,6 +237,7 @@ class qtype_ddmatch extends question_type {
             $responses = [];
             foreach ($q->choices as $choiceid => $choice) {
                 $stemhtml = $q->html_to_text($stem, $q->stemformat[$stemid]);
+                $choicehtml = $q->html_to_text($choice, $q->choiceformat[$choiceid]);
 
                 $responses[$choiceid] = new question_possible_response(
                     $stemhtml . ': ' . $choicehtml,
