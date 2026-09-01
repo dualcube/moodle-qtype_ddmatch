@@ -186,7 +186,6 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
                 // The question changed, purge and start again!
                 $this->questionsubcache = [];
 
-                $params = ['question' => $newquestionid];
                 $potentialsubs = $DB->get_records(
                     'qtype_ddmatch_subquestions',
                     ['questionid' => $newquestionid],

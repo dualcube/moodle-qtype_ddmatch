@@ -59,7 +59,6 @@ class qtype_ddmatch_qe2_attempt_updater extends question_qtype_attempt_updater {
         $this->right = [];
 
         foreach ($this->question->options->subquestions as $matchsub) {
-            $ans = $matchsub->answertext;
             $key = array_search($matchsub->answertext, $this->choices);
             if ($key === false) {
                 $key = $matchsub->id;
@@ -199,7 +198,7 @@ class qtype_ddmatch_qe2_attempt_updater extends question_qtype_attempt_updater {
      */
     public function set_first_step_data_elements($state, &$data) {
         $choices = $this->explode_answer($state->answer);
-        foreach ($choices as $key => $notused) {
+        foreach (array_keys($choices) as $key) {
             if (array_key_exists($key, $this->stems)) {
                 $this->stemorder[] = $key;
             }

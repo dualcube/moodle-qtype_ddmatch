@@ -56,7 +56,6 @@ class walkthrough_test extends qbehaviour_walkthrough_test_base {
         $this->start_attempt_at_question($m, 'deferredfeedback', 4);
 
         $choiceorder = $m->get_choice_order();
-        $orderforchoice = array_combine(array_values($choiceorder), array_keys($choiceorder));
         $choices = [0 => get_string('choose') . '...'];
         foreach ($choiceorder as $key => $choice) {
             $choices[$key] = $m->choices[$choice];

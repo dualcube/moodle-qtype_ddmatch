@@ -112,7 +112,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $table = new html_table();
         $table->attributes['class'] = 'generaltable correctanswertable';
         $table->size = ['50%', '50%'];
-        foreach ($stemorder as $key => $stemid) {
+        foreach ($stemorder as $stemid) {
             $row = new html_table_row();
             $row->cells[] = $question->format_text(
                 $question->stems[$stemid],
@@ -186,13 +186,13 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
             $dragdropclasses[] = 'visibleifjs';
             $o .= html_writer::tag(
                 'td',
-                $this->construct_choice_cell_select($qa, $options, $choices, $stemid, $curfieldname, $selected) .
+                $this->construct_choice_cell_select($qa, $options, $choices, $curfieldname, $selected) .
                     ' ' . $feedbackimage,
                 ['class' => implode(' ', $classes)]
             );
             $o .= html_writer::tag(
                 'td',
-                $this->construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) .
+                $this->construct_choice_cell_dragdrop($qa, $choices, $stemid, $curfieldname, $selected) .
                 ' ' . $feedbackimage,
                 ['class' => implode(' ', $dragdropclasses)]
             );
@@ -233,12 +233,11 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
      * @param question_attempt $qa the question attempt.
      * @param question_display_options $options the options for display.
      * @param array $choices the formatted choices, indexed by choice key.
-     * @param int $stemid the id of the stem for this row.
      * @param string $curfieldname the response field name for this row.
      * @param int $selected the currently selected choice key, or 0.
      * @return string HTML fragment.
      */
-    private function construct_choice_cell_select($qa, $options, $choices, $stemid, $curfieldname, $selected) {
+    private function construct_choice_cell_select($qa, $options, $choices, $curfieldname, $selected) {
         return html_writer::select(
             $choices,
             $qa->get_qt_field_name($curfieldname),
@@ -252,22 +251,18 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
      * Construct the HTML for the drag-and-drop target for one row of the answer table.
      *
      * @param question_attempt $qa the question attempt.
-     * @param question_display_options $options the options for display.
      * @param array $choices the formatted choices, indexed by choice key.
      * @param int $stemid the id of the stem for this row.
      * @param string $curfieldname the response field name for this row.
      * @param int $selected the currently selected choice key, or 0.
      * @return string HTML fragment.
      */
-    private function construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) {
+    private function construct_choice_cell_dragdrop($qa, $choices, $stemid, $curfieldname, $selected) {
         $placeholderclasses = ['placeholder'];
         $li = '';
         // Check whether an answer has already been selected.
         if ($selected !== 0) {
             // An answer has already been selected, display it as well.
-            $question = $qa->get_question();
-            $choiceorder = $question->get_choice_order();
-
             $attributes = [
                 'data-id' => $selected,
                 'class' => 'matchdrag copy'];
@@ -307,7 +302,7 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $choices = $this->format_choices($qa, true);
 
         $uldata = '';
-        foreach ($choiceorder as $key => $choiceid) {
+        foreach (array_keys($choiceorder) as $key) {
             $attributes = [
                 'data-id' => $key,
                 'class' => 'draghome infinite dragdrop-choice choice' . $key,

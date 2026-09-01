@@ -271,7 +271,7 @@ class qtype_ddmatch extends question_type {
             'id',
             'id,1'
         );
-        foreach ($subquestionids as $subquestionid => $notused) {
+        foreach (array_keys($subquestionids) as $subquestionid) {
             $fs->move_area_files_to_new_context(
                 $oldcontextid,
                 $newcontextid,
@@ -310,7 +310,7 @@ class qtype_ddmatch extends question_type {
             'id',
             'id,1'
         );
-        foreach ($subquestionids as $subquestionid => $notused) {
+        foreach (array_keys($subquestionids) as $subquestionid) {
             $fs->delete_area_files($contextid, 'qtype_ddmatch', 'subquestion', $subquestionid);
             $fs->delete_area_files($contextid, 'qtype_ddmatch', 'subanswer', $subquestionid);
         }
