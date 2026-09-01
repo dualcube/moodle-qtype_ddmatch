@@ -376,9 +376,9 @@ jobs:
           tag_name: v${{ steps.version.outputs.version }}
           files: release/${{ env.PLUGIN_SLUG }}.zip
           body: |
-            We're pleased to announce the official release of MooWoodle Connect for Moodle v${{ steps.version.outputs.version }}.
+            We're pleased to announce the official release of Drag-and-Drop Matching Question Type for Moodle v${{ steps.version.outputs.version }}.
 
-            Thank you for using our MooWoodle Connect plugin and for being part of the Moodle community.
+            Thank you for using our Drag-and-Drop Matching plugin and for being part of the Moodle community.
 
             Release Information
 

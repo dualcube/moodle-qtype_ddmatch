@@ -41,8 +41,8 @@ use core_privacy\local\request\writer;
  * personal data associated with this component.
  */
 class provider implements
-        \core_privacy\local\metadata\provider,
-        \core_privacy\local\request\user_preference_provider {
+    \core_privacy\local\metadata\provider,
+    \core_privacy\local\request\user_preference_provider {
     /**
      * Returns meta data about this system.
      *

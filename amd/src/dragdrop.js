@@ -419,7 +419,7 @@ DragDropToMatch.prototype.getNextDrag = function(drag) {
     }
 
     var next = this.getUnplacedChoice(choice);
-    while (next.length === 0 && choice < numChoices) {
+    while (next.length === 0 && choice < this.noOfChoicesIn()) {
         choice++;
         next = this.getUnplacedChoice(choice);
     }
@@ -560,7 +560,16 @@ DragDropToMatch.prototype.getCurrentDragInPlace = function(place) {
  * @returns {int} the number of drops.
  */
 DragDropToMatch.prototype.noOfDropsIn = function() {
-    return this.getRoot().find('.drop' ).length;
+    return this.getRoot().find('.drop').length;
+};
+
+/**
+ * Return the number of distinct choices in the question set.
+ *
+ * @returns {int} the number of choices.
+ */
+DragDropToMatch.prototype.noOfChoicesIn = function() {
+    return this.getRoot().find('.draghome.dragplaceholder').length;
 };
 
 /**
