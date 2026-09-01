@@ -5,7 +5,7 @@ dropping** them, instead of picking answers from dropdown menus. It's built
 as an extension of the core Matching question type, so question authoring
 and grading behave exactly the way teachers already expect.
 
-> This plugin was originally created by [DualCube](https://dualcube.com).
+> This plugin is maintained by [DualCube](https://dualcube.com).
 
 ## Overview
 
