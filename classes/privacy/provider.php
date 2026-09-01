@@ -25,17 +25,51 @@
 
 namespace qtype_ddmatch\privacy;
 
+use core_privacy\local\metadata\collection;
+use core_privacy\local\request\transform;
+use core_privacy\local\request\writer;
+
 /**
- * Privacy Subsystem implementation for qtype_ddmatch.
+ * Privacy Subsystem for qtype_ddmatch implementing user_preference_provider.
+ *
+ * The drag and drop matching question type itself stores no personal data:
+ * qtype_ddmatch_options and qtype_ddmatch_subquestions hold question-authoring
+ * content, not user data. However, like every question type, it inherits the
+ * "remember my last used default mark/penalty" behaviour from question_type,
+ * which stores those defaults as per-user preferences. That is the only
+ * personal data associated with this component.
  */
-class provider implements \core_privacy\local\metadata\null_provider {
+class provider implements
+        \core_privacy\local\metadata\provider,
+        \core_privacy\local\request\user_preference_provider {
     /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
+     * Returns meta data about this system.
      *
-     * @return string
+     * @param collection $collection The initialised collection to add items to.
+     * @return collection A listing of user data stored through this system.
      */
-    public static function get_reason(): string {
-        return 'privacy:metadata';
+    public static function get_metadata(collection $collection): collection {
+        $collection->add_user_preference('qtype_ddmatch_defaultmark', 'privacy:preference:defaultmark');
+        $collection->add_user_preference('qtype_ddmatch_penalty', 'privacy:preference:penalty');
+        return $collection;
+    }
+
+    /**
+     * Export all user preferences for the plugin.
+     *
+     * @param int $userid The userid of the user whose data is to be exported.
+     */
+    public static function export_user_preferences(int $userid) {
+        $preference = get_user_preferences('qtype_ddmatch_defaultmark', null, $userid);
+        if (null !== $preference) {
+            $desc = get_string('privacy:preference:defaultmark', 'qtype_ddmatch');
+            writer::export_user_preference('qtype_ddmatch', 'defaultmark', $preference, $desc);
+        }
+
+        $preference = get_user_preferences('qtype_ddmatch_penalty', null, $userid);
+        if (null !== $preference) {
+            $desc = get_string('privacy:preference:penalty', 'qtype_ddmatch');
+            writer::export_user_preference('qtype_ddmatch', 'penalty', transform::percentage($preference), $desc);
+        }
     }
 }

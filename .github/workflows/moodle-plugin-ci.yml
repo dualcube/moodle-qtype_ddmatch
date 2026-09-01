@@ -1,6 +1,7 @@
 name: Moodle Plugin CI
 
 on:
+  push:
   workflow_dispatch:
 
 permissions:

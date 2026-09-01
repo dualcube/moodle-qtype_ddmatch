@@ -31,7 +31,7 @@ The grading is identical to the original matching question.
 
 Requirements
 ------------
-* Moodle 4.4 - 5.3
+* Moodle 5.0 - 5.3
 
 Uninstall
 ---------

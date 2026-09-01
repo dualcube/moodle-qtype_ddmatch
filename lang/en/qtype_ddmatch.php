@@ -32,4 +32,6 @@ $string['pluginname_link'] = 'question/type/ddmatch';
 $string['pluginnameadding'] = 'Adding Drag-and-Drop matching question';
 $string['pluginnameediting'] = 'Editing Drag-and-Drop matching question';
 $string['pluginnamesummary'] = 'An extension of the matching question that allows the user to drag and drop items to match answers to subquestions.';
-$string['privacy:metadata'] = 'The question type ddmatch plugin does not store any personal data';
+$string['privacy:metadata'] = 'Drag-and-drop matching question type plugin allows question authors to set default options as user preferences.';
+$string['privacy:preference:defaultmark'] = 'The default mark set for a given question.';
+$string['privacy:preference:penalty'] = 'The penalty for each incorrect try when questions are run using the \'Interactive with multiple tries\' or \'Adaptive mode\' behaviour.';
