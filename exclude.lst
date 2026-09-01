@@ -19,3 +19,4 @@ ddmatch/tests/*
 ddmatch/release/*
 ddmatch/exclude.lst
 ddmatch/Gruntfile.js
+ddmatch/.stylelintrc
