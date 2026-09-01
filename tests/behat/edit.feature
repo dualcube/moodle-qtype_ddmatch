@@ -20,13 +20,10 @@ Feature: Test editing a Drag and drop matching question
     And the following "questions" exist:
       | questioncategory | qtype   | name                   | template |
       | Test questions   | ddmatch | Ddmatching for editing | foursubq |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I navigate to "Question bank" in current page administration
 
   @javascript @_switch_window
   Scenario: Edit a Drag and drop matching question
-    When I choose "Edit question" action for "Ddmatching for editing" in the question bank
+    When I am on the "Ddmatching for editing" "core_question > edit" page logged in as teacher1
     And I set the following fields to these values:
       | Question name | |
     And I press "id_submitbutton"

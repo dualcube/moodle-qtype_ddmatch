@@ -5,10 +5,7 @@ Feature: Test duplicating a quiz containing a Drag and drop matching question
   I need to be able to backup and restore them
 
   Background:
-    Given the following "users" exist:
-      | username | firstname | lastname | email               |
-      | teacher1 | T1        | Teacher1 | teacher1@moodle.com |
-    And the following "courses" exist:
+    Given the following "courses" exist:
       | fullname | shortname | category |
       | Course 1 | C1        | 0        |
     And the following "question categories" exist:
@@ -22,17 +19,19 @@ Feature: Test duplicating a quiz containing a Drag and drop matching question
       | quiz       | Test quiz | C1     | quiz1    |
     And quiz "Test quiz" contains the following questions:
       | ddmatch-001 | 1 |
-    And I log in as "admin"
-    And I am on "Course 1" course homepage
+    And the following config values are set as admin:
+      | enableasyncbackup | 0 |
 
   @javascript
   Scenario: Backup and restore a course containing a Drag and drop matching question
-    When I backup "Course 1" course using this options:
+    When I am on the "Course 1" course page logged in as admin
+    And I backup "Course 1" course using this options:
       | Confirmation | Filename | test_backup.mbz |
     And I restore "test_backup.mbz" backup into a new course using this options:
-      | Schema | Course name | Course 2 |
-    And I navigate to "Question bank" in current page administration
-    When I choose "Edit question" action for "ddmatch-001" in the question bank
+      | Schema | Course name       | Course 2 |
+      | Schema | Course short name | C2       |
+    And I am on the "Course 2" "core_question > course question bank" page
+    And I choose "Edit question" action for "ddmatch-001" in the question bank
     Then the following fields match these values:
       | Question name                      | ddmatch-001                      |
       | Question text                      | Classify the animals.            |
