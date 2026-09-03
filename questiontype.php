@@ -42,6 +42,9 @@ class qtype_ddmatch extends question_type {
      *
      * @param object $question the question object to add the options to.
      * @return bool true on success.
+     *
+     * This overrides question_type::get_question_options(), called by name
+     * throughout the question engine - it can't be renamed to is...()/has...().
      */
     public function get_question_options($question) {
         global $DB;
@@ -71,6 +74,11 @@ class qtype_ddmatch extends question_type {
      *
      * @param object $question the question object being saved.
      * @return object|bool $result->error or $result->notice, or true on success.
+     *
+     * This overrides question_type::save_question_options() and has to walk
+     * the full subquestion/subanswer save-and-cleanup sequence in one pass;
+     * splitting it would fragment a single atomic DB operation across methods
+     * for no real gain.
      */
     public function save_question_options($question) {
         global $DB;
@@ -326,6 +334,10 @@ class qtype_ddmatch extends question_type {
      * @param qformat_xml $format the format object so that helper methods can be used.
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info).
      * @return string the data to append to the output buffer or false if error.
+     *
+     * $extra is unused - this question type doesn't need it - but this
+     * overrides question_type::export_to_xml(), which qformat_xml calls with
+     * this exact signature for every question type.
      */
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $expout = '';
@@ -364,6 +376,10 @@ class qtype_ddmatch extends question_type {
      * @param qformat_xml $format the format object so that helper methods can be used (in particular error()).
      * @param mixed $extra any additional format specific data that may be passed by the format (see format code for info).
      * @return object|bool question object suitable for save_options() call or false if cannot handle.
+     *
+     * $extra is unused - this question type doesn't need it - but this
+     * overrides question_type::import_from_xml(), which qformat_xml calls
+     * with this exact signature for every question type.
      */
     public function import_from_xml($xml, $fromform, qformat_xml $format, $extra = null) {
         // Check question is for us.

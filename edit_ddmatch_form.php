@@ -37,6 +37,11 @@ class qtype_ddmatch_edit_form extends question_edit_form {
      * @param array $repeatedoptions array of options to update in the form.
      * @param mixed $answersoption reference to return the name of the answers option.
      * @return array the form fields to repeat for each matching pair.
+     *
+     * $gradeoptions is unused here (this question type has no per-answer grade
+     * field), but this overrides question_edit_form::get_per_answer_fields(),
+     * which every caller (add_per_answer_fields()) invokes with this exact
+     * signature - dropping the parameter would break the override.
      */
     protected function get_per_answer_fields(
         $mform,

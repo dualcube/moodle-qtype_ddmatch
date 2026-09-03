@@ -41,6 +41,10 @@ require_once($CFG->dirroot . '/question/engine/upgrade/tests/helper.php');
  *
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Each test method here replays one legacy question_states history verbatim,
+ * step by step, to prove it upgrades correctly - splitting a single replay
+ * across helper methods would just obscure the sequence being tested.
  */
 class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
     public function test_ddmatch_deferredfeedback_history6220() {
