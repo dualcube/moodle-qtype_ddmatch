@@ -394,6 +394,13 @@ class walkthrough_test extends qbehaviour_walkthrough_test_base {
         );
     }
 
+    /**
+     * Test that trying again clears a previous wrong answer.
+     *
+     * This walks a full attempt through multiple interactive tries, checking
+     * state/output after each - the same linear step-by-step style used by
+     * every other walkthrough test in this file and in core.
+     */
     public function test_ddmatch_clear_wrong() {
 
         // Create a ddmatching question.

@@ -36,6 +36,10 @@
  * @param bool $forcedownload whether or not force download.
  * @param array $options additional options affecting the file serving.
  * @return bool false if file not found, does not return if found - just sends the file.
+ *
+ * $cm is unused - question contexts aren't course-module-scoped - but this
+ * is Moodle's fixed {component}_pluginfile() callback signature, called
+ * positionally by core's file-serving code with all these arguments.
  */
 function qtype_ddmatch_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG;

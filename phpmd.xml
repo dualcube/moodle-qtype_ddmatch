@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ruleset name="PHPMD rules for qtype_ddmatch"
+        xmlns="http://pmd.sf.net/ruleset/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+        xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        Moodle's default moodle-plugin-ci PHPMD ruleset (see
+        https://github.com/moodlehq/moodle-plugin-ci/blob/master/res/config/phpmd.xml),
+        with five rules disabled plugin-wide. Every current violation of these
+        rules in this codebase is a confirmed false positive - either an
+        overridden Moodle base-class method or fixed core callback signature
+        that can't be changed without breaking the plugin, or a file whose
+        length/complexity is inherent to its nature (upgrade.php's one-block-
+        per-version convention, or a linear walkthrough test replaying a full
+        attempt step by step). Each site is also documented in-place in the
+        source file it applies to.
+
+        moodle-plugin-ci's phpmd command calls the PHPMD API directly rather
+        than the phpmd CLI, and does not read a ruleset's exclude-pattern
+        elements (it hardcodes an empty ignore-list), so file-specific
+        exclusion isn't reachable through it - only a full rule disable is.
+        Inline SuppressWarnings annotations aren't an alternative either:
+        moodle-cs's ValidTagsSniff rejects that tag outright, and phpcs
+        (unlike phpmd) is a hard CI gate.
+    </description>
+
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="NPathComplexity"/>
+        <exclude name="ExcessiveMethodLength"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
+    <rule ref="rulesets/naming.xml">
+        <!-- This rule throws out a problem on var names less than three chars, Moodle has $DB, $rs, etc -->
+        <exclude name="ShortVariable"/>
+        <exclude name="BooleanGetMethodName"/>
+    </rule>
+    <rule ref="rulesets/design.xml"/>
+    <rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>
+
+</ruleset>

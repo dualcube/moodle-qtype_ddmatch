@@ -232,6 +232,11 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      * @param int $sequencenumber the sequence number of the response.
      * @param array $response the response data.
      * @return array the recoded response data.
+     *
+     * $questionid and $sequencenumber are unused here, but this overrides
+     * restore_qtype_plugin::recode_response(), which is called with this
+     * exact signature throughout the restore process - dropping either
+     * parameter would break the override.
      */
     public function recode_response($questionid, $sequencenumber, array $response) {
         if (array_key_exists('_stemorder', $response)) {

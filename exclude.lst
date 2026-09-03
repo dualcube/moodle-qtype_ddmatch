@@ -20,3 +20,4 @@ ddmatch/release/*
 ddmatch/exclude.lst
 ddmatch/Gruntfile.js
 ddmatch/.stylelintrc
+ddmatch/phpmd.xml

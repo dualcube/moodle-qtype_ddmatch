@@ -30,6 +30,11 @@
  *
  * @param int $oldversion the version we are upgrading from.
  * @return bool always true.
+ *
+ * Every Moodle plugin's upgrade function is one "if ($oldversion < X) {...}"
+ * block per historical upgrade step, by convention - splitting it up would
+ * break that convention without reducing real complexity, since each step
+ * must still run in order against the same $oldversion checkpoint.
  */
 function xmldb_qtype_ddmatch_upgrade($oldversion) {
     global $CFG, $DB;
