@@ -209,7 +209,10 @@ jobs:
       - name: PHP Mess Detector
         if: ${{ !cancelled() }}
         continue-on-error: true
-        run: moodle-plugin-ci phpmd "$PLUGIN_SLUG"
+        # --rules points at our own phpmd.xml (Moodle's default ruleset with a
+        # handful of rules disabled for confirmed false positives - see that
+        # file for why) instead of moodle-plugin-ci's bundled default.
+        run: moodle-plugin-ci phpmd --rules "$PLUGIN_SLUG/phpmd.xml" "$PLUGIN_SLUG"
 
       # ---------------------------------------------------------
       # Mustache templates
