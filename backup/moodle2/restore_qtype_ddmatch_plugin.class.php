@@ -15,16 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Restore code for the drag and drop matching question type.
+ *
  * @package    qtype_ddmatch
- * 
+ *
+ * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Restore plugin class that provides the necessary information
@@ -34,12 +33,11 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
-
     /**
      * A simple answer, questiontext to id cache for a ddmatch answers.
      * @var array
      */
-    private $questionsubcache = array();
+    private $questionsubcache = [];
 
     /**
      * The id of the current question in the questionsubcache.
@@ -53,7 +51,7 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      */
     protected function define_question_plugin_structure() {
 
-        $paths = array();
+        $paths = [];
 
         // Add own qtype stuff.
         $elename = 'matchoptions';
@@ -122,6 +120,8 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
     /**
      * Process the qtype/matchoptions element.
+     *
+     * @param array $data the parsed backup data.
      */
     public function process_matchoptions($data) {
         global $DB;
@@ -136,30 +136,12 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
         // If the question has been created by restore, we need to create its qtype_ddmatch_options too.
         if ($questioncreated) {
-            // Fill in some field that were added in 2.1, and so which may be missing
-            // from backups made in older versions of Moodle.
-            if (!isset($data->correctfeedback)) {
-                $data->correctfeedback = '';
-                $data->correctfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->partiallycorrectfeedback)) {
-                $data->partiallycorrectfeedback = '';
-                $data->partiallycorrectfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->incorrectfeedback)) {
-                $data->incorrectfeedback = '';
-                $data->incorrectfeedbackformat = FORMAT_HTML;
-            }
-            if (!isset($data->shownumcorrect)) {
-                $data->shownumcorrect = 0;
-            }
-
             // Adjust some columns.
             $data->questionid = $newquestionid;
 
             // It is possible for old backup files to contain unique key violations.
             // We need to check to avoid that.
-            if (!$DB->record_exists('qtype_ddmatch_options', array('questionid' => $data->questionid))) {
+            if (!$DB->record_exists('qtype_ddmatch_options', ['questionid' => $data->questionid])) {
                 $newitemid = $DB->insert_record('qtype_ddmatch_options', $data);
                 $this->set_mapping('qtype_ddmatch_options', $oldid, $newitemid);
             }
@@ -168,6 +150,8 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
 
     /**
      * Process the qtype/matches/match element.
+     *
+     * @param array $data the parsed backup data.
      */
     public function process_match($data) {
         global $DB;
@@ -193,7 +177,6 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
             if (isset($data->code)) {
                 $this->set_mapping('qtype_ddmatch_subquestion_codes', $data->code, $newitemid);
             }
-
         } else {
             // The ddmatch questions require mapping of qtype_ddmatch_subquestions, because
             // they are used by question_states->answer.
@@ -201,22 +184,31 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
             // Have we cached the current question?
             if ($this->questionsubcacheid !== $newquestionid) {
                 // The question changed, purge and start again!
-                $this->questionsubcache = array();
+                $this->questionsubcache = [];
 
-                $params = array('question' => $newquestionid);
-                $potentialsubs = $DB->get_records('qtype_ddmatch_subquestions',
-                        array('questionid' => $newquestionid), '', 'id, questiontext, answertext');
+                $potentialsubs = $DB->get_records(
+                    'qtype_ddmatch_subquestions',
+                    ['questionid' => $newquestionid],
+                    '',
+                    'id, questiontext, answertext'
+                );
 
                 $this->questionsubcacheid = $newquestionid;
                 // Cache all cleaned answers and questiontext.
                 foreach ($potentialsubs as $potentialsub) {
-                    // Clean in the same way than {@link xml_writer::xml_safe_utf8()}.
-                    $cleanquestion = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i',
-                            '', $potentialsub->questiontext); // Clean CTRL chars.
+                    // Clean in the same way than xml_writer::xml_safe_utf8().
+                    $cleanquestion = preg_replace(
+                        '/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i',
+                        '',
+                        $potentialsub->questiontext
+                    ); // Clean CTRL chars.
                     $cleanquestion = preg_replace("/\r\n|\r/", "\n", $cleanquestion); // Normalize line ending.
 
-                    $cleananswer = preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i',
-                            '', $potentialsub->answertext); // Clean CTRL chars.
+                    $cleananswer = preg_replace(
+                        '/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/i',
+                        '',
+                        $potentialsub->answertext
+                    ); // Clean CTRL chars.
                     $cleananswer = preg_replace("/\r\n|\r/", "\n", $cleananswer); // Normalize line ending.
 
                     $this->questionsubcache[$cleanquestion][$cleananswer] = $potentialsub->id;
@@ -233,6 +225,14 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
         $this->set_mapping('qtype_ddmatch_subquestions', $oldid, $newitemid);
     }
 
+    /**
+     * Recode the components of a response that refer to subquestion ids.
+     *
+     * @param int $questionid the question being processed.
+     * @param int $sequencenumber the sequence number of the response.
+     * @param array $response the response data.
+     * @return array the recoded response data.
+     */
     public function recode_response($questionid, $sequencenumber, array $response) {
         if (array_key_exists('_stemorder', $response)) {
             $response['_stemorder'] = $this->recode_ddmatch_sub_order($response['_stemorder']);
@@ -250,10 +250,13 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      * answer is one comma separated list of hypen separated pairs
      * containing question_ddmatch_sub->id and question_ddmatch_sub->code, which
      * has been remapped to be qtype_ddmatch_subquestions->id, since code no longer exists.
+     *
+     * @param object $state the question_states record.
+     * @return string the recoded answer.
      */
     public function recode_legacy_state_answer($state) {
         $answer = $state->answer;
-        $resultarr = array();
+        $resultarr = [];
         foreach (explode(',', $answer) as $pair) {
             $pairarr = explode('-', $pair);
             $id = $pairarr[0];
@@ -275,7 +278,7 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      * @return string the recoded order.
      */
     protected function recode_ddmatch_sub_order($order) {
-        $neworder = array();
+        $neworder = [];
         foreach (explode(',', $order) as $id) {
             if ($newid = $this->get_mappingid('qtype_ddmatch_subquestions', $id)) {
                 $neworder[] = $newid;
@@ -289,12 +292,15 @@ class restore_qtype_ddmatch_plugin extends restore_qtype_plugin {
      */
     public static function define_decode_contents() {
 
-        $contents = array();
+        $contents = [];
 
-        $contents[] = new restore_decode_content('qtype_ddmatch_subquestions',
-                array('questiontext', 'answertext'), 'qtype_ddmatch_subquestions');
+        $contents[] = new restore_decode_content(
+            'qtype_ddmatch_subquestions',
+            ['questiontext', 'answertext'],
+            'qtype_ddmatch_subquestions'
+        );
 
-        $fields = array('correctfeedback', 'partiallycorrectfeedback', 'incorrectfeedback');
+        $fields = ['correctfeedback', 'partiallycorrectfeedback', 'incorrectfeedback'];
         $contents[] = new restore_decode_content('qtype_ddmatch_options', $fields, 'qtype_ddmatch_options');
 
         return $contents;

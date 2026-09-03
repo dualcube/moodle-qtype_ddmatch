@@ -18,15 +18,12 @@
  * Contains the helper class for the select missing words question type tests.
  *
  * @package    qtype_ddmatch
- * 
+ *
+ * @copyright  2018 Jean-Michel Vedrine
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Test helper class for the drag and rop matching question type.
@@ -35,8 +32,13 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_ddmatch_test_helper extends question_test_helper {
+    /**
+     * Get the names of the test questions provided by this class.
+     *
+     * @return array of question names.
+     */
     public function get_test_questions() {
-        return array('foursubq');
+        return ['foursubq'];
     }
 
     /**
@@ -59,11 +61,11 @@ class qtype_ddmatch_test_helper extends question_test_helper {
         test_question_maker::set_standard_combined_feedback_fields($ddmatch);
 
         // Using unset to get 1-based arrays.
-        $ddmatch->stems = array('', 'Dog', 'Frog', 'Toad', 'Cat');
-        $ddmatch->stemformat = array('', FORMAT_HTML, FORMAT_HTML, FORMAT_HTML, FORMAT_HTML);
-        $ddmatch->choices = array('', 'Mammal', 'Amphibian', 'Insect');
-        $ddmatch->choiceformat = array('', FORMAT_HTML, FORMAT_HTML, FORMAT_HTML);
-        $ddmatch->right = array('', 1, 2, 2, 1);
+        $ddmatch->stems = ['', 'Dog', 'Frog', 'Toad', 'Cat'];
+        $ddmatch->stemformat = ['', FORMAT_HTML, FORMAT_HTML, FORMAT_HTML, FORMAT_HTML];
+        $ddmatch->choices = ['', 'Mammal', 'Amphibian', 'Insect'];
+        $ddmatch->choiceformat = ['', FORMAT_HTML, FORMAT_HTML, FORMAT_HTML];
+        $ddmatch->right = ['', 1, 2, 2, 1];
         unset($ddmatch->stems[0]);
         unset($ddmatch->stemformat[0]);
         unset($ddmatch->choices[0]);
@@ -100,28 +102,28 @@ class qtype_ddmatch_test_helper extends question_test_helper {
         $q->options->shuffleanswers = 1;
         test_question_maker::set_standard_combined_feedback_fields($q->options);
 
-        $q->options->subquestions = array(
-            14 => (object) array(
+        $q->options->subquestions = [
+            14 => (object) [
                 'id' => 14,
                 'questiontext' => 'frog',
                 'questiontextformat' => FORMAT_HTML,
-                'answertext' => 'amphibian'),
-            15 => (object) array(
+                'answertext' => 'amphibian'],
+            15 => (object) [
                 'id' => 15,
                 'questiontext' => 'cat',
                 'questiontextformat' => FORMAT_HTML,
-                'answertext' => 'mammal'),
-            16 => (object) array(
+                'answertext' => 'mammal'],
+            16 => (object) [
                 'id' => 16,
                 'questiontext' => 'newt',
                 'questiontextformat' => FORMAT_HTML,
-                'answertext' => 'amphibian'),
-            17 => (object) array(
+                'answertext' => 'amphibian'],
+            17 => (object) [
                 'id' => 17,
                 'questiontext' => '',
                 'questiontextformat' => FORMAT_HTML,
-                'answertext' => 'insect'),
-        );
+                'answertext' => 'insect'],
+        ];
 
         return $q;
     }
@@ -134,30 +136,29 @@ class qtype_ddmatch_test_helper extends question_test_helper {
     public function get_ddmatch_question_form_data_foursubq() {
         $q = new stdClass();
         $q->name = 'Drag and drop matching question';
-        $q->questiontext = array('text' => 'Classify the animals.', 'format' => FORMAT_HTML);
-        $q->generalfeedback = array('text' => 'General feedback.', 'format' => FORMAT_HTML);
+        $q->questiontext = ['text' => 'Classify the animals.', 'format' => FORMAT_HTML];
+        $q->generalfeedback = ['text' => 'General feedback.', 'format' => FORMAT_HTML];
         $q->defaultmark = 1;
         $q->penalty = 0.3333333;
 
         $q->shuffleanswers = 1;
         test_question_maker::set_standard_combined_feedback_form_data($q);
 
-        $q->subquestions = array(
-            0 => array('text' => 'frog', 'format' => FORMAT_HTML),
-            1 => array('text' => 'cat', 'format' => FORMAT_HTML),
-            2 => array('text' => 'newt', 'format' => FORMAT_HTML),
-            3 => array('text' => '', 'format' => FORMAT_HTML));
+        $q->subquestions = [
+            0 => ['text' => 'frog', 'format' => FORMAT_HTML],
+            1 => ['text' => 'cat', 'format' => FORMAT_HTML],
+            2 => ['text' => 'newt', 'format' => FORMAT_HTML],
+            3 => ['text' => '', 'format' => FORMAT_HTML]];
 
-        $q->subanswers = array(
-            0 => array('text' => 'amphibian', 'format' => FORMAT_HTML),
-            1 => array('text' => 'mammal', 'format' => FORMAT_HTML),
-            2 => array('text' => 'amphibian', 'format' => FORMAT_HTML),
-            3 => array('text' => 'insect', 'format' => FORMAT_HTML),
-        );
+        $q->subanswers = [
+            0 => ['text' => 'amphibian', 'format' => FORMAT_HTML],
+            1 => ['text' => 'mammal', 'format' => FORMAT_HTML],
+            2 => ['text' => 'amphibian', 'format' => FORMAT_HTML],
+            3 => ['text' => 'insect', 'format' => FORMAT_HTML],
+        ];
 
         $q->noanswers = 4;
 
         return $q;
     }
-
 }

@@ -19,9 +19,10 @@
  *
  * @package    qtype
  * @subpackage ddmatch
- * 
+ *
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -58,6 +59,11 @@ class questiontype_test extends advanced_testcase {
         $this->qtype = null;
     }
 
+    /**
+     * Get a test question data object.
+     *
+     * @return stdClass the question data.
+     */
     protected function get_test_question_data() {
         global $USER;
         $q = new stdClass();
@@ -87,32 +93,32 @@ class questiontype_test extends advanced_testcase {
         $q->options->shuffleanswers = false;
         test_question_maker::set_standard_combined_feedback_fields($q->options);
 
-        $q->options->subquestions = array(
-            14 => (object) array(
+        $q->options->subquestions = [
+            14 => (object) [
                 'id' => 14,
                 'questiontext' => 'frog',
                 'questiontextformat' => FORMAT_HTML,
                 'answertext' => 'amphibian',
-                'answertextformat' => FORMAT_HTML),
-            15 => (object) array(
+                'answertextformat' => FORMAT_HTML],
+            15 => (object) [
                 'id' => 15,
                 'questiontext' => 'cat',
                 'questiontextformat' => FORMAT_HTML,
                 'answertext' => 'mammal',
-                'answertextformat' => FORMAT_HTML),
-            16 => (object) array(
+                'answertextformat' => FORMAT_HTML],
+            16 => (object) [
                 'id' => 16,
                 'questiontext' => 'newt',
                 'questiontextformat' => FORMAT_HTML,
                 'answertext' => 'amphibian',
-                'answertextformat' => FORMAT_HTML),
-            17 => (object) array(
+                'answertextformat' => FORMAT_HTML],
+            17 => (object) [
                 'id' => 17,
                 'questiontext' => '',
                 'questiontextformat' => FORMAT_HTML,
                 'answertext' => 'insect',
-                'answertextformat' => FORMAT_HTML),
-        );
+                'answertextformat' => FORMAT_HTML],
+        ];
 
         return $q;
     }
@@ -133,22 +139,22 @@ class questiontype_test extends advanced_testcase {
     public function test_get_possible_responses() {
         $q = $this->get_test_question_data();
 
-        $this->assertEquals(array(
-            14 => array(
+        $this->assertEquals([
+            14 => [
                 14 => new question_possible_response('frog: amphibian', 1 / 3),
                 15 => new question_possible_response('frog: mammal', 0),
                 17 => new question_possible_response('frog: insect', 0),
-                null => question_possible_response::no_response()),
-            15 => array(
+                null => question_possible_response::no_response()],
+            15 => [
                 14 => new question_possible_response('cat: amphibian', 0),
                 15 => new question_possible_response('cat: mammal', 1 / 3),
                 17 => new question_possible_response('cat: insect', 0),
-                null => question_possible_response::no_response()),
-            16 => array(
+                null => question_possible_response::no_response()],
+            16 => [
                 14 => new question_possible_response('newt: amphibian', 1 / 3),
                 15 => new question_possible_response('newt: mammal', 0),
                 17 => new question_possible_response('newt: insect', 0),
-                null => question_possible_response::no_response()),
-        ), $this->qtype->get_possible_responses($q));
+                null => question_possible_response::no_response()],
+        ], $this->qtype->get_possible_responses($q));
     }
 }
