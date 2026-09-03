@@ -1,6 +1,6 @@
 {
   "name": "moodle-qtype-ddmatch",
-  "version": "2.5.4",
+  "version": "2.6.0",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
