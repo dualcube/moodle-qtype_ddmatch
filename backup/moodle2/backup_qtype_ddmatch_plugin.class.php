@@ -15,16 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Backup code for the drag and drop matching question type.
+ *
  * @package    qtype_ddmatch
  *
+ * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Provides the information to backup ddmatch questions.
@@ -33,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_qtype_ddmatch_plugin extends backup_qtype_plugin {
-
     /**
      * Returns the qtype information to attach to question element.
      */
@@ -49,15 +47,15 @@ class backup_qtype_ddmatch_plugin extends backup_qtype_plugin {
         $plugin->add_child($pluginwrapper);
 
         // Now create the qtype own structures.
-        $matchoptions = new backup_nested_element('matchoptions', array('id'), array(
+        $matchoptions = new backup_nested_element('matchoptions', ['id'], [
             'shuffleanswers', 'correctfeedback', 'correctfeedbackformat',
             'partiallycorrectfeedback', 'partiallycorrectfeedbackformat',
-            'incorrectfeedback', 'incorrectfeedbackformat', 'shownumcorrect'));
+            'incorrectfeedback', 'incorrectfeedbackformat', 'shownumcorrect']);
 
         $matches = new backup_nested_element('matches');
 
-        $match = new backup_nested_element('match', array('id'), array(
-            'questiontext', 'questiontextformat', 'answertext', 'answertextformat'));
+        $match = new backup_nested_element('match', ['id'], [
+            'questiontext', 'questiontextformat', 'answertext', 'answertextformat']);
 
         // Now the own qtype tree.
         $pluginwrapper->add_child($matchoptions);
@@ -65,9 +63,11 @@ class backup_qtype_ddmatch_plugin extends backup_qtype_plugin {
         $matches->add_child($match);
 
         // Set source to populate the data.
-        $matchoptions->set_source_table('qtype_ddmatch_options',
-                array('questionid' => backup::VAR_PARENTID));
-        $match->set_source_table('qtype_ddmatch_subquestions', array('questionid' => backup::VAR_PARENTID), 'id ASC');
+        $matchoptions->set_source_table(
+            'qtype_ddmatch_options',
+            ['questionid' => backup::VAR_PARENTID]
+        );
+        $match->set_source_table('qtype_ddmatch_subquestions', ['questionid' => backup::VAR_PARENTID], 'id ASC');
 
         // Don't need to annotate ids nor files.
 
@@ -77,15 +77,17 @@ class backup_qtype_ddmatch_plugin extends backup_qtype_plugin {
     /**
      * Returns one array with filearea => mappingname elements for the qtype.
      *
-     * Used by {@link get_components_and_fileareas} to know about all the qtype
+     * Used by get_components_and_fileareas() to know about all the qtype
      * files to be processed both in backup and restore.
+     *
+     * @return array filearea => mappingname elements.
      */
     public static function get_qtype_fileareas() {
-        return array(
+        return [
             'correctfeedback' => 'question_created',
             'partiallycorrectfeedback' => 'question_created',
             'incorrectfeedback' => 'question_created',
             'subquestion' => 'qtype_ddmatch_subquestions',
-            'subanswer' => 'qtype_ddmatch_subquestions');
+            'subanswer' => 'qtype_ddmatch_subquestions'];
     }
 }

@@ -1,40 +1,49 @@
-Drag-and-Drop Matching Question  [This block is written by DualCube<admin@dualcube.com>.]
-===============================
+# Drag-and-Drop Matching Question
 
-Installation:-
-------------
-Go to [ Site administration > Plugins(Plugins) > Install plugins ] and just upload or drag & drop downloaed ZIP file.
-To install, place all downloaded files in /question/type/ddmatch and visit /admin/index.php in your browser.
+A Moodle question type that lets students match items by **dragging and
+dropping** them, instead of picking answers from dropdown menus. It's built
+as an extension of the core Matching question type, so question authoring
+and grading behave exactly the way teachers already expect.
 
-Setup:-
------
-On Course > Create new Quiz > Add Question > Drag-and-Drop Matching 
+> This plugin is maintained by [DualCube](https://dualcube.com).
 
-Overview:-
---------
-The drag-and-drop question is adapted from the existing matching question. 
-The teacher editing interface and the grading have not been modified. The 
-fallback looks identical to the original matching question.
+## Overview
 
-The drag-and-drop version of the student interface provides all the 
-answers in a list to the right of the question table.  Answers can be 
-dragged from the list to each of the question targets.  The current target 
-is highlighted to show where the answer will be dropped.  To allow answers 
-to be used multiple times, dragging an answer from the list on the right 
-to a target puts the answer in the target.  The current answer 
-for a question can be changed by dragging the answer off the target or by 
-dropping another answer on the target.
+The drag-and-drop question is adapted from the existing Matching question.
+The teacher editing interface and the grading logic are unchanged — the
+non-JavaScript fallback looks identical to the original Matching question.
 
-This version can be used with Moodle 3.9.0 and ulterior versions.
+In the drag-and-drop student interface, all the answers are listed to the
+right of the question table. Students:
 
-Grading:-
--------
-The grading is identical to the original matching question.
+- Drag an answer from the list onto any question target. The target is
+  highlighted to show exactly where the answer will land.
+- Reuse an answer multiple times, if needed, by dragging it to another
+  target.
+- Change an answer by dragging it off its target, or by dropping a
+  different answer on top of it.
 
-Requirements
-------------
-* Moodle 2.4.1 - 4.1
+## Requirements
 
-Uninstall
----------
-Admin can uninstall this admin tool from- Administration > Site Administration > Plugins > Plugins overview [Roshni Lite] > uninstall 
+* Moodle 5.0 – 5.3
+
+## Installation
+
+1. Go to **Site administration > Plugins > Install plugins**, and either
+   upload the plugin ZIP or drag and drop it onto the page.
+
+   Alternatively, install it manually:
+   1. Place the plugin's files in `question/type/ddmatch`.
+   2. Visit `admin/index.php` in your browser to complete the installation.
+
+## Usage
+
+From within a course, go to **Course > Add an activity or resource > Quiz > Question bank > Create a new question**, then choose **Drag-and-Drop Matching** from the list of question types.
+
+## Grading
+
+Grading is identical to the standard Matching question type.
+
+## Uninstallation
+
+Go to **Site administration > Plugins > Plugins overview**, find **Drag-and-Drop Matching Question**, and select **Uninstall**.

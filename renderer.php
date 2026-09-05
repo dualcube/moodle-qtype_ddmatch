@@ -1,4 +1,4 @@
-    <?php
+<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -12,33 +12,28 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Drag&drop matching question renderer class.
  *
  * @package   qtype_ddmatch
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Generates the output for drag&drop matching questions.
- *
- * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
-
     /**
-     * Generate the HTML required for a ddmatch question
+     * Generate the HTML required for a ddmatch question.
      *
-     * @param $qa question_attempt The question attempt
-     * @param $options question_display_options The options for display
+     * @param question_attempt $qa the question attempt.
+     * @param question_display_options $options the options for display.
+     * @return string HTML fragment.
      */
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         // We use the question quite a lot so store a reference to it once.
@@ -50,25 +45,31 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $output .= $this->construct_answerblock($qa, $question, $options);
 
         $this->page->requires->string_for_js('draganswerhere', 'qtype_ddmatch');
-        $this->page->requires->js_call_amd('qtype_ddmatch/dragdrop', 'init', [$qa->get_outer_question_div_unique_id(), $options->readonly]);
+        $this->page->requires->js_call_amd('qtype_ddmatch/dragdrop', 'init', [
+            $qa->get_outer_question_div_unique_id(),
+            $options->readonly,
+        ]);
         if ($qa->get_state() === question_state::$invalid) {
             $response = $qa->get_last_qt_data();
-            $output .= html_writer::nonempty_tag('div',
-                    $question->get_validation_error($response),
-                    array('class' => 'validationerror'));
+            $output .= html_writer::nonempty_tag(
+                'div',
+                $question->get_validation_error($response),
+                ['class' => 'validationerror']
+            );
         }
 
         return $output;
     }
 
     /**
-     * Format the question choices for display
+     * Format the question choices for display.
      *
-     * @param question_attempt qa
+     * @param question_attempt $qa the question attempt.
+     * @return array of formatted choices, indexed by choice key.
      */
     public function format_choices(question_attempt $qa) {
         $question = $qa->get_question();
-        $choices = array();
+        $choices = [];
         foreach ($question->get_choice_order() as $key => $choiceid) {
             $choices[$key] = $question->format_text(
                 $question->choices[$choiceid],
@@ -82,10 +83,22 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         return $choices;
     }
 
+    /**
+     * Generate the specific feedback for the question.
+     *
+     * @param question_attempt $qa the question attempt.
+     * @return string HTML fragment.
+     */
     public function specific_feedback(question_attempt $qa) {
         return $this->combined_feedback($qa);
     }
 
+    /**
+     * Generate an automatic description of the correct response.
+     *
+     * @param question_attempt $qa the question attempt.
+     * @return string HTML fragment.
+     */
     public function correct_response(question_attempt $qa) {
         if ($qa->get_state()->is_correct()) {
             // The answer was correct so we don't need to do anything further.
@@ -98,12 +111,17 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
 
         $table = new html_table();
         $table->attributes['class'] = 'generaltable correctanswertable';
-        $table->size = array('50%', '50%');
-        foreach ($stemorder as $key => $stemid) {
+        $table->size = ['50%', '50%'];
+        foreach ($stemorder as $stemid) {
             $row = new html_table_row();
-            $row->cells[] = $question->format_text($question->stems[$stemid],
-                    $question->stemformat[$stemid], $qa,
-                    'qtype_ddmatch', 'subquestion', $stemid);
+            $row->cells[] = $question->format_text(
+                $question->stems[$stemid],
+                $question->stemformat[$stemid],
+                $qa,
+                'qtype_ddmatch',
+                'subquestion',
+                $stemid
+            );
             $row->cells[] = $choices[$question->get_right_choice_for($stemid)];
 
             $table->data[] = $row;
@@ -113,37 +131,43 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
     }
 
     /**
-     * Construct the question text displayed to the user
+     * Construct the question text displayed to the user.
      *
-     * @param questiontext The question text to user
-     * @return String the rendered question text
+     * @param string $questiontext the question text to render.
+     * @return string the rendered question text.
      */
     public function construct_questiontext($questiontext) {
-        return html_writer::tag('div', $questiontext, array(
-                'class' => 'qtext',
-        ));
+        return html_writer::tag('div', $questiontext, [
+            'class' => 'qtext',
+        ]);
     }
 
     /**
-     * Construct the answer block area
+     * Construct the answer block area.
      *
-     * @param question_attempt $qa
+     * @param question_attempt $qa the question attempt.
+     * @param question_definition $question the question being displayed.
+     * @param question_display_options $options the options for display.
+     * @return string HTML fragment.
      */
     public function construct_answerblock($qa, $question, $options) {
         $stemorder = $question->get_stem_order();
         $response = $qa->get_last_qt_data();
         $choices = $this->format_choices($qa);
-        $o  = html_writer::start_tag('div', array('class' => 'ablock'));
-        $o .= html_writer::start_tag('div', array('class' => 'divanswer'));
-        $o .= html_writer::start_tag('table', array('class' => 'answer'));
+        $o  = html_writer::start_tag('div', ['class' => 'ablock']);
+        $o .= html_writer::start_tag('div', ['class' => 'divanswer']);
+        $o .= html_writer::start_tag('table', ['class' => 'answer']);
         $o .= html_writer::start_tag('tbody');
         $parity = 0;
         $curfieldname = null;
         foreach ($stemorder as $key => $stemid) {
-            $o .= html_writer::start_tag('tr', array('class' => 'r' . $parity));
-            $o .= html_writer::tag('td', $this->construct_stem_cell($qa, $question, $stemid),
-                            array('class' => 'text dragdrop-question'));
-            $classes = array('control');
+            $o .= html_writer::start_tag('tr', ['class' => 'r' . $parity]);
+            $o .= html_writer::tag(
+                'td',
+                $this->construct_stem_cell($qa, $question, $stemid),
+                ['class' => 'text dragdrop-question']
+            );
+            $classes = ['control'];
             $feedbackimage = '';
             $curfieldname = $question->get_field_name($key);
             if (array_key_exists($curfieldname, $response)) {
@@ -160,12 +184,18 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
             $dragdropclasses = $classes;
             $classes[] = 'hiddenifjs';
             $dragdropclasses[] = 'visibleifjs';
-            $o .= html_writer::tag('td',
-                    $this->construct_choice_cell_select($qa, $options, $choices, $stemid, $curfieldname, $selected) .
-                    ' ' . $feedbackimage, array('class' => implode(' ', $classes)));
-            $o .= html_writer::tag('td',
-                    $this->construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) .
-                    ' ' . $feedbackimage, array('class' => implode(' ', $dragdropclasses)));
+            $o .= html_writer::tag(
+                'td',
+                $this->construct_choice_cell_select($qa, $options, $choices, $curfieldname, $selected) .
+                    ' ' . $feedbackimage,
+                ['class' => implode(' ', $classes)]
+            );
+            $o .= html_writer::tag(
+                'td',
+                $this->construct_choice_cell_dragdrop($qa, $choices, $stemid, $curfieldname, $selected) .
+                ' ' . $feedbackimage,
+                ['class' => implode(' ', $dragdropclasses)]
+            );
             $o .= html_writer::end_tag('tr');
             $parity = 1 - $parity;
         }
@@ -174,50 +204,87 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
         $o .= html_writer::end_tag('div');
         $o .= $this->construct_available_dragdrop_choices($qa, $question);
         $o .= html_writer::end_tag('div');
-        $o .= html_writer::tag('div', '', array('class' => 'clearer'));
+        $o .= html_writer::tag('div', '', ['class' => 'clearer']);
         return $o;
     }
 
+    /**
+     * Construct the HTML for the stem cell of one row of the answer table.
+     *
+     * @param question_attempt $qa the question attempt.
+     * @param question_definition $question the question being displayed.
+     * @param int $stemid the id of the stem to render.
+     * @return string HTML fragment.
+     */
     private function construct_stem_cell($qa, $question, $stemid) {
         return $question->format_text(
-                            $question->stems[$stemid], $question->stemformat[$stemid],
-                            $qa, 'qtype_ddmatch', 'subquestion', $stemid);
+            $question->stems[$stemid],
+            $question->stemformat[$stemid],
+            $qa,
+            'qtype_ddmatch',
+            'subquestion',
+            $stemid
+        );
     }
 
-    private function construct_choice_cell_select($qa, $options, $choices, $stemid, $curfieldname, $selected) {
-        return html_writer::select($choices, $qa->get_qt_field_name($curfieldname), $selected,
-                            array('0' => 'choose'), array('disabled' => $options->readonly));
+    /**
+     * Construct the HTML for the non-JS choice select for one row of the answer table.
+     *
+     * @param question_attempt $qa the question attempt.
+     * @param question_display_options $options the options for display.
+     * @param array $choices the formatted choices, indexed by choice key.
+     * @param string $curfieldname the response field name for this row.
+     * @param int $selected the currently selected choice key, or 0.
+     * @return string HTML fragment.
+     */
+    private function construct_choice_cell_select($qa, $options, $choices, $curfieldname, $selected) {
+        return html_writer::select(
+            $choices,
+            $qa->get_qt_field_name($curfieldname),
+            $selected,
+            ['0' => 'choose'],
+            ['disabled' => $options->readonly]
+        );
     }
 
-    private function construct_choice_cell_dragdrop($qa, $options, $choices, $stemid, $curfieldname, $selected) {
-        $placeholderclasses = array('placeholder');
+    /**
+     * Construct the HTML for the drag-and-drop target for one row of the answer table.
+     *
+     * @param question_attempt $qa the question attempt.
+     * @param array $choices the formatted choices, indexed by choice key.
+     * @param int $stemid the id of the stem for this row.
+     * @param string $curfieldname the response field name for this row.
+     * @param int $selected the currently selected choice key, or 0.
+     * @return string HTML fragment.
+     */
+    private function construct_choice_cell_dragdrop($qa, $choices, $stemid, $curfieldname, $selected) {
+        $placeholderclasses = ['placeholder'];
         $li = '';
         // Check whether an answer has already been selected.
         if ($selected !== 0) {
             // An answer has already been selected, display it as well.
-            $question = $qa->get_question();
-            $choiceorder = $question->get_choice_order();
-
-            $attributes = array(
-                    'data-id' => $selected,
-                    'class' => 'matchdrag copy');
+            $attributes = [
+                'data-id' => $selected,
+                'class' => 'matchdrag copy'];
             $li = html_writer::tag('li', $choices[$selected], $attributes);
 
             // Add the hidden placeholder class so that the placeholder is initially hidden.
             $placeholderclasses[] = 'hidden';
         }
-        $placeholder = html_writer::tag('li', html_writer::tag('p',
-            get_string('draganswerhere', 'qtype_ddmatch')), array(
-            'class' => implode(' ', $placeholderclasses),
-        ));
+        $placeholder = html_writer::tag('li', html_writer::tag(
+            'p',
+            get_string('draganswerhere', 'qtype_ddmatch')
+        ), [
+        'class' => implode(' ', $placeholderclasses),
+        ]);
         $li = $placeholder . $li;
         $question = $qa->get_question();
-        $attributes = array(
-            'id'    => 'ultarget'.$question->id.'_'.$stemid,
-            'name'  => $qa->get_qt_field_name($curfieldname),
-            'class' => 'place' . $stemid . ' drop active',
-            'data-selectname' => $qa->get_qt_field_name($curfieldname),
-        );
+        $attributes = [
+        'id'    => 'ultarget' . $question->id . '_' . $stemid,
+        'name'  => $qa->get_qt_field_name($curfieldname),
+        'class' => 'place' . $stemid . ' drop active',
+        'data-selectname' => $qa->get_qt_field_name($curfieldname),
+        ];
         $output = html_writer::tag('ul', $li, $attributes);
         return $output;
     }
@@ -226,28 +293,29 @@ class qtype_ddmatch_renderer extends qtype_with_combined_feedback_renderer {
      * Construct the list of available answers for use in the drag and drop
      * interface.
      *
-     * @param $question
-     * @return String
+     * @param question_attempt $qa the question attempt.
+     * @param question_definition $question the question being displayed.
+     * @return string HTML fragment.
      */
     public function construct_available_dragdrop_choices($qa, $question) {
         $choiceorder = $question->get_choice_order();
         $choices = $this->format_choices($qa, true);
 
         $uldata = '';
-        foreach ($choiceorder as $key => $choiceid) {
-            $attributes = array(
-                    'data-id' => $key,
-                    'class' => 'draghome infinite dragdrop-choice choice' . $key 
-            );
+        foreach (array_keys($choiceorder) as $key) {
+            $attributes = [
+                'data-id' => $key,
+                'class' => 'draghome infinite dragdrop-choice choice' . $key,
+            ];
             $li = html_writer::tag('li', $choices[$key], $attributes);
             $uldata .= $li;
         }
-        $attributes = array(
-            'id'    => 'ulorigin' . $question->id,
-            'class' => 'draghomes visibleifjs');
+        $attributes = [
+        'id'    => 'ulorigin' . $question->id,
+        'class' => 'draghomes visibleifjs'];
         $o = html_writer::tag('ul', $uldata, $attributes);
-        $classes = array('answercontainer');
-            $o = html_writer::tag('div', $o, array('class' => implode(' ', $classes)));
+        $classes = ['answercontainer'];
+        $o = html_writer::tag('div', $o, ['class' => implode(' ', $classes)]);
         return $o;
     }
 }

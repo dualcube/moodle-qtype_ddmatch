@@ -19,9 +19,10 @@
  * ddmatch questions.
  *
  * @package    qtype_ddmatch
- * 
+ *
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -40,11 +41,14 @@ require_once($CFG->dirroot . '/question/engine/upgrade/tests/helper.php');
  *
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Each test method here replays one legacy question_states history verbatim,
+ * step by step, to prove it upgrades correctly - splitting a single replay
+ * across helper methods would just obscure the sequence being tested.
  */
 class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
-
     public function test_ddmatch_deferredfeedback_history6220() {
-        $quiz = (object) array(
+        $quiz = (object) [
             'id' => '72',
             'course' => '1181',
             'name' => 'Study Guide 4 Quiz',
@@ -74,8 +78,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'delay1' => '0',
             'delay2' => '0',
             'timelimit' => '0',
-        );
-        $attempt = (object) array(
+        ];
+        $attempt = (object) [
             'id' => '3562',
             'uniqueid' => '3562',
             'quiz' => '72',
@@ -87,8 +91,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'timemodified' => '1168015476',
             'layout' => '689,690,0,691,692,0,693,694,0,695,696,0,697,698,0',
             'preview' => '0',
-        );
-        $question = (object) array(
+        ];
+        $question = (object) [
             'id' => '695',
             'category' => '65',
             'parent' => '0',
@@ -110,55 +114,55 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'modifiedby' => null,
             'unlimited' => null,
             'maxmark' => '3',
-            'options' => (object) array(
+            'options' => (object) [
                 'id' => '27',
                 'question' => '695',
-                'subquestions' => array(
-                    148 => (object) array(
+                'subquestions' => [
+                    148 => (object) [
                         'code' => '511093512',
                         'question' => '695',
                         'questiontext' => 'Active adjacent system',
                         'answertext' => 'A system that interacts with or participates in the work.',
                         'id' => 148,
-                    ),
-                    149 => (object) array(
+                    ],
+                    149 => (object) [
                         'code' => '10881658',
                         'question' => '695',
                         'questiontext' => 'Autonomous adjacent system',
                         'answertext' => 'An external entity that acts independently of the work under study.',
                         'id' => 149,
-                    ),
-                    150 => (object) array(
+                    ],
+                    150 => (object) [
                         'code' => '661953276',
                         'question' => '695',
                         'questiontext' => 'Cooperative adjacent system',
                         'answertext' => 'A system that is involved in the response to a business event.',
                         'id' => 150,
-                    ),
-                    151 => (object) array(
+                    ],
+                    151 => (object) [
                         'code' => '786218388',
                         'question' => '695',
                         'questiontext' => '',
                         'answertext' => 'A system which does not supply or receive data from the work.',
                         'id' => 151,
-                    ),
-                    152 => (object) array(
+                    ],
+                    152 => (object) [
                         'code' => '166673328',
                         'question' => '695',
                         'questiontext' => '',
                         'answertext' => 'An external entity that performs part of the work under study.',
                         'id' => 152,
-                    ),
-                ),
+                    ],
+                ],
                 'shuffleanswers' => '1',
                 'correctfeedback' => '',
                 'partiallycorrectfeedback' => '',
                 'incorrectfeedback' => '',
                 'correctresponsesfeedback' => '0',
-            ),
+            ],
             'hints' => false,
-        );
-        $qsession = (object) array(
+        ];
+        $qsession = (object) [
             'id' => '33092',
             'attemptid' => '3562',
             'questionid' => '695',
@@ -168,9 +172,9 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'manualcomment' => '',
             'manualcommentformat' => '1',
             'flagged' => '1',
-        );
-        $qstates = array(
-            79604 => (object) array(
+        ];
+        $qstates = [
+            79604 => (object) [
                 'attempt' => '3562',
                 'question' => '695',
                 'originalquestion' => '0',
@@ -182,8 +186,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0',
                 'penalty' => '0',
                 'id' => 79604,
-            ),
-            79614 => (object) array(
+            ],
+            79614 => (object) [
                 'attempt' => '3562',
                 'question' => '695',
                 'originalquestion' => '0',
@@ -195,8 +199,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '1',
                 'penalty' => '0',
                 'id' => 79614,
-            ),
-            79619 => (object) array(
+            ],
+            79619 => (object) [
                 'attempt' => '3562',
                 'question' => '695',
                 'originalquestion' => '0',
@@ -208,8 +212,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '3',
                 'penalty' => '0',
                 'id' => 79619,
-            ),
-            79626 => (object) array(
+            ],
+            79626 => (object) [
                 'attempt' => '3562',
                 'question' => '695',
                 'originalquestion' => '0',
@@ -221,12 +225,12 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '3',
                 'penalty' => '0',
                 'id' => 79626,
-            ),
-        );
+            ],
+        ];
 
         $qa = $this->updater->convert_question_attempt($quiz, $attempt, $question, $qsession, $qstates);
 
-        $expectedqa = (object) array(
+        $expectedqa = (object) [
             'behaviour' => 'deferredfeedback',
             'questionid' => 695,
             'variant' => 1,
@@ -234,45 +238,55 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'minfraction' => 0,
             'maxfraction' => 1,
             'flagged' => 0,
-            'questionsummary' => 'Associate the appropriate definition with each term. {Active adjacent system; Autonomous adjacent system; Cooperative adjacent system} -> {A system that interacts with or participates in the work.; An external entity that acts independently of the work under study.; A system that is involved in the response to a business event.; A system which does not supply or receive data from the work.; An external entity that performs part of the work under study.}',
-            'rightanswer' => 'Active adjacent system -> A system that interacts with or participates in the work.; Autonomous adjacent system -> An external entity that acts independently of the work under study.; Cooperative adjacent system -> A system that is involved in the response to a business event.',
-            'responsesummary' => 'Active adjacent system -> A system that interacts with or participates in the work.; Autonomous adjacent system -> An external entity that acts independently of the work under study.; Cooperative adjacent system -> A system that is involved in the response to a business event.',
+            'questionsummary' => 'Associate the appropriate definition with each term. ' .
+                '{Active adjacent system; Autonomous adjacent system; Cooperative adjacent system} -> ' .
+                '{A system that interacts with or participates in the work.; ' .
+                'An external entity that acts independently of the work under study.; ' .
+                'A system that is involved in the response to a business event.; ' .
+                'A system which does not supply or receive data from the work.; ' .
+                'An external entity that performs part of the work under study.}',
+            'rightanswer' => 'Active adjacent system -> A system that interacts with or participates in the work.; ' .
+                'Autonomous adjacent system -> An external entity that acts independently of the work under study.; ' .
+                'Cooperative adjacent system -> A system that is involved in the response to a business event.',
+            'responsesummary' => 'Active adjacent system -> A system that interacts with or participates in the work.; ' .
+                'Autonomous adjacent system -> An external entity that acts independently of the work under study.; ' .
+                'Cooperative adjacent system -> A system that is involved in the response to a business event.',
             'timemodified' => 1177419956,
-            'steps' => array(
-                0 => (object) array(
+            'steps' => [
+                0 => (object) [
                     'sequencenumber' => 0,
                     'state' => 'todo',
                     'fraction' => null,
                     'timecreated' => 1177419915,
                     'userid' => 91483,
-                    'data' => array('_stemorder' => '148,149,150', '_choiceorder' => 'todo - see below'),
-                ),
-                1 => (object) array(
+                    'data' => ['_stemorder' => '148,149,150', '_choiceorder' => 'todo - see below'],
+                ],
+                1 => (object) [
                     'sequencenumber' => 1,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1177419855,
                     'userid' => 91483,
-                    'data' => array('sub0' => 148, 'sub1' => 151, 'sub2' => 152),
-                ),
-                2 => (object) array(
+                    'data' => ['sub0' => 148, 'sub1' => 151, 'sub2' => 152],
+                ],
+                2 => (object) [
                     'sequencenumber' => 2,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1177419956,
                     'userid' => 91483,
-                    'data' => array('sub0' => 148, 'sub1' => 149, 'sub2' => 150),
-                ),
-                3 => (object) array(
+                    'data' => ['sub0' => 148, 'sub1' => 149, 'sub2' => 150],
+                ],
+                3 => (object) [
                     'sequencenumber' => 3,
                     'state' => 'gradedright',
                     'fraction' => 1,
                     'timecreated' => 1177419956,
                     'userid' => 91483,
-                    'data' => array('sub0' => 148, 'sub1' => 149, 'sub2' => 150, '-finish' => 1),
-                ),
-            ),
-        );
+                    'data' => ['sub0' => 148, 'sub1' => 149, 'sub2' => 150, '-finish' => 1],
+                ],
+            ],
+        ];
 
         // This is a random thing, so just set expected to actual.
         $expectedqa->steps[0]->data['_choiceorder'] = $qa->steps[0]->data['_choiceorder'];
@@ -289,11 +303,12 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
     }
 
     public function test_ddmatch_deferredfeedback_history60() {
-        $quiz = (object) array(
+        $quiz = (object) [
             'id' => '60',
             'course' => '2304',
             'name' => 'Types of resources available quiz',
-            'intro' => 'This quiz covers the different types of information resources available and how to select which is most appropriate. ',
+            'intro' => 'This quiz covers the different types of information resources available and how ' .
+                'to select which is most appropriate. ',
             'introformat' => FORMAT_HTML,
             'questiondecimalpoints' => '-1',
             'showuserpicture' => '1',
@@ -319,8 +334,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'delay1' => '0',
             'delay2' => '0',
             'timelimit' => '0',
-        );
-        $attempt = (object) array(
+        ];
+        $attempt = (object) [
             'id' => '1065',
             'uniqueid' => '1065',
             'quiz' => '60',
@@ -332,8 +347,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'timemodified' => '1168267508',
             'layout' => '509,510,511,738,514,0',
             'preview' => '0',
-        );
-        $question = (object) array(
+        ];
+        $question = (object) [
             'id' => '738',
             'category' => '60',
             'parent' => '0',
@@ -359,48 +374,49 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'modifiedby' => null,
             'unlimited' => null,
             'maxmark' => '1',
-            'options' => (object) array(
+            'options' => (object) [
                 'id' => '35',
                 'question' => '738',
-                'subquestions' => array(
-                    213 => (object) array(
+                'subquestions' => [
+                    213 => (object) [
                         'code' => '860968335',
                         'question' => '738',
                         'questiontext' => 'Subject gateways provide links to sites that have been quality checked ',
                         'answertext' => 'True',
                         'id' => 213,
-                    ),
-                    214 => (object) array(
+                    ],
+                    214 => (object) [
                         'code' => '253006016',
                         'question' => '738',
                         'questiontext' => 'Subject gateways offer more variety than search engines ',
                         'answertext' => 'False',
                         'id' => 214,
-                    ),
-                    215 => (object) array(
+                    ],
+                    215 => (object) [
                         'code' => '964910717',
                         'question' => '738',
                         'questiontext' => 'Subject gateways index websites automatically',
                         'answertext' => 'False',
                         'id' => 215,
-                    ),
-                    216 => (object) array(
+                    ],
+                    216 => (object) [
                         'code' => '3109713',
                         'question' => '738',
-                        'questiontext' => 'Subject gateways can provide a more direct route to websites containing academic content ',
+                        'questiontext' => 'Subject gateways can provide a more direct route to websites ' .
+                            'containing academic content ',
                         'answertext' => 'True',
                         'id' => 216,
-                    ),
-                ),
+                    ],
+                ],
                 'shuffleanswers' => '1',
                 'correctfeedback' => '',
                 'partiallycorrectfeedback' => '',
                 'incorrectfeedback' => '',
                 'correctresponsesfeedback' => '0',
-            ),
+            ],
             'hints' => false,
-        );
-        $qsession = (object) array(
+        ];
+        $qsession = (object) [
             'id' => '9258',
             'attemptid' => '1065',
             'questionid' => '738',
@@ -410,9 +426,9 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'manualcomment' => '',
             'manualcommentformat' => '1',
             'flagged' => '1',
-        );
-        $qstates = array(
-            24961 => (object) array(
+        ];
+        $qstates = [
+            24961 => (object) [
                 'attempt' => '1065',
                 'question' => '738',
                 'originalquestion' => '0',
@@ -424,8 +440,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0',
                 'penalty' => '0',
                 'id' => 24961,
-            ),
-            24966 => (object) array(
+            ],
+            24966 => (object) [
                 'attempt' => '1065',
                 'question' => '738',
                 'originalquestion' => '0',
@@ -437,12 +453,12 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '1',
                 'penalty' => '0.1',
                 'id' => 24966,
-            ),
-        );
+            ],
+        ];
 
         $qa = $this->updater->convert_question_attempt($quiz, $attempt, $question, $qsession, $qstates);
 
-        $expectedqa = (object) array(
+        $expectedqa = (object) [
             'behaviour' => 'deferredfeedback',
             'questionid' => 738,
             'variant' => 1,
@@ -450,29 +466,39 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'minfraction' => 0,
             'maxfraction' => 1,
             'flagged' => 0,
-            'questionsummary' => 'Which of the following statements about subject gateways are true, and which are false? {Subject gateways provide links to sites that have been quality checked; Subject gateways offer more variety than search engines; Subject gateways index websites automatically; Subject gateways can provide a more direct route to websites containing academic content} -> {True; False}',
-            'rightanswer' => 'Subject gateways provide links to sites that have been quality checked -> True; Subject gateways offer more variety than search engines -> False; Subject gateways index websites automatically -> False; Subject gateways can provide a more direct route to websites containing academic content -> True',
-            'responsesummary' => 'Subject gateways provide links to sites that have been quality checked -> True; Subject gateways offer more variety than search engines -> False; Subject gateways index websites automatically -> False; Subject gateways can provide a more direct route to websites containing academic content -> True',
+            'questionsummary' => 'Which of the following statements about subject gateways are true, and which are false? ' .
+                '{Subject gateways provide links to sites that have been quality checked; ' .
+                'Subject gateways offer more variety than search engines; ' .
+                'Subject gateways index websites automatically; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content} -> {True; False}',
+            'rightanswer' => 'Subject gateways provide links to sites that have been quality checked -> True; ' .
+                'Subject gateways offer more variety than search engines -> False; ' .
+                'Subject gateways index websites automatically -> False; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content -> True',
+            'responsesummary' => 'Subject gateways provide links to sites that have been quality checked -> True; ' .
+                'Subject gateways offer more variety than search engines -> False; ' .
+                'Subject gateways index websites automatically -> False; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content -> True',
             'timemodified' => 1168267508,
-            'steps' => array(
-                0 => (object) array(
+            'steps' => [
+                0 => (object) [
                     'sequencenumber' => 0,
                     'state' => 'todo',
                     'fraction' => null,
                     'timecreated' => 1168267317,
                     'userid' => 182682,
-                    'data' => array('_stemorder' => '213,214,215,216', '_choiceorder' => 'todo - see below'),
-                ),
-                1 => (object) array(
+                    'data' => ['_stemorder' => '213,214,215,216', '_choiceorder' => 'todo - see below'],
+                ],
+                1 => (object) [
                     'sequencenumber' => 1,
                     'state' => 'gradedright',
                     'fraction' => 1,
                     'timecreated' => 1168267508,
                     'userid' => 182682,
-                    'data' => array('sub0' => 213, 'sub1' => 214, 'sub2' => 214, 'sub3' => 213, '-finish' => 1),
-                ),
-            ),
-        );
+                    'data' => ['sub0' => 213, 'sub1' => 214, 'sub2' => 214, 'sub3' => 213, '-finish' => 1],
+                ],
+            ],
+        ];
 
         // This is a random thing, so just set expected to actual.
         $expectedqa->steps[0]->data['_choiceorder'] = $qa->steps[0]->data['_choiceorder'];
@@ -489,7 +515,7 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
     }
 
     public function test_ddmatch_deferredfeedback_history622220() {
-        $quiz = (object) array(
+        $quiz = (object) [
             'id' => '719',
             'course' => '3541',
             'name' => 'Types of resources quiz',
@@ -519,8 +545,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'delay1' => '0',
             'delay2' => '0',
             'timelimit' => '0',
-        );
-        $attempt = (object) array(
+        ];
+        $attempt = (object) [
             'id' => '23777',
             'uniqueid' => '23777',
             'quiz' => '719',
@@ -533,8 +559,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'layout' => '11163,0,11164,0,11165,0,11135,0,11166,0',
             'preview' => '0',
             'needsupgradetonewqe' => '1',
-        );
-        $question = (object) array(
+        ];
+        $question = (object) [
             'id' => '11135',
             'category' => '675',
             'parent' => '0',
@@ -551,11 +577,13 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'generalfeedback' => '<ul>
             <li>Subject gateways provide links to sites that have been quality checked = True </li>
  </ul>
- <p>All links in a subject gateway have been added by a knowledgeable subject specialist and so have to be of a certain quality to be added to the collection.</p>
+ <p>All links in a subject gateway have been added by a knowledgeable subject specialist and so have ' .
+                'to be of a certain quality to be added to the collection.</p>
  <ul>
             <li>Subject gateways offer more variety than search engines = False </li>
  </ul>
- <p>Subject gateways will most likely provide fewer links than a search engine, but this is because they are selected with a particular subject area in mind </p>
+ <p>Subject gateways will most likely provide fewer links than a search engine, but this is because ' .
+                'they are selected with a particular subject area in mind </p>
  <ul>
             <li>Subject gateways index websites automatically = False </li>
  </ul>
@@ -563,7 +591,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
  <ul>
             <li>Subject gateways can provide a more direct route to websites containing academic content = True </li>
  </ul>
- <p>All links in a subject gateway have been added by a knowledgeable subject specialist and so you can find academic content easier than using a web search engine.</p>',
+ <p>All links in a subject gateway have been added by a knowledgeable subject specialist and so you ' .
+                'can find academic content easier than using a web search engine.</p>',
             'generalfeedbackformat' => '1',
             'timecreated' => '0',
             'timemodified' => '0',
@@ -571,48 +600,49 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'modifiedby' => null,
             'unlimited' => null,
             'maxmark' => '1',
-            'options' => (object) array(
+            'options' => (object) [
                 'id' => '279',
                 'question' => '11135',
-                'subquestions' => array(
-                    1632 => (object) array(
+                'subquestions' => [
+                    1632 => (object) [
                         'code' => '315604704',
                         'question' => '11135',
                         'questiontext' => 'Subject gateways provide links to sites that have been quality checked',
                         'answertext' => 'True',
                         'id' => 1632,
-                    ),
-                    1633 => (object) array(
+                    ],
+                    1633 => (object) [
                         'code' => '750106618',
                         'question' => '11135',
                         'questiontext' => 'Subject gateways offer more variety than search engines',
                         'answertext' => 'False',
                         'id' => 1633,
-                    ),
-                    1634 => (object) array(
+                    ],
+                    1634 => (object) [
                         'code' => '446418834',
                         'question' => '11135',
                         'questiontext' => 'Subject gateways index websites automatically',
                         'answertext' => 'False',
                         'id' => 1634,
-                    ),
-                    1635 => (object) array(
+                    ],
+                    1635 => (object) [
                         'code' => '3262827',
                         'question' => '11135',
-                        'questiontext' => 'Subject gateways can provide a more direct route to websites containing academic content',
+                        'questiontext' => 'Subject gateways can provide a more direct route to websites ' .
+                            'containing academic content',
                         'answertext' => 'True',
                         'id' => 1635,
-                    ),
-                ),
+                    ],
+                ],
                 'shuffleanswers' => '1',
                 'correctfeedback' => '',
                 'partiallycorrectfeedback' => '',
                 'incorrectfeedback' => '',
                 'correctresponsesfeedback' => '0',
-            ),
+            ],
             'hints' => false,
-        );
-        $qsession = (object) array(
+        ];
+        $qsession = (object) [
             'id' => '356418',
             'attemptid' => '23777',
             'questionid' => '11135',
@@ -622,9 +652,9 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'manualcomment' => '',
             'manualcommentformat' => '1',
             'flagged' => '1',
-        );
-        $qstates = array(
-            862587 => (object) array(
+        ];
+        $qstates = [
+            862587 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -636,8 +666,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0',
                 'penalty' => '0',
                 'id' => 862587,
-            ),
-            862638 => (object) array(
+            ],
+            862638 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -649,8 +679,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0.75',
                 'penalty' => '0.1',
                 'id' => 862638,
-            ),
-            862668 => (object) array(
+            ],
+            862668 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -662,8 +692,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0.75',
                 'penalty' => '0.1',
                 'id' => 862668,
-            ),
-            862673 => (object) array(
+            ],
+            862673 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -675,8 +705,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0.75',
                 'penalty' => '0.1',
                 'id' => 862673,
-            ),
-            862716 => (object) array(
+            ],
+            862716 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -688,8 +718,8 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0.75',
                 'penalty' => '0.1',
                 'id' => 862716,
-            ),
-            862740 => (object) array(
+            ],
+            862740 => (object) [
                 'attempt' => '23777',
                 'question' => '11135',
                 'originalquestion' => '0',
@@ -701,12 +731,12 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
                 'raw_grade' => '0.75',
                 'penalty' => '0.1',
                 'id' => 862740,
-            ),
-        );
+            ],
+        ];
 
         $qa = $this->updater->convert_question_attempt($quiz, $attempt, $question, $qsession, $qstates);
 
-        $expectedqa = (object) array(
+        $expectedqa = (object) [
             'behaviour' => 'deferredfeedback',
             'questionid' => 11135,
             'variant' => 1,
@@ -714,70 +744,82 @@ class upgradelibnewqe_test extends question_attempt_upgrader_test_base {
             'minfraction' => 0,
             'maxfraction' => 1,
             'flagged' => 0,
-            'questionsummary' => 'Which of the following statements about subject gateways are true, and which are false? {Subject gateways provide links to sites that have been quality checked; Subject gateways offer more variety than search engines; Subject gateways index websites automatically; Subject gateways can provide a more direct route to websites containing academic content} -> {True; False}',
-            'rightanswer' => 'Subject gateways provide links to sites that have been quality checked -> True; Subject gateways offer more variety than search engines -> False; Subject gateways index websites automatically -> False; Subject gateways can provide a more direct route to websites containing academic content -> True',
-            'responsesummary' => 'Subject gateways offer more variety than search engines -> False; Subject gateways can provide a more direct route to websites containing academic content -> True; Subject gateways index websites automatically -> True; Subject gateways provide links to sites that have been quality checked -> True',
+            'questionsummary' => 'Which of the following statements about subject gateways are true, and which are false? ' .
+                '{Subject gateways provide links to sites that have been quality checked; ' .
+                'Subject gateways offer more variety than search engines; ' .
+                'Subject gateways index websites automatically; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content} -> {True; False}',
+            'rightanswer' => 'Subject gateways provide links to sites that have been quality checked -> True; ' .
+                'Subject gateways offer more variety than search engines -> False; ' .
+                'Subject gateways index websites automatically -> False; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content -> True',
+            'responsesummary' => 'Subject gateways offer more variety than search engines -> False; ' .
+                'Subject gateways can provide a more direct route to websites containing academic content -> True; ' .
+                'Subject gateways index websites automatically -> True; ' .
+                'Subject gateways provide links to sites that have been quality checked -> True',
             'timemodified' => 1200507467,
-            'steps' => array(
-                0 => (object) array(
+            'steps' => [
+                0 => (object) [
                     'sequencenumber' => 0,
                     'state' => 'todo',
                     'fraction' => null,
                     'timecreated' => 1200506648,
                     'userid' => 6584,
-                    'data' => array('_stemorder' => '1633,1635,1634,1632', '_choiceorder' => 'todo - see below'),
-                ),
-                1 => (object) array(
+                    'data' => ['_stemorder' => '1633,1635,1634,1632', '_choiceorder' => 'todo - see below'],
+                ],
+                1 => (object) [
                     'sequencenumber' => 1,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1200507025,
                     'userid' => 6584,
-                    'data' => array('sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632),
-                ),
-                2 => (object) array(
+                    'data' => ['sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632],
+                ],
+                2 => (object) [
                     'sequencenumber' => 2,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1200507125,
                     'userid' => 6584,
-                    'data' => array('sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632),
-                ),
-                3 => (object) array(
+                    'data' => ['sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632],
+                ],
+                3 => (object) [
                     'sequencenumber' => 3,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1200507172,
                     'userid' => 6584,
-                    'data' => array('sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632),
-                ),
-                4 => (object) array(
+                    'data' => ['sub0' => 1633, 'sub1' => 1632, 'sub2' => 0, 'sub3' => 1632],
+                ],
+                4 => (object) [
                     'sequencenumber' => 4,
                     'state' => 'complete',
                     'fraction' => null,
                     'timecreated' => 1200507467,
                     'userid' => 6584,
-                    'data' => array('sub0' => 1633, 'sub1' => 1632, 'sub2' => 1632, 'sub3' => 1632),
-                ),
-                5 => (object) array(
+                    'data' => ['sub0' => 1633, 'sub1' => 1632, 'sub2' => 1632, 'sub3' => 1632],
+                ],
+                5 => (object) [
                     'sequencenumber' => 5,
                     'state' => 'gradedpartial',
                     'fraction' => 0.75,
                     'timecreated' => 1200507467,
                     'userid' => 6584,
-                    'data' => array('sub0' => 1633, 'sub1' => 1632, 'sub2' => 1632, 'sub3' => 1632, '-finish' => 1),
-                ),
-            ),
-        );
+                    'data' => ['sub0' => 1633, 'sub1' => 1632, 'sub2' => 1632, 'sub3' => 1632, '-finish' => 1],
+                ],
+            ],
+        ];
 
-        // This is a random thing, so just set expected to actual:
+        // This is a random thing, so just set expected to actual.
         $expectedqa->steps[0]->data['_choiceorder'] = $qa->steps[0]->data['_choiceorder'];
         $order = explode(',', $qa->steps[0]->data['_choiceorder']);
         $order = array_combine(array_values($order), array_keys($order));
         for ($i = 1; $i <= 5; $i++) {
             for ($sub = 0; $sub < 5; $sub++) {
-                if (!array_key_exists('sub' . $sub, $expectedqa->steps[$i]->data) ||
-                        $expectedqa->steps[$i]->data['sub' . $sub] == 0) {
+                if (
+                    !array_key_exists('sub' . $sub, $expectedqa->steps[$i]->data) ||
+                        $expectedqa->steps[$i]->data['sub' . $sub] == 0
+                ) {
                     continue;
                 }
                 $expectedqa->steps[$i]->data['sub' . $sub] =

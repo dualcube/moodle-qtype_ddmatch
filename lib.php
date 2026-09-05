@@ -18,18 +18,30 @@
  * Serve question type files
  *
  * @package qtype_ddmatch
- * 
+ *
+ * @author Dongsheng Cai <dongsheng@moodle.com>
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
- * function for renderening question file 
+ * Serve a file from the drag-and-drop matching question type.
+ *
+ * @param stdClass $course course object.
+ * @param stdClass $cm course module object.
+ * @param context $context context object.
+ * @param string $filearea file area.
+ * @param array $args extra arguments.
+ * @param bool $forcedownload whether or not force download.
+ * @param array $options additional options affecting the file serving.
+ * @return bool false if file not found, does not return if found - just sends the file.
+ *
+ * $cm is unused - question contexts aren't course-module-scoped - but this
+ * is Moodle's fixed {component}_pluginfile() callback signature, called
+ * positionally by core's file-serving code with all these arguments.
  */
-function qtype_ddmatch_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function qtype_ddmatch_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG;
     require_once($CFG->libdir . '/questionlib.php');
     question_pluginfile($course, $context, 'qtype_ddmatch', $filearea, $args, $forcedownload, $options);

@@ -20,8 +20,9 @@
  * @package    qtype
  * @subpackage ddmatch
  *
+ * @copyright  2009 The Open University
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -47,39 +48,43 @@ require_once($CFG->dirroot . '/question/type/ddmatch/tests/helper.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class question_test extends advanced_testcase {
-
     public function test_get_expected_data() {
         $question = qtype_ddmatch_test_helper::make_a_ddmatching_question();
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertEquals(array('sub0' => PARAM_INT, 'sub1' => PARAM_INT,
-                'sub2' => PARAM_INT, 'sub3' => PARAM_INT), $question->get_expected_data());
+        $this->assertEquals(['sub0' => PARAM_INT, 'sub1' => PARAM_INT,
+                'sub2' => PARAM_INT, 'sub3' => PARAM_INT], $question->get_expected_data());
     }
 
     public function test_is_complete_response() {
         $question = qtype_ddmatch_test_helper::make_a_ddmatching_question();
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertFalse($question->is_complete_response(array()));
+        $this->assertFalse($question->is_complete_response([]));
         $this->assertFalse($question->is_complete_response(
-                array('sub0' => '1', 'sub1' => '1', 'sub2' => '1', 'sub3' => '0')));
-        $this->assertFalse($question->is_complete_response(array('sub1' => '1')));
+            ['sub0' => '1', 'sub1' => '1', 'sub2' => '1', 'sub3' => '0']
+        ));
+        $this->assertFalse($question->is_complete_response(['sub1' => '1']));
         $this->assertTrue($question->is_complete_response(
-                array('sub0' => '1', 'sub1' => '1', 'sub2' => '1', 'sub3' => '1')));
+            ['sub0' => '1', 'sub1' => '1', 'sub2' => '1', 'sub3' => '1']
+        ));
     }
 
     public function test_is_gradable_response() {
         $question = qtype_ddmatch_test_helper::make_a_ddmatching_question();
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertFalse($question->is_gradable_response(array()));
+        $this->assertFalse($question->is_gradable_response([]));
         $this->assertFalse($question->is_gradable_response(
-                array('sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0')));
+            ['sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0']
+        ));
         $this->assertTrue($question->is_gradable_response(
-                array('sub0' => '1', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0')));
-        $this->assertTrue($question->is_gradable_response(array('sub1' => '1')));
+            ['sub0' => '1', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0']
+        ));
+        $this->assertTrue($question->is_gradable_response(['sub1' => '1']));
         $this->assertTrue($question->is_gradable_response(
-                array('sub0' => '1', 'sub1' => '1', 'sub2' => '3', 'sub3' => '1')));
+            ['sub0' => '1', 'sub1' => '1', 'sub2' => '3', 'sub3' => '1']
+        ));
     }
 
     public function test_is_same_response() {
@@ -87,24 +92,29 @@ class question_test extends advanced_testcase {
         $question->start_attempt(new question_attempt_step(), 1);
 
         $this->assertTrue($question->is_same_response(
-                array(),
-                array('sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0')));
+            [],
+            ['sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0']
+        ));
 
         $this->assertTrue($question->is_same_response(
-                array('sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0'),
-                array('sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0')));
+            ['sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0'],
+            ['sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0']
+        ));
 
         $this->assertFalse($question->is_same_response(
-                array('sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0'),
-                array('sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1')));
+            ['sub0' => '0', 'sub1' => '0', 'sub2' => '0', 'sub3' => '0'],
+            ['sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1']
+        ));
 
         $this->assertTrue($question->is_same_response(
-                array('sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1'),
-                array('sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1')));
+            ['sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1'],
+            ['sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1']
+        ));
 
         $this->assertFalse($question->is_same_response(
-                array('sub0' => '2', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1'),
-                array('sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1')));
+            ['sub0' => '2', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1'],
+            ['sub0' => '1', 'sub1' => '2', 'sub2' => '3', 'sub3' => '1']
+        ));
     }
 
     public function test_grading() {
@@ -115,16 +125,22 @@ class question_test extends advanced_testcase {
         $choiceorder = $question->get_choice_order();
         $orderforchoice = array_combine(array_values($choiceorder), array_keys($choiceorder));
 
-        $this->assertEquals(array(1, question_state::$gradedright),
-                $question->grade_response(array('sub0' => $orderforchoice[1],
+        $this->assertEquals(
+            [1, question_state::$gradedright],
+            $question->grade_response(['sub0' => $orderforchoice[1],
                         'sub1' => $orderforchoice[2], 'sub2' => $orderforchoice[2],
-                        'sub3' => $orderforchoice[1])));
-        $this->assertEquals(array(0.25, question_state::$gradedpartial),
-                $question->grade_response(array('sub0' => $orderforchoice[1])));
-        $this->assertEquals(array(0, question_state::$gradedwrong),
-                $question->grade_response(array('sub0' => $orderforchoice[2],
+            'sub3' => $orderforchoice[1]])
+        );
+        $this->assertEquals(
+            [0.25, question_state::$gradedpartial],
+            $question->grade_response(['sub0' => $orderforchoice[1]])
+        );
+        $this->assertEquals(
+            [0, question_state::$gradedwrong],
+            $question->grade_response(['sub0' => $orderforchoice[2],
                         'sub1' => $orderforchoice[3], 'sub2' => $orderforchoice[1],
-                        'sub3' => $orderforchoice[2])));
+            'sub3' => $orderforchoice[2]])
+        );
     }
 
     public function test_get_correct_response() {
@@ -135,9 +151,11 @@ class question_test extends advanced_testcase {
         $choiceorder = $question->get_choice_order();
         $orderforchoice = array_combine(array_values($choiceorder), array_keys($choiceorder));
 
-        $this->assertEquals(array('sub0' => $orderforchoice[1], 'sub1' => $orderforchoice[2],
-                'sub2' => $orderforchoice[2], 'sub3' => $orderforchoice[1]),
-                $question->get_correct_response());
+        $this->assertEquals(
+            ['sub0' => $orderforchoice[1], 'sub1' => $orderforchoice[2],
+                'sub2' => $orderforchoice[2], 'sub3' => $orderforchoice[1]],
+            $question->get_correct_response()
+        );
     }
 
     public function test_get_question_summary() {
@@ -158,7 +176,7 @@ class question_test extends advanced_testcase {
         $ddmatch->shufflestems = false;
         $ddmatch->start_attempt(new question_attempt_step(), 1);
 
-        $summary = $ddmatch->summarise_response(array('sub0' => 2, 'sub1' => 1));
+        $summary = $ddmatch->summarise_response(['sub0' => 2, 'sub1' => 1]);
 
         $this->assertMatchesRegularExpression('/Dog -> \w+; Frog -> \w+/', $summary);
     }
@@ -170,25 +188,25 @@ class question_test extends advanced_testcase {
 
         $choiceorder = $ddmatch->get_choice_order();
         $orderforchoice = array_combine(array_values($choiceorder), array_keys($choiceorder));
-        $choices = array(0 => get_string('choose') . '...');
+        $choices = [0 => get_string('choose') . '...'];
         foreach ($choiceorder as $key => $choice) {
             $choices[$key] = $ddmatch->choices[$choice];
         }
 
-        $this->assertEquals(array(
+        $this->assertEquals([
                     1 => new question_classified_response(2, 'Amphibian', 0),
                     2 => new question_classified_response(3, 'Insect', 0),
                     3 => question_classified_response::no_response(),
                     4 => question_classified_response::no_response(),
-                ), $ddmatch->classify_response(array('sub0' => $orderforchoice[2],
-                        'sub1' => $orderforchoice[3], 'sub2' => 0, 'sub3' => 0)));
-        $this->assertEquals(array(
+                ], $ddmatch->classify_response(['sub0' => $orderforchoice[2],
+                        'sub1' => $orderforchoice[3], 'sub2' => 0, 'sub3' => 0]));
+        $this->assertEquals([
                     1 => new question_classified_response(1, 'Mammal', 0.25),
                     2 => new question_classified_response(2, 'Amphibian', 0.25),
                     3 => new question_classified_response(2, 'Amphibian', 0.25),
                     4 => new question_classified_response(1, 'Mammal', 0.25),
-                ), $ddmatch->classify_response(array('sub0' => $orderforchoice[1],
+                ], $ddmatch->classify_response(['sub0' => $orderforchoice[1],
                         'sub1' => $orderforchoice[2], 'sub2' => $orderforchoice[2],
-                        'sub3' => $orderforchoice[1])));
+                        'sub3' => $orderforchoice[1]]));
     }
 }

@@ -18,21 +18,30 @@
  * Drag and drop matching question type upgrade code.
  *
  * @package    qtype_ddmatch
- * 
+ *
+ * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com) 
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Upgrade code for the drag and drop matching question type.
+ *
+ * @param int $oldversion the version we are upgrading from.
+ * @return bool always true.
+ *
+ * Every Moodle plugin's upgrade function is one "if ($oldversion < X) {...}"
+ * block per historical upgrade step, by convention - splitting it up would
+ * break that convention without reducing real complexity, since each step
+ * must still run in order against the same $oldversion checkpoint.
+ */
 function xmldb_qtype_ddmatch_upgrade($oldversion) {
     global $CFG, $DB;
 
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2010121800) {
-
         // Define field questiontextformat to be added to question_ddmatch_sub.
         $table = new xmldb_table('question_ddmatch_sub');
         $field = new xmldb_field('questiontextformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'questiontext');
@@ -86,8 +95,12 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
         }
 
         if ($CFG->texteditors !== 'textarea') {
-            $rs = $DB->get_recordset('question_ddmatch_sub',
-                    array('answertextformat' => FORMAT_MOODLE), '', 'id,answertext,answertextformat');
+            $rs = $DB->get_recordset(
+                'question_ddmatch_sub',
+                ['answertextformat' => FORMAT_MOODLE],
+                '',
+                'id,answertext,answertextformat'
+            );
             foreach ($rs as $s) {
                 $s->answertext       = text_to_html($s->answertext, false, false, true);
                 $s->answertextformat = FORMAT_HTML;
@@ -101,12 +114,19 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2011080500) {
-
         $table = new xmldb_table('question_ddmatch');
 
         // Define field correctfeedback to be added to question_ddmatch.
-        $field = new xmldb_field('correctfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                null, null, null, 'shuffleanswers');
+        $field = new xmldb_field(
+            'correctfeedback',
+            XMLDB_TYPE_TEXT,
+            'small',
+            null,
+            null,
+            null,
+            null,
+            'shuffleanswers'
+        );
 
         // Conditionally launch add field correctfeedback.
         if (!$dbman->field_exists($table, $field)) {
@@ -116,14 +136,30 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
             $DB->set_field('question_ddmatch', 'correctfeedback', '');
 
             // Now add the not null constraint.
-            $field = new xmldb_field('correctfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                    XMLDB_NOTNULL, null, null, 'shuffleanswers');
+            $field = new xmldb_field(
+                'correctfeedback',
+                XMLDB_TYPE_TEXT,
+                'small',
+                null,
+                XMLDB_NOTNULL,
+                null,
+                null,
+                'shuffleanswers'
+            );
             $dbman->change_field_notnull($table, $field);
         }
 
         // Define field correctfeedbackformat to be added to question_ddmatch.
-        $field = new xmldb_field('correctfeedbackformat', XMLDB_TYPE_INTEGER, '2', null,
-                XMLDB_NOTNULL, null, '0', 'correctfeedback');
+        $field = new xmldb_field(
+            'correctfeedbackformat',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            '0',
+            'correctfeedback'
+        );
 
         // Conditionally launch add field correctfeedbackformat.
         if (!$dbman->field_exists($table, $field)) {
@@ -131,8 +167,16 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
         }
 
         // Define field partiallycorrectfeedback to be added to question_ddmatch.
-        $field = new xmldb_field('partiallycorrectfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                null, null, null, 'correctfeedbackformat');
+        $field = new xmldb_field(
+            'partiallycorrectfeedback',
+            XMLDB_TYPE_TEXT,
+            'small',
+            null,
+            null,
+            null,
+            null,
+            'correctfeedbackformat'
+        );
 
         // Conditionally launch add field partiallycorrectfeedback.
         if (!$dbman->field_exists($table, $field)) {
@@ -142,14 +186,30 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
             $DB->set_field('question_ddmatch', 'partiallycorrectfeedback', '');
 
             // Now add the not null constraint.
-            $field = new xmldb_field('partiallycorrectfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                    XMLDB_NOTNULL, null, null, 'correctfeedbackformat');
+            $field = new xmldb_field(
+                'partiallycorrectfeedback',
+                XMLDB_TYPE_TEXT,
+                'small',
+                null,
+                XMLDB_NOTNULL,
+                null,
+                null,
+                'correctfeedbackformat'
+            );
             $dbman->change_field_notnull($table, $field);
         }
 
         // Define field partiallycorrectfeedbackformat to be added to question_ddmatch.
-        $field = new xmldb_field('partiallycorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2', null,
-                XMLDB_NOTNULL, null, '0', 'partiallycorrectfeedback');
+        $field = new xmldb_field(
+            'partiallycorrectfeedbackformat',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            '0',
+            'partiallycorrectfeedback'
+        );
 
         // Conditionally launch add field partiallycorrectfeedbackformat.
         if (!$dbman->field_exists($table, $field)) {
@@ -157,8 +217,16 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
         }
 
         // Define field incorrectfeedback to be added to question_ddmatch.
-        $field = new xmldb_field('incorrectfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                null, null, null, 'partiallycorrectfeedbackformat');
+        $field = new xmldb_field(
+            'incorrectfeedback',
+            XMLDB_TYPE_TEXT,
+            'small',
+            null,
+            null,
+            null,
+            null,
+            'partiallycorrectfeedbackformat'
+        );
 
         // Conditionally launch add field incorrectfeedback.
         if (!$dbman->field_exists($table, $field)) {
@@ -168,14 +236,30 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
             $DB->set_field('question_ddmatch', 'incorrectfeedback', '');
 
             // Now add the not null constraint.
-            $field = new xmldb_field('incorrectfeedback', XMLDB_TYPE_TEXT, 'small', null,
-                    XMLDB_NOTNULL, null, null, 'partiallycorrectfeedbackformat');
+            $field = new xmldb_field(
+                'incorrectfeedback',
+                XMLDB_TYPE_TEXT,
+                'small',
+                null,
+                XMLDB_NOTNULL,
+                null,
+                null,
+                'partiallycorrectfeedbackformat'
+            );
             $dbman->change_field_notnull($table, $field);
         }
 
         // Define field incorrectfeedbackformat to be added to question_ddmatch.
-        $field = new xmldb_field('incorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2', null,
-                XMLDB_NOTNULL, null, '0', 'incorrectfeedback');
+        $field = new xmldb_field(
+            'incorrectfeedbackformat',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            '0',
+            'incorrectfeedback'
+        );
 
         // Conditionally launch add field incorrectfeedbackformat.
         if (!$dbman->field_exists($table, $field)) {
@@ -183,8 +267,16 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
         }
 
         // Define field shownumcorrect to be added to question_ddmatch.
-        $field = new xmldb_field('shownumcorrect', XMLDB_TYPE_INTEGER, '2', null,
-                XMLDB_NOTNULL, null, '0', 'incorrectfeedbackformat');
+        $field = new xmldb_field(
+            'shownumcorrect',
+            XMLDB_TYPE_INTEGER,
+            '2',
+            null,
+            XMLDB_NOTNULL,
+            null,
+            '0',
+            'incorrectfeedbackformat'
+        );
 
         // Conditionally launch add field shownumcorrect.
         if (!$dbman->field_exists($table, $field)) {
@@ -196,7 +288,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062400) {
-
         // Define table question_ddmatch to be renamed to qtype_ddmatch_options.
         $table = new xmldb_table('question_ddmatch');
 
@@ -208,10 +299,9 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062401) {
-
         // Define key question (foreign) to be dropped form qtype_ddmatch_options.
         $table = new xmldb_table('qtype_ddmatch_options');
-        $key = new xmldb_key('question', XMLDB_KEY_FOREIGN, array('question'), 'question', array('id'));
+        $key = new xmldb_key('question', XMLDB_KEY_FOREIGN, ['question'], 'question', ['id']);
 
         // Launch drop key question.
         $dbman->drop_key($table, $key);
@@ -221,7 +311,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062402) {
-
         // Rename field question on table qtype_ddmatch_options to questionid.
         $table = new xmldb_table('qtype_ddmatch_options');
         $field = new xmldb_field('question', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
@@ -234,10 +323,9 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062403) {
-
         // Define key questionid (foreign-unique) to be added to qtype_ddmatch_options.
         $table = new xmldb_table('qtype_ddmatch_options');
-        $key = new xmldb_key('questionid', XMLDB_KEY_FOREIGN_UNIQUE, array('questionid'), 'question', array('id'));
+        $key = new xmldb_key('questionid', XMLDB_KEY_FOREIGN_UNIQUE, ['questionid'], 'question', ['id']);
 
         // Launch add key questionid.
         $dbman->add_key($table, $key);
@@ -247,7 +335,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062404) {
-
         // Define field subquestions to be dropped from qtype_ddmatch_options.
         $table = new xmldb_table('qtype_ddmatch_options');
         $field = new xmldb_field('subquestions');
@@ -262,7 +349,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062405) {
-
         // Define table question_ddmatch_sub to be renamed to qtype_ddmatch_subquestions.
         $table = new xmldb_table('question_ddmatch_sub');
 
@@ -274,10 +360,9 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062406) {
-
         // Define key question (foreign) to be dropped form qtype_ddmatch_subquestions.
         $table = new xmldb_table('qtype_ddmatch_subquestions');
-        $key = new xmldb_key('question', XMLDB_KEY_FOREIGN, array('question'), 'question', array('id'));
+        $key = new xmldb_key('question', XMLDB_KEY_FOREIGN, ['question'], 'question', ['id']);
 
         // Launch drop key question.
         $dbman->drop_key($table, $key);
@@ -287,7 +372,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062407) {
-
         // Rename field question on table qtype_ddmatch_subquestions to questionid.
         $table = new xmldb_table('qtype_ddmatch_subquestions');
         $field = new xmldb_field('question', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
@@ -300,10 +384,9 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062408) {
-
         // Define key questionid (foreign) to be added to qtype_ddmatch_subquestions.
         $table = new xmldb_table('qtype_ddmatch_subquestions');
-        $key = new xmldb_key('questionid', XMLDB_KEY_FOREIGN, array('questionid'), 'question', array('id'));
+        $key = new xmldb_key('questionid', XMLDB_KEY_FOREIGN, ['questionid'], 'question', ['id']);
 
         // Launch add key questionid.
         $dbman->add_key($table, $key);
@@ -313,7 +396,6 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
     }
 
     if ($oldversion < 2013062409) {
-
         // Define field code to be dropped from qtype_ddmatch_subquestions.
         // The field code has not been needed since the new question engine in
         // Moodle 2.1. It should be safe to drop it now.
@@ -328,7 +410,7 @@ function xmldb_qtype_ddmatch_upgrade($oldversion) {
         // Record that qtype_ddmatch savepoint was reached.
         upgrade_plugin_savepoint(true, 2013062409, 'qtype', 'ddmatch');
     }
-    
+
     if ($oldversion < 2019040400) {
         $table = new xmldb_table('qtype_ddmatch_subquestions');
 

@@ -13,7 +13,7 @@
     padding: 0.625rem;
     font-size: 0.938rem;
     color: #333;
-    line-height:1.25rem;
+    line-height: 1.25rem;
     cursor: move;
 }
 
@@ -32,7 +32,7 @@
 .que.ddmatch .draghome.dragplaceholder.active {
     visibility: hidden;
     display: inline-block;
-       margin: 0;
+    margin: 0;
 }
 li.matchdrag.copy {
     margin: 0.25rem;
@@ -67,11 +67,11 @@ li.matchdrag.copy {
     margin: 0;
     padding: 0.25rem;
     width: 35%;
-    max-height:fit-content;
+    max-height: fit-content;
 }
 
 .ddmatch .draghomes li {
-    list-style:none;
+    list-style: none;
 }
 
 .ddmatch .drop {
@@ -88,28 +88,28 @@ li.matchdrag.copy {
 
 
 .ddmatch .drop li {
-    list-style:none;
+    list-style: none;
     box-sizing: content-box;
 }
 
 .ddmatch li p {
     display: table-cell;
     vertical-align: middle;
-        word-break: break-word;
+    word-break: break-word;
 }
 
 .ddmatch ul.drop {
     border: 0.06rem solid gray;
-    padding-left: 0rem;
+    padding-left: 0;
 }
-.ddmatch .que .formulation{
-    background:#f1f1f1 !Important;
-    padding:1.25rem !Important;
+.ddmatch.ddmatch .que .formulation {
+    background: #f1f1f1;
+    padding: 1.25rem;
 }
 
 .ddmatch td.text {
     width: 50%;
-    padding:0;
+    padding: 0;
 }
 .ddmatch td.control {
     width: 85%;
@@ -140,13 +140,13 @@ li.matchdrag.copy {
 }
 
 .ddmatch .drop.yui3-dd-drop-over li {
-    opacity:0.5;
+    opacity: 0.5;
 }
 
 /* Editing form. */
 body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] {
-    background: #EEE;
-    border: 0.06rem solid #BBB;
+    background: #eee;
+    border: 0.06rem solid #bbb;
     border-bottom: 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -159,8 +159,8 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subquestions_] .fitemtitl
 }
 
 body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
-    background: #EEE;
-    border: 0.06rem solid #BBB;
+    background: #eee;
+    border: 0.06rem solid #bbb;
     border-top: 0;
     margin-bottom: 2em;
     margin-top: 0;
@@ -173,35 +173,49 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
     width: 60%;
     float: left;
 }
-.ddmatch .qtext{margin-bottom:0;}
-.ddmatch .qtext p{margin:0;}
-.ddmatch .qtext p br{display:none;}
-.ddmatch .divanswer .answer .visibleifjs{display:inline-block !important; margin-bottom:5px;}
-.ddmatch p{
-    font-size: 0.938rem !Important;
+.ddmatch .qtext {
+    margin-bottom: 0;
+}
+.ddmatch .qtext p {
+    margin: 0;
+}
+.ddmatch .qtext p br {
+    display: none;
+}
+.ddmatch.ddmatch .divanswer .answer .visibleifjs {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.ddmatch.ddmatch p {
+    font-size: 0.938rem;
     word-break: break-word;
     line-height: 1.25rem;
     color: #333;
 }
-.ddmatch .text {
-    font-size: 0.938rem !Important;
+.ddmatch.ddmatch .text {
+    font-size: 0.938rem;
     word-break: break-word;
     line-height: 1.25rem;
     color: #333;
 }
+
 @media screen and (max-width: 768px) {
-.ddmatch li p{font-size:0.75rem;}
-.ddmatch .draghomes li{font-size:0.75rem;}
-.ddmatch td.control {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-}
-.ddmatch td.text {
-    width: 100%;
-    padding: 0;
-    display: block;
-}
+    .ddmatch li p {
+        font-size: 0.75rem;
+    }
+    .ddmatch .draghomes li {
+        font-size: 0.75rem;
+    }
+    .ddmatch td.control {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .ddmatch td.text {
+        width: 100%;
+        padding: 0;
+        display: block;
+    }
 }
 .ddmatch .drop {
     -webkit-touch-callout: none;
@@ -213,12 +227,12 @@ body#page-question-type-ddmatch div[id^=fitem_id_][id*=subanswers_] {
 }
 
 .ddmatch ul.draghomes {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .que.ddmatch .draghome.dragplaceholder {
     display: none;

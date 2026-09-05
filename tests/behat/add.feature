@@ -14,12 +14,11 @@ Feature: Test creating a drag and drop matching question
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I navigate to "Question bank" in current page administration
 
+  @javascript
   Scenario: Create a drag and drop matching question
-    When I add a "Drag-and-Drop Matching" question filling the form with:
+    When I am on the "Course 1" "core_question > course question bank" page logged in as teacher1
+    And I add a "Drag-and-Drop Matching" question filling the form with:
       | Question name                      | ddmatch-001                                    |
       | Question text                      | Match the country with the capital city.       |
       | General feedback                   | England=London, France=Paris and Spain=Madrid. |

@@ -18,33 +18,60 @@
  * Defines the editing form for the drag&drop match question type.
  *
  * @package    qtype_ddmatch
+ * @copyright  2007 Adriane Boyd (adrianeboyd@gmail.com)
  * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
+ * @copyright  2017 DualCube (https://dualcube.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Drag&drop match question type editing form definition.
- * 
- * @author DualCube <admin@dualcube.com>
- * @copyright  2007 DualCube (https://dualcube.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_ddmatch_edit_form extends question_edit_form {
+    /**
+     * Add the fields for one matching pair (a question and an answer editor).
+     *
+     * @param object $mform the form being built.
+     * @param string $label the label to use for the question editor.
+     * @param array $gradeoptions list of grade options.
+     * @param array $repeatedoptions array of options to update in the form.
+     * @param mixed $answersoption reference to return the name of the answers option.
+     * @return array the form fields to repeat for each matching pair.
+     *
+     * $gradeoptions is unused here (this question type has no per-answer grade
+     * field), but this overrides question_edit_form::get_per_answer_fields(),
+     * which every caller (add_per_answer_fields()) invokes with this exact
+     * signature - dropping the parameter would break the override.
+     */
+    protected function get_per_answer_fields(
+        $mform,
+        $label,
+        $gradeoptions,
+        &$repeatedoptions,
+        &$answersoption
+    ) {
+        $mform->addElement(
+            'static',
+            'answersinstruct',
+            get_string('availablechoices', 'qtype_match'),
+            get_string('filloutthreeqsandtwoas', 'qtype_match')
+        );
 
-    protected function get_per_answer_fields($mform, $label, $gradeoptions,
-            &$repeatedoptions, &$answersoption) {
-        $mform->addElement('static', 'answersinstruct',
-                get_string('availablechoices', 'qtype_match'),
-                get_string('filloutthreeqsandtwoas', 'qtype_match'));
-
-        $repeated = array();
-        $repeated[] = $mform->createElement('editor', 'subquestions',
-                $label, array('rows' => 3), $this->editoroptions);
-        $repeated[] = $mform->createElement('editor', 'subanswers',
-                get_string('answer'), array('rows' => 3), $this->editoroptions);
+        $repeated = [];
+        $repeated[] = $mform->createElement(
+            'editor',
+            'subquestions',
+            $label,
+            ['rows' => 3],
+            $this->editoroptions
+        );
+        $repeated[] = $mform->createElement(
+            'editor',
+            'subanswers',
+            get_string('answer'),
+            ['rows' => 3],
+            $this->editoroptions
+        );
         $repeatedoptions['subquestions']['type'] = PARAM_RAW;
         $repeatedoptions['subanswers']['type'] = PARAM_RAW;
         $answersoption = 'subquestions';
@@ -57,8 +84,14 @@ class qtype_ddmatch_edit_form extends question_edit_form {
      * @param object $mform the form being built.
      */
     protected function definition_inner($mform) {
-        $mform->addElement('advcheckbox', 'shuffleanswers',
-                get_string('shuffle', 'qtype_match'), null, null, array(0, 1));
+        $mform->addElement(
+            'advcheckbox',
+            'shuffleanswers',
+            get_string('shuffle', 'qtype_match'),
+            null,
+            null,
+            [0, 1]
+        );
         $mform->addHelpButton('shuffleanswers', 'shuffle', 'qtype_match');
         $mform->setDefault('shuffleanswers', 1);
 
@@ -75,6 +108,12 @@ class qtype_ddmatch_edit_form extends question_edit_form {
         return get_string('blanksforxmorequestions', 'qtype_match');
     }
 
+    /**
+     * Perform the necessary preprocessing for the question editing form.
+     *
+     * @param object $question the data being passed to the form.
+     * @return object $question the modified data.
+     */
     protected function data_preprocessing($question) {
         $question = parent::data_preprocessing($question);
         $question = $this->data_preprocessing_combined_feedback($question, true);
@@ -91,13 +130,13 @@ class qtype_ddmatch_edit_form extends question_edit_form {
             $question->subanswers[$key] = $subquestion->answertext;
 
             $draftid = file_get_submitted_draft_itemid('subquestions[' . $key . ']');
-            $question->subquestions[$key] = array();
+            $question->subquestions[$key] = [];
             $question->subquestions[$key]['text'] = file_prepare_draft_area(
-                $draftid,           // Draftid.
+                $draftid, // Draftid.
                 $this->context->id, // Context.
-                'qtype_ddmatch',      // Component.
-                'subquestion',      // Filarea.
-                !empty($subquestion->id) ? (int) $subquestion->id : null, // itemid
+                'qtype_ddmatch', // Component.
+                'subquestion', // Filarea.
+                !empty($subquestion->id) ? (int) $subquestion->id : null, // Item id.
                 $this->fileoptions, // Options.
                 $subquestion->questiontext // Text.
             );
@@ -105,13 +144,13 @@ class qtype_ddmatch_edit_form extends question_edit_form {
             $question->subquestions[$key]['itemid'] = $draftid;
 
             $draftid = file_get_submitted_draft_itemid('subanswers[' . $key . ']');
-            $question->subanswers[$key] = array();
+            $question->subanswers[$key] = [];
             $question->subanswers[$key]['text'] = file_prepare_draft_area(
-                $draftid,           // Draftid.
+                $draftid, // Draftid.
                 $this->context->id, // Context.
-                'qtype_ddmatch',      // Component.
-                'subanswer',      // Filarea.
-                !empty($subquestion->id) ? (int) $subquestion->id : null, // itemid
+                'qtype_ddmatch', // Component.
+                'subanswer', // Filarea.
+                !empty($subquestion->id) ? (int) $subquestion->id : null, // Item id.
                 $this->fileoptions, // Options.
                 $subquestion->answertext // Text.
             );
@@ -124,6 +163,13 @@ class qtype_ddmatch_edit_form extends question_edit_form {
         return $question;
     }
 
+    /**
+     * Validate the question editing form.
+     *
+     * @param array $data the submitted form data.
+     * @param array $files the submitted files.
+     * @return array the errors, indexed by field name.
+     */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
         $answers = $data['subanswers'];
@@ -140,7 +186,7 @@ class qtype_ddmatch_edit_form extends question_edit_form {
                 $answercount++;
             }
             if ($trimmedquestion != '' && $trimmedanswer == '') {
-                $errors['subanswers['.$key.']'] =
+                $errors['subanswers[' . $key . ']'] =
                         get_string('nomatchinganswerforq', 'qtype_match', $trimmedquestion);
             }
         }
@@ -158,6 +204,11 @@ class qtype_ddmatch_edit_form extends question_edit_form {
         return $errors;
     }
 
+    /**
+     * Returns the question type name.
+     *
+     * @return string the question type name.
+     */
     public function qtype() {
         return 'ddmatch';
     }
