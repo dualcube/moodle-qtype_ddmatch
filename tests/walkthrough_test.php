@@ -537,4 +537,38 @@ class walkthrough_test extends qbehaviour_walkthrough_test_base {
             $this->get_no_hint_visible_expectation()
         );
     }
+
+    #[\PHPUnit\Framework\Attributes\Group('baseline')]
+    /**
+     * Script markup in an answer choice must be removed and the stored format respected.
+     *
+     * @covers \qtype_ddmatch_renderer::format_choices
+     */
+    public function test_ddmatch_choices_are_cleaned(): void {
+        $m = qtype_ddmatch_test_helper::make_a_ddmatching_question();
+        $m->choices[1] = 'Mammal<script>alert("xss")</script>';
+        $m->choices[3] = '<b>Insect</b>';
+        $m->choiceformat[3] = FORMAT_PLAIN;
+        $this->start_attempt_at_question($m, 'deferredfeedback', 4);
+
+        $this->render();
+        $this->assertStringNotContainsString('<script>alert("xss")', $this->currentoutput);
+        $this->assertStringNotContainsString('<b>Insect</b>', $this->currentoutput);
+        $this->assertStringContainsString('&lt;b&gt;Insect&lt;/b&gt;', $this->currentoutput);
+    }
+
+    #[\PHPUnit\Framework\Attributes\Group('baseline')]
+    /**
+     * Legitimate HTML formatting in an answer choice is preserved.
+     *
+     * @covers \qtype_ddmatch_renderer::format_choices
+     */
+    public function test_ddmatch_choices_keep_formatting(): void {
+        $m = qtype_ddmatch_test_helper::make_a_ddmatching_question();
+        $m->choices[1] = '<b>Mammal</b>';
+        $this->start_attempt_at_question($m, 'deferredfeedback', 4);
+
+        $this->render();
+        $this->assertStringContainsString('<b>Mammal</b>', $this->currentoutput);
+    }
 }
